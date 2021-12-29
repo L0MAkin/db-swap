@@ -6,8 +6,8 @@ function App() {
 
     return (
         <div className="App">
-            <h1 className="text-3xl font-bold">
-                NEAR Crowd: {t('hi')}
+            <h1>
+                NEAR Crowd - {t('hi')}
             </h1>
 
             <button onClick={() => i18n.changeLanguage("ru")}>ru</button>
