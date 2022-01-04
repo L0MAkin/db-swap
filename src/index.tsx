@@ -1,22 +1,23 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './components/App/App';
-import reportWebVitals from './reportWebVitals';
-import Whitepaper from './pages/witepaper';
-
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./i18n";
+import './styles/index.css';
+
+import App from './components/App/App';
+import reportWebVitals from './reportWebVitals';
+
+import { NearProvider, NearEnvironment } from "react-near";
+// NOTE: this package is required for make near-api-js work properly.
+import { Buffer } from "buffer";
+global.Buffer = Buffer;
+
 
 ReactDOM.render(
     <React.StrictMode>
-        <BrowserRouter>
-            <Routes>
-                <Route path="/" element={<App />} />
-                <Route path="whitepaper" element={<Whitepaper />} />
-            </Routes>
-        </BrowserRouter>
+        <NearProvider environment={NearEnvironment.TestNet}>
+            <App />
+        </NearProvider>
     </React.StrictMode>,
     document.getElementById('root')
 );

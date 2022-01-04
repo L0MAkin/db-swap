@@ -1,4 +1,4 @@
-export default function Witepaper() {
+export default function WitepaperPage() {
     return (
         <div>
             Welcome to NEAR Crowd. NEAR Crowd is a service that allows people earn Ⓝ by completing small tasks.

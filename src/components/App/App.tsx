@@ -1,19 +1,22 @@
 import React from 'react';
-import { useTranslation } from "react-i18next";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
-    const { t, i18n } = useTranslation()
+import WhitepaperPage from '../../pages/witepaper';
+import HomePage from '../../pages/home';
+
+import {useNear} from "react-near";
+
+export default function App() {
+    const near = useNear();
+    console.log(near);
 
     return (
-        <div className="App">
-            <h1>
-                NEAR Crowd - {t('hi')}
-            </h1>
-
-            <button onClick={() => i18n.changeLanguage("ru")}>ru</button>
-            <button onClick={() => i18n.changeLanguage("en")}>en</button>
-        </div>
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/whitepaper" element={<WhitepaperPage />} />
+            </Routes>
+        </BrowserRouter>
     );
 }
 
-export default App;
