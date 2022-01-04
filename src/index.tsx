@@ -3,12 +3,20 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
+import Whitepaper from './pages/witepaper';
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./i18n";
 
 ReactDOM.render(
     <React.StrictMode>
-        <App />
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<App />} />
+                <Route path="whitepaper" element={<Whitepaper />} />
+            </Routes>
+        </BrowserRouter>
     </React.StrictMode>,
     document.getElementById('root')
 );
