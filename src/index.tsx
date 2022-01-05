@@ -1,15 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-import "./i18n";
+import './i18n';
 import './styles/index.css';
 
-import App from './components/App/App';
+import App from './App/App';
 import reportWebVitals from './reportWebVitals';
 
-import { NearProvider, NearEnvironment } from "react-near";
+import { NearProvider, NearEnvironment } from 'react-near';
 // NOTE: this package is required for make near-api-js work properly.
-import { Buffer } from "buffer";
+import { Buffer } from 'buffer';
 global.Buffer = Buffer;
 
 
@@ -19,7 +19,7 @@ ReactDOM.render(
             <App />
         </NearProvider>
     </React.StrictMode>,
-    document.getElementById('root')
+    document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function

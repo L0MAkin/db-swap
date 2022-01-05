@@ -1,10 +1,9 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import WhitepaperPage from '../../pages/witepaper';
-import HomePage from '../../pages/home';
+import WhitepaperPage from '../pages/witepaper';
+import HomePage from '../pages/home';
 
-import {useNear} from "react-near";
+import { useNear } from 'react-near';
 
 export default function App() {
     const near = useNear();
