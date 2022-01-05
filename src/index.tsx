@@ -4,14 +4,13 @@ import ReactDOM from 'react-dom';
 import './i18n';
 import './styles/index.css';
 
+import { NearProvider, NearEnvironment } from 'react-near';
+import { Buffer } from 'buffer';
 import App from './App/App';
 import reportWebVitals from './reportWebVitals';
 
-import { NearProvider, NearEnvironment } from 'react-near';
-// NOTE: this package is required for make near-api-js work properly.
-import { Buffer } from 'buffer';
+// NOTE: necessary fix for a client because `Buffer` object is used by 'near-api-js' lib.
 global.Buffer = Buffer;
-
 
 ReactDOM.render(
     <React.StrictMode>

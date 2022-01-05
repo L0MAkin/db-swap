@@ -1,13 +1,11 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import WhitepaperPage from '../pages/witepaper';
-import HomePage from '../pages/home';
-
 import { useNear } from 'react-near';
+import WhitepaperPage from '../pages/WitepaperPage';
+import HomePage from '../pages/HomePage';
 
 export default function App() {
     const near = useNear();
-    console.log(near);
 
     return (
         <BrowserRouter>
@@ -18,4 +16,3 @@ export default function App() {
         </BrowserRouter>
     );
 }
-
