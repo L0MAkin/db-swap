@@ -4,9 +4,9 @@ import ReactDOM from 'react-dom';
 import './i18n';
 import './styles/index.css';
 
-import { NearProvider, NearEnvironment } from 'react-near';
+import { NearEnvironment, NearProvider } from 'react-near';
 import { Buffer } from 'buffer';
-import App from './App/App';
+import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 
 // NOTE: necessary fix for a client because `Buffer` object is used by 'near-api-js' lib.
