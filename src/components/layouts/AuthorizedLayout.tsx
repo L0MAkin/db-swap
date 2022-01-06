@@ -1,19 +1,20 @@
 import { FC } from 'react';
 import { useNearWallet } from 'react-near';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
-const AuthorizedLayout: FC<{ children: never }> = ({ children }) => {
+const AuthorizedLayout: FC = ({ children }) => {
     const wallet = useNearWallet();
+    const navigate = useNavigate();
 
     if (!wallet) {
         return <div>loading wallet...</div>;
     }
 
     if (wallet && !wallet.isSignedIn()) {
-        return <Navigate to="/" />;
+        navigate('/');
     }
 
-    return children;
+    return <>{children}</>;
 };
 
 export default AuthorizedLayout;
