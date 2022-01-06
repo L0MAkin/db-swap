@@ -5,7 +5,7 @@ import HowItWorksPage from '../pages/HowItWorksPage';
 import HomePage from '../pages/HomePage';
 import TasksPage from '../pages/TasksPage';
 
-import NavBar from '../NavBar';
+import NavBar from '../NavBar/NavBar';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
 const AppLayout: FC<ReactNode> = ({ children }) => <main>{children}</main>;
