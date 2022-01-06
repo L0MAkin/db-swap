@@ -10,6 +10,7 @@
         "lint:fix": "eslint --fix ."
     },
     "dependencies": {
+        "@headlessui/react": "^1.4.2",
         "buffer": "^6.0.3",
         "i18next": "^21.6.4",
         "i18next-browser-languagedetector": "^6.1.2",

@@ -1,15 +1,15 @@
 import { FC, HTMLProps } from 'react';
 
-type Props = { text: string } & HTMLProps<HTMLButtonElement>;
+type Props = HTMLProps<HTMLButtonElement>;
 
-const CustomButton: FC<Props> = ({ text, onClick }) => {
+const CustomButton: FC<Props> = ({ children, onClick }) => {
     return (
         <button
             type="button"
             onClick={onClick}
-            className="border-2 p-2 rounded border-blue-500 bg-blue-200 text-white"
+            className="py-2 px-3 rounded bg-rose-500 text-white font-medium"
         >
-            {text}
+            {children}
         </button>
     );
 };

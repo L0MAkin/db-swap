@@ -8,7 +8,6 @@ function LogoutButton() {
 
     return (
         <CustomButton
-            text={t('buttons.logout')}
             onClick={() => {
                 // NOTE: this method only clears data from local storage
                 // which does not make state changes or trigger updates
@@ -16,7 +15,9 @@ function LogoutButton() {
                 // HACK: refresh browser page
                 window.location.reload();
             }}
-        />
+        >
+            {t('buttons.logout')}
+        </CustomButton>
     );
 }
 

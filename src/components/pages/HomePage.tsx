@@ -1,3 +1,11 @@
-export default function HomePage() {
-    return <div>home page</div>;
+import PageLayout from '../layouts/PageLayout';
+
+function HomePage() {
+    return (
+        <PageLayout>
+            <div>home</div>
+        </PageLayout>
+    );
 }
+
+export default HomePage;

@@ -8,11 +8,12 @@ function LoginButton() {
 
     return (
         <CustomButton
-            text={t('buttons.login')}
             onClick={() => {
                 wallet?.requestSignIn();
             }}
-        />
+        >
+            {t('buttons.login')}
+        </CustomButton>
     );
 }
 
