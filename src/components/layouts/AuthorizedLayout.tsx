@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { useNearWallet } from 'react-near';
 import { Navigate } from 'react-router-dom';
 
-const AuthorizedLayout: FC<{ children: any }> = ({ children }) => {
+const AuthorizedLayout: FC<{ children: never }> = ({ children }) => {
     const wallet = useNearWallet();
 
     if (!wallet) {

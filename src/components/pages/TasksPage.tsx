@@ -1,7 +1,3 @@
 export default function TasksPage() {
-    return (
-        <div>
-            my tasks
-        </div>
-    );
+    return <div>my tasks</div>;
 }

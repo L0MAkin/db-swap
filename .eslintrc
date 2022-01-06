@@ -1,56 +1,32 @@
 {
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true,
+            "useJSXTextNode": true
+        },
+        "ecmaVersion": 2021,
+        "sourceType": "module",
+        "project": "./tsconfig.json"
+    },
     "extends": [
-        "airbnb",
+        "prettier",
+        "plugin:prettier/recommended",
         "airbnb-typescript",
-        "airbnb/whitespace",
         "airbnb/hooks",
         "plugin:@typescript-eslint/recommended",
         "plugin:import/recommended",
-        "plugin:react/recommended",
-        "plugin:jest/recommended",
-        "plugin:jsx-a11y/recommended",
-        "plugin:react/jsx-runtime"
+        "plugin:jest/recommended"
     ],
-    "rules": {
-        "indent": ["error", 4],
-        "@typescript-eslint/indent": ["error", 4],
-        "react/jsx-indent": ["error", 4],
-        "react/jsx-indent-props": ["error", 4],
-
-        "react/jsx-filename-extension": [1, { "extensions": [".tsx", ".ts"] }],
-        "import/extensions": [
-            "error",
-            "ignorePackages",
-            {
-                "js": "never",
-                "jsx": "never",
-                "ts": "never",
-                "tsx": "never"
-            }
-        ]
-    },
     "plugins": [
-        "import",
+        "prettier",
         "react",
-        "@typescript-eslint"
+        "react-hooks",
+        "@typescript-eslint",
+        "jest"
     ],
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-        "ecmaVersion": 2021,
-        "sourceType": "module",
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "project": "./tsconfig.json"
-    },
-    "settings": {
-        "react": {
-            "version": "detect"
-        }
-    },
     "env": {
         "browser": true,
-        "node": true,
         "es6": true,
         "jest": true
     },
@@ -60,5 +36,40 @@
         "dist",
         "public",
         "**/*.config.js"
-    ]
+    ],
+    "rules": {
+        "@typescript-eslint/indent": ["error", 4],
+        "@typescript-eslint/comma-dangle": ["error", "never"],
+
+        "linebreak-style": "off",
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+
+        "prettier/prettier": [
+            "error",
+            {
+                "singleQuote": true,
+                "printWidth": 120,
+                "tabWidth": 4,
+                "useTabs": false,
+                "trailingComma": "none"
+            }
+        ],
+        "import/extensions": [
+            "error",
+            "ignorePackages",
+            {
+                "js": "never",
+                "jsx": "never",
+                "ts": "never",
+                "tsx": "never"
+            }
+        ],
+        "import/no-extraneous-dependencies": [
+            "error", {
+                "devDependencies": true
+            }
+        ]
+    }
+
 }

@@ -8,7 +8,7 @@ import TasksPage from '../pages/TasksPage';
 import NavBar from '../NavBar';
 import AuthorizedLayout from '../layouts/AuthorizedLayout';
 
-const AppLayout: FC<ReactNode> = ({ children }) => (<main>{children}</main>);
+const AppLayout: FC<ReactNode> = ({ children }) => <main>{children}</main>;
 
 function App() {
     return (
@@ -16,27 +16,22 @@ function App() {
             <AppLayout>
                 <NavBar />
                 <Routes>
-                    <Route
-                        path="/"
-                        element={(
-                            <HomePage />
-                        )}
-                    />
+                    <Route path="/" element={<HomePage />} />
                     <Route
                         path="/tasks"
-                        element={(
+                        element={
                             <AuthorizedLayout>
                                 <TasksPage />
                             </AuthorizedLayout>
-                        )}
+                        }
                     />
                     <Route
                         path="/how-it-works"
-                        element={(
+                        element={
                             <AuthorizedLayout>
                                 <HowItWorksPage />
                             </AuthorizedLayout>
-                        )}
+                        }
                     />
                 </Routes>
             </AppLayout>
