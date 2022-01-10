@@ -1,3 +1,7 @@
 {
-    "hi": "hello"
+    "hi": "hello",
+    "buttons": {
+        "login": "Login with NEAR",
+        "logout": "Logout"
+    }
 }
