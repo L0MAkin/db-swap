@@ -2,11 +2,11 @@ import { FC, HTMLProps } from 'react';
 
 type Props = HTMLProps<HTMLButtonElement>;
 
-const CustomButton: FC<Props> = ({ children, onClick }) => {
+const CustomButton: FC<Props> = ({ children, ...props }) => {
     return (
         <button
+            {...props}
             type="button"
-            onClick={onClick}
             className="py-2 px-3 rounded bg-rose-500 text-white font-medium"
         >
             {children}

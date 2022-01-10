@@ -3,5 +3,9 @@
     "buttons": {
         "login": "Login with NEAR",
         "logout": "Logout"
+    },
+    "navigation": {
+        "tasks": "My Tasks",
+        "docs": "How it works"
     }
 }

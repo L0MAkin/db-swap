@@ -3,28 +3,45 @@ import { useNearWallet } from 'react-near';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from '../buttons/LogoutButton';
 import LoginButton from '../buttons/LoginButton';
+import { useTranslation } from 'react-i18next';
+
+const NAV_ITEMS = [
+    {
+        id: 1,
+        to: '/tasks',
+        translationKey: 'navigation.tasks',
+        requireAuth: true
+    },
+    {
+        id: 2,
+        to: '/docs',
+        translationKey: 'navigation.docs',
+        requireAuth: false
+    }
+];
 
 const PageLayout: FC = ({ children }) => {
     const wallet = useNearWallet();
     const authorized = wallet?.isSignedIn();
-
-    // const navigate = useNavigate();
-    // if (wallet && !wallet.isSignedIn()) {
-    //     navigate('/');
-    // }
+    const { t } = useTranslation();
 
     return (
         <div className="h-screen flex flex-col">
-            <nav className="p-4 bg-gray-800 flex items-center space-x-3">
-                {authorized && <NavLink to="/tasks">My Tasks</NavLink>}
-                {authorized && <NavLink to="/docs">How it works</NavLink>}
+            <nav className="p-4 bg-gray-800 flex items-center text-white justify-between">
+                <ul className="flex items-center space-x-4">
+                    {NAV_ITEMS.map(({ id, to, translationKey }) => (
+                        <li key={id}>
+                            {authorized && (
+                                <NavLink to={to}>{t(translationKey)}</NavLink>
+                            )}
+                        </li>
+                    ))}
+                </ul>
 
                 <div>{authorized ? <LogoutButton /> : <LoginButton />}</div>
             </nav>
 
-            <main className="flex-1">
-                <div>{children}</div>
-            </main>
+            <main className="flex-1 h-max container p-6">{children}</main>
         </div>
     );
 };

@@ -3,5 +3,9 @@
     "buttons": {
         "login": "Войти с NEAR",
         "logout": "Выйти"
+    },
+    "navigation": {
+        "tasks": "Мои задачи",
+        "docs": "Как это работает"
     }
 }
