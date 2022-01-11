@@ -2,15 +2,18 @@ import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
 import CustomButton from './CustomButton';
 import logo from '../../assets/near-logo.png';
+import * as nearcrowd from '../../contracts/nearcrowd';
 
 function LoginButton() {
-    const wallet = useNearWallet();
+    const wallet = useNearWallet()!;
     const { t } = useTranslation();
 
     return (
         <CustomButton
             onClick={() => {
-                wallet?.requestSignIn();
+                wallet.requestSignIn({
+                    contractId: nearcrowd.CONTRACT_ID
+                });
             }}
         >
             <div className="flex items-center space-x-3">

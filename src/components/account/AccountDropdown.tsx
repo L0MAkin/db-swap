@@ -1,59 +1,51 @@
-import { Popover, Transition } from '@headlessui/react';
-import { FC, Fragment } from 'react';
+import { Fragment, useEffect, useState } from 'react';
 import { useNearWallet } from 'react-near';
-import LogoutButton from '../buttons/LogoutButton';
+import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
+import LogoutButton from '../buttons/LogoutButton';
+import Stats from './Stats';
 
-const Stat: FC<{
-    value: number | string;
-    title: string;
-    formatter?: (s: string | number) => string;
-}> = ({ title, value, formatter }) => {
-    const formattedValue = formatter ? formatter(value) : value;
-
-    return (
-        <div className="w-max">
-            <div className="text-gray-400 text-md font-normal">{title}</div>
-            <div className="text-gray-900 text-3xl font-bold">
-                {formattedValue}
-            </div>
-        </div>
-    );
-};
-
-const AccountStats: FC<{ stats: IAccountStats }> = ({ stats }) => {
-    return (
-        <div className="space-y-2">
-            <Stat title="Successful tasks" value={stats.successful} />
-            <Stat title="Failed tasks" value={stats.failed} />
-            <Stat title="Pending review" value={stats.pendingReview} />
-            <Stat
-                title="Reward collected"
-                value={stats.rewardCollected}
-                formatter={(s) => `${s} Ⓝ`}
-            />
-        </div>
-    );
-};
-
-interface IAccountStats {
-    successful: number;
-    failed: number;
-    pendingReview: number;
-    rewardCollected: number;
-}
+import * as nearcrowd from '../../contracts/nearcrowd';
 
 function AccountDropdown() {
-    const wallet = useNearWallet();
+    const wallet = useNearWallet()!;
+    const account = wallet.account();
+    const contract = nearcrowd.useNearcrowdContract();
 
-    const account = wallet?.account();
+    const [accountWhitelisted, setAccountWhitelisted] = useState(false);
+    const [accountStats, setAccountStats] = useState<nearcrowd.AccountStats>({
+        balance: '0',
+        successful: 0,
+        failed: 0
+    });
 
-    const stats: IAccountStats = {
-        successful: 10,
-        failed: 1,
-        pendingReview: 3,
-        rewardCollected: 0.001
-    };
+    useEffect(() => {
+        async function callIsAccountWhitelisted() {
+            const whitelisted = await contract.is_account_whitelisted({
+                account_id: account.accountId
+            });
+
+            setAccountWhitelisted(whitelisted);
+        }
+
+        callIsAccountWhitelisted();
+    }, [account, contract]);
+
+    useEffect(() => {
+        async function callGetAccountStats() {
+            const stats = await contract.get_account_stats({
+                account_id: account.accountId
+            });
+
+            setAccountStats(stats);
+        }
+
+        if (accountWhitelisted) {
+            callGetAccountStats();
+        }
+    }, [account, contract, accountWhitelisted]);
+
+    // TODO: ui for not whitelisted account
 
     return (
         <Popover className="relative">
@@ -68,7 +60,8 @@ function AccountDropdown() {
                             space-x-2"
                     >
                         <UserCircleIcon className="w-5 h-5" />
-                        <span>{account?.accountId}</span>
+                        <span>{account.accountId}</span>
+                        <span>{`${accountWhitelisted}`}</span>
                     </Popover.Button>
 
                     <Transition
@@ -83,7 +76,7 @@ function AccountDropdown() {
                         <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 right-0">
                             <div className="overflow-hidden rounded shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="p-7 bg-white text-gray-900">
-                                    <AccountStats stats={stats} />
+                                    <Stats stats={accountStats} />
                                 </div>
 
                                 <div className="p-7 bg-gray-100 flex justify-end">
