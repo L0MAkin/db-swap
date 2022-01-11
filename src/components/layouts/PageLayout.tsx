@@ -1,9 +1,9 @@
 import { FC } from 'react';
 import { useNearWallet } from 'react-near';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from '../buttons/LogoutButton';
 import LoginButton from '../buttons/LoginButton';
 import { useTranslation } from 'react-i18next';
+import AccountDropdown from '../account/AccountDropdown';
 
 const NAV_ITEMS = [
     {
@@ -38,7 +38,9 @@ const PageLayout: FC = ({ children }) => {
                     ))}
                 </ul>
 
-                <div>{authorized ? <LogoutButton /> : <LoginButton />}</div>
+                {!authorized && <LoginButton />}
+
+                {authorized && <AccountDropdown />}
             </nav>
 
             <main className="flex-1 h-max container p-6">{children}</main>
