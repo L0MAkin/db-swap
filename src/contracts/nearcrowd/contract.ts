@@ -3,7 +3,7 @@ import { useNearContract } from 'react-near';
 
 export const CONTRACT_ID = 'nearcrowd.testnet';
 
-export interface AccountStats {
+export interface IAccountStats {
     balance: string;
     successful: number;
     failed: number;
@@ -15,12 +15,12 @@ export type NEARCrowdContract = NearContract & {
     // TODO: describe all the methods of the contract
 
     is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
-    get_account_stats(args: { account_id: string }): Promise<AccountStats>;
+    is_account_banned(args: { account_id: string }): Promise<boolean>;
+    get_account_stats(args: { account_id: string }): Promise<IAccountStats>;
 };
 
 const VIEW_METHODS = [
     'is_account_whitelisted',
-    'is_account_banned',
     'get_current_taskset',
     'get_estimated_atto_tasks_per_share',
     'get_account_state',

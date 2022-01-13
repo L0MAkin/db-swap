@@ -4,32 +4,24 @@ import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import LogoutButton from '../buttons/LogoutButton';
 import Stats from './Stats';
-
-import * as nearcrowd from '../../contracts/nearcrowd';
+import {
+    IAccountStats,
+    useNearcrowdContract
+} from '../../contracts/nearcrowd/contract';
+import { useWhitelistedContext } from '../../contracts/nearcrowd/WhitelistedContext';
 
 function AccountDropdown() {
     const wallet = useNearWallet()!;
     const account = wallet.account();
-    const contract = nearcrowd.useNearcrowdContract();
+    const contract = useNearcrowdContract();
 
-    const [accountWhitelisted, setAccountWhitelisted] = useState(false);
-    const [accountStats, setAccountStats] = useState<nearcrowd.AccountStats>({
+    const { whitelisted } = useWhitelistedContext();
+
+    const [accountStats, setAccountStats] = useState<IAccountStats>({
         balance: '0',
         successful: 0,
         failed: 0
     });
-
-    useEffect(() => {
-        async function callIsAccountWhitelisted() {
-            const whitelisted = await contract.is_account_whitelisted({
-                account_id: account.accountId
-            });
-
-            setAccountWhitelisted(whitelisted);
-        }
-
-        callIsAccountWhitelisted();
-    }, [account, contract]);
 
     useEffect(() => {
         async function callGetAccountStats() {
@@ -40,10 +32,10 @@ function AccountDropdown() {
             setAccountStats(stats);
         }
 
-        if (accountWhitelisted) {
+        if (whitelisted) {
             callGetAccountStats();
         }
-    }, [account, contract, accountWhitelisted]);
+    }, [account, contract, whitelisted]);
 
     // TODO: ui for not whitelisted account
 
@@ -61,7 +53,7 @@ function AccountDropdown() {
                     >
                         <UserCircleIcon className="w-5 h-5" />
                         <span>{account.accountId}</span>
-                        <span>{`${accountWhitelisted}`}</span>
+                        {!whitelisted && <span>| not whitelisted</span>}
                     </Popover.Button>
 
                     <Transition

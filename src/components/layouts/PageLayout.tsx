@@ -8,7 +8,7 @@ import AccountDropdown from '../account/AccountDropdown';
 const NAV_ITEMS = [
     {
         id: 1,
-        to: '/tasks',
+        to: '/task-sets',
         translationKey: 'navigation.tasks',
         requireAuth: true
     },
