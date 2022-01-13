@@ -1,4 +1,4 @@
-import PageLayout from '../layouts/PageLayout';
+import PageLayout from '../../layouts/PageLayout';
 import { useTranslation } from 'react-i18next';
 
 function DocsPage() {

@@ -2,13 +2,10 @@ import { Fragment, useEffect, useState } from 'react';
 import { useNearWallet } from 'react-near';
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
-import LogoutButton from '../buttons/LogoutButton';
-import Stats from './Stats';
-import {
-    IAccountStats,
-    useNearcrowdContract
-} from '../../contracts/nearcrowd/contract';
-import { useWhitelistedContext } from '../../contracts/nearcrowd/WhitelistedContext';
+import LogoutButton from '../logout/LogoutButton';
+import AccountStats from './AccountStats';
+import { IAccountStats, useNearcrowdContract } from '../../contracts/nearcrowd';
+import { useWhitelistedContext } from '../../contexts/WhitelistedContext';
 
 function AccountDropdown() {
     const wallet = useNearWallet()!;
@@ -68,7 +65,7 @@ function AccountDropdown() {
                         <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 right-0">
                             <div className="overflow-hidden rounded shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="p-7 bg-white text-gray-900">
-                                    <Stats stats={accountStats} />
+                                    <AccountStats stats={accountStats} />
                                 </div>
 
                                 <div className="p-7 bg-gray-100 flex justify-end">

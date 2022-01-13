@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import { IAccountStats } from '../../contracts/nearcrowd/contract';
+import { IAccountStats } from '../../contracts/nearcrowd';
 
 const Stat: FC<{
     value: number | string;
@@ -18,7 +18,7 @@ const Stat: FC<{
     );
 };
 
-const Stats: FC<{ stats: IAccountStats }> = ({ stats }) => {
+const AccountStats: FC<{ stats: IAccountStats }> = ({ stats }) => {
     return (
         <div className="space-y-2">
             <Stat title="Successful tasks" value={stats.successful} />
@@ -35,4 +35,4 @@ const Stats: FC<{ stats: IAccountStats }> = ({ stats }) => {
     );
 };
 
-export default Stats;
+export default AccountStats;

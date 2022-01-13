@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useContext, useState } from 'react';
 import { useNearWallet } from 'react-near';
-import { useNearcrowdContract } from './contract';
+import { useNearcrowdContract } from '../contracts/nearcrowd';
 
 // TODO: this can be replaced by redux state later
 

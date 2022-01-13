@@ -1,8 +1,8 @@
 import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
-import CustomButton from './CustomButton';
-import logo from '../../assets/near-logo.png';
-import nearcrowd from '../../contracts/nearcrowd';
+import CustomButton from '../CustomButton';
+import logo from '../../assets/images/near-logo.png';
+import { CONTRACT_ID } from '../../contracts/nearcrowd';
 
 function LoginButton() {
     const wallet = useNearWallet()!;
@@ -12,7 +12,7 @@ function LoginButton() {
         <CustomButton
             onClick={() => {
                 wallet.requestSignIn({
-                    contractId: nearcrowd.CONTRACT_ID
+                    contractId: CONTRACT_ID
                 });
             }}
         >

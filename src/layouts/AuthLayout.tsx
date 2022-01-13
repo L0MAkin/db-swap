@@ -1,10 +1,10 @@
 import { FC } from 'react';
-import { useNearWallet } from 'react-near';
 import { Navigate } from 'react-router-dom';
-import { useWhitelistedContext } from '../../contracts/nearcrowd/WhitelistedContext';
+import { useWhitelistedContext } from '../contexts/WhitelistedContext';
+import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
 
 const AuthLayout: FC = ({ children }) => {
-    const authorized = useNearWallet()!.isSignedIn();
+    const { authorized } = useWalletAuthorized();
     const { whitelisted } = useWhitelistedContext();
 
     if (!authorized) {

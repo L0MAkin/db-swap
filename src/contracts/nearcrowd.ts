@@ -2,24 +2,7 @@ import { NearContract } from 'react-near/core/contract';
 import { useNearContract } from 'react-near';
 
 export const CONTRACT_ID = 'nearcrowd.testnet';
-
-export interface IAccountStats {
-    balance: string;
-    successful: number;
-    failed: number;
-    pending?: number;
-    invites?: number;
-}
-
-export type NEARCrowdContract = NearContract & {
-    // TODO: describe all the methods of the contract
-
-    is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
-    is_account_banned(args: { account_id: string }): Promise<boolean>;
-    get_account_stats(args: { account_id: string }): Promise<IAccountStats>;
-};
-
-const VIEW_METHODS = [
+export const VIEW_METHODS = [
     'is_account_whitelisted',
     'get_current_taskset',
     'get_estimated_atto_tasks_per_share',
@@ -30,7 +13,7 @@ const VIEW_METHODS = [
     'cheapest_invite',
     'can_push_queue'
 ];
-const CHANGE_METHODS = [
+export const CHANGE_METHODS = [
     'claim_reward',
     'change_taskset',
     'apply_for_assignment',
@@ -49,6 +32,22 @@ const CHANGE_METHODS = [
     'buy_invite',
     'push_queue'
 ];
+
+export interface IAccountStats {
+    balance: string;
+    successful: number;
+    failed: number;
+    pending?: number;
+    invites?: number;
+}
+
+export type NEARCrowdContract = NearContract & {
+    // TODO: describe all the methods of the contract
+
+    is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
+    is_account_banned(args: { account_id: string }): Promise<boolean>;
+    get_account_stats(args: { account_id: string }): Promise<IAccountStats>;
+};
 
 export function useNearcrowdContract() {
     return useNearContract(CONTRACT_ID, {
