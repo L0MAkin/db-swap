@@ -38,6 +38,7 @@
         "**/*.config.js"
     ],
     "rules": {
+        "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/indent": ["error", 4],
         "@typescript-eslint/comma-dangle": ["error", "never"],
 

@@ -1,6 +1,7 @@
 import { useTranslation } from 'react-i18next';
 import { useNearWallet } from 'react-near';
-import CustomButton from './CustomButton';
+import CustomButton from '../CustomButton';
+import { LogoutIcon } from '@heroicons/react/outline';
 
 function LogoutButton() {
     const { t } = useTranslation();
@@ -15,8 +16,10 @@ function LogoutButton() {
                 // HACK: refresh browser page
                 window.location.reload();
             }}
+            className="flex items-center space-x-2"
         >
-            {t('buttons.logout')}
+            <span>{t('buttons.logout')}</span>
+            <LogoutIcon className="w-5 h-5" />
         </CustomButton>
     );
 }
