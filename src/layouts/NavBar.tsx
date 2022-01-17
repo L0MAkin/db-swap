@@ -27,13 +27,17 @@ const NavBar: FC = () => {
     return (
         <nav className="p-4 bg-gray-800 flex items-center text-white justify-between">
             <ul className="flex items-center space-x-4">
-                {NAV_ITEMS.map(({ id, to, translationKey }) => (
-                    <li key={id}>
-                        {authorized && (
-                            <NavLink to={to}>{t(translationKey)}</NavLink>
-                        )}
-                    </li>
-                ))}
+                {NAV_ITEMS.map(({ id, to, translationKey, requireAuth }) => {
+                    const Link = () => (
+                        <NavLink to={to}>{t(translationKey)}</NavLink>
+                    );
+
+                    return (
+                        <li key={id}>
+                            {!requireAuth ? <Link /> : authorized && <Link />}
+                        </li>
+                    );
+                })}
             </ul>
 
             {!authorized && <LoginButton />}
