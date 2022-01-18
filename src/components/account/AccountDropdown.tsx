@@ -4,8 +4,15 @@ import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import LogoutButton from '../logout/LogoutButton';
 import AccountStats from './AccountStats';
-import { IAccountStats, useNearcrowdContract } from '../../contracts/nearcrowd';
+import { useNearcrowdContract } from '../../contracts/nearcrowd';
+import * as nearcrowd from '../../contracts/nearcrowd';
 import { useWhitelistedContext } from '../../contexts/WhitelistedContext';
+
+const defaultAccountStats = {
+    balance: '0',
+    successful: 0,
+    failed: 0
+};
 
 function AccountDropdown() {
     const wallet = useNearWallet()!;
@@ -14,11 +21,8 @@ function AccountDropdown() {
 
     const { whitelisted } = useWhitelistedContext();
 
-    const [accountStats, setAccountStats] = useState<IAccountStats>({
-        balance: '0',
-        successful: 0,
-        failed: 0
-    });
+    const [accountStats, setAccountStats] =
+        useState<nearcrowd.AccountStats>(defaultAccountStats);
 
     useEffect(() => {
         async function callGetAccountStats() {
@@ -32,6 +36,11 @@ function AccountDropdown() {
         if (whitelisted) {
             callGetAccountStats();
         }
+
+        return () => {
+            // cleanup
+            setAccountStats(defaultAccountStats);
+        };
     }, [account, contract, whitelisted]);
 
     // TODO: ui for not whitelisted account
