@@ -11,6 +11,7 @@ const AuthLayout: FC = ({ children }) => {
         return <Navigate to="/" />;
     }
 
+    // TODO: may be wait until whitelisted prop loaded?
     if (!whitelisted) {
         return <Navigate to="/" />;
     }
