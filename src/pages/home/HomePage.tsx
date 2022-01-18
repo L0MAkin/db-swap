@@ -2,11 +2,13 @@ import PageLayout from '../../layouts/PageLayout';
 import LoginButton from '../../components/login/LoginButton';
 import { useWalletAuthorized } from '../../hooks/useWalletAuthorized';
 import { useWhitelistedContext } from '../../contexts/WhitelistedContext';
+import { Link } from 'react-router-dom';
 
 function HomePage() {
     const { authorized } = useWalletAuthorized();
     const { whitelisted } = useWhitelistedContext();
 
+    const invited = authorized && whitelisted;
     const notInvited = authorized && !whitelisted;
 
     return (
@@ -22,6 +24,15 @@ function HomePage() {
                 )}
 
                 {notInvited && <p>You are not whitelisted yet.</p>}
+
+                {invited && (
+                    <>
+                        <p>You are ready to go!</p>
+                        <Link to="/tasksets" className="text-yellow-500">
+                            Tasksets
+                        </Link>
+                    </>
+                )}
             </div>
         </PageLayout>
     );

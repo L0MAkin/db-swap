@@ -11,8 +11,6 @@ const AppLayout: FC = ({ children }) => <>{children}</>; // utility wrapper
 function App() {
     const wallet = useNearWallet();
 
-    console.log(wallet);
-
     const { authorized } = useWalletAuthorized();
     const { callIsAccountWhitelisted } = useWhitelistedContext();
 
@@ -21,7 +19,8 @@ function App() {
             callIsAccountWhitelisted();
         }
     }, [authorized, callIsAccountWhitelisted]);
-    // check if wallet even initialized
+
+    // check if wallet object initialized
     if (!wallet) {
         return <Loader />;
     }

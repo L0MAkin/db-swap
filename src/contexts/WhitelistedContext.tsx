@@ -24,8 +24,6 @@ export function WhitelistedProvider({ children }: { children: ReactNode }) {
             account_id: wallet.account().accountId
         });
 
-        console.log('checking if account whitelisted', result);
-
         setWhitelisted(result);
     }
 

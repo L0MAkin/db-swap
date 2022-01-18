@@ -42,8 +42,8 @@ function AccountDropdown() {
                 <>
                     <Popover.Button
                         className="
-                            text-rose-200 group bg-transparent
-                            border-rose-200 border-2
+                            text-yellow-300 group bg-transparent
+                            border-yellow-300 border-2
                             px-3 py-2 rounded-md flex
                             items-center font-medium
                             space-x-2"

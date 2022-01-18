@@ -8,7 +8,7 @@ const CustomButton: FC<Props> = ({ children, className, ...props }) => {
             {...props}
             type="button"
             className={
-                'py-2 px-3 rounded bg-rose-500 text-white font-medium ' +
+                'py-2 px-3 rounded bg-yellow-500 text-white font-medium ' +
                 className
             }
         >
