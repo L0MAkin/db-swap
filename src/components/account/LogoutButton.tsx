@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next';
 import { useNearWallet } from 'react-near';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 import { LogoutIcon } from '@heroicons/react/outline';
 
 function LogoutButton() {

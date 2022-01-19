@@ -1,7 +1,7 @@
-import PageLayout from '../../layouts/PageLayout';
 import { useEffect, useState } from 'react';
-import TasksetCard from './TasksetCard';
-import { fetchTasksetList, Taskset } from './tasksets';
+import TasksetCard from '../../components/tasksets/TasksetCard';
+import PageLayout from '../../components/layouts/PageLayout';
+import { fetchTasksetList, Taskset } from '../../services/tasksets';
 
 function TasksetSelectionPage() {
     const [tasksetList, setTasksetList] = useState<Taskset[]>([]);

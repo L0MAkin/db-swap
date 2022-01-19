@@ -1,5 +1,5 @@
-import PageLayout from '../../layouts/PageLayout';
 import { useTranslation } from 'react-i18next';
+import PageLayout from '../components/layouts/PageLayout';
 
 function DocsPage() {
     const { t } = useTranslation();

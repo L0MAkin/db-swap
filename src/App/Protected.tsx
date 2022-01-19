@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useWhitelistedContext } from '../contexts/WhitelistedContext';
+import { useWhitelistedContext } from '../hooks/useWhitelistedContext';
 import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
-import Loader from '../App/Loader';
+import Loader from './Loader';
 
 export function WhitelistProtectedRoutes() {
     const { whitelisted, whitelistChecked } = useWhitelistedContext();

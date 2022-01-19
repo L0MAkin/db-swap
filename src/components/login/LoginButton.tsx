@@ -1,6 +1,6 @@
 import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../CustomButton';
+import CustomButton from '../shared/CustomButton';
 import logo from '../../assets/images/near-logo.png';
 import { CONTRACT_ID } from '../../contracts/nearcrowd-v1';
 

@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, ReactNode, useState } from 'react';
 import { useNearWallet } from 'react-near';
 import { useNearcrowdContract } from '../contracts/nearcrowd-v1';
 
@@ -8,7 +8,7 @@ interface WhitelistedContextType {
     callIsAccountWhitelisted: () => Promise<void>;
 }
 
-const WhitelistedContext = createContext<WhitelistedContextType>({
+export const WhitelistedContext = createContext<WhitelistedContextType>({
     whitelisted: false,
     whitelistChecked: false,
     callIsAccountWhitelisted: async () => {}
@@ -36,8 +36,4 @@ export function WhitelistedProvider({ children }: { children: ReactNode }) {
             {children}
         </WhitelistedContext.Provider>
     );
-}
-
-export function useWhitelistedContext() {
-    return useContext(WhitelistedContext);
 }

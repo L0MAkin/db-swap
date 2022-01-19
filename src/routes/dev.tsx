@@ -1,5 +1,5 @@
 function DevPage() {
-    return <div>Dev</div>;
+    return <code>dev page</code>;
 }
 
 export default DevPage;

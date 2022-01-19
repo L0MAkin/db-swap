@@ -1,6 +1,6 @@
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Taskset } from './tasksets';
+import { Taskset } from '../../services/tasksets';
 
 const TasksetCard: FC<{ taskset: Taskset }> = ({ taskset }) => {
     const navigate = useNavigate();

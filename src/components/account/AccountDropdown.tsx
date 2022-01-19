@@ -2,11 +2,11 @@ import { Fragment, useEffect, useState } from 'react';
 import { useNearWallet } from 'react-near';
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
-import LogoutButton from '../logout/LogoutButton';
+import LogoutButton from './LogoutButton';
 import AccountStats from './AccountStats';
 import { useNearcrowdContract } from '../../contracts/nearcrowd-v1';
 import * as nearcrowd from '../../contracts/nearcrowd-v1';
-import { useWhitelistedContext } from '../../contexts/WhitelistedContext';
+import { useWhitelistedContext } from '../../hooks/useWhitelistedContext';
 
 const defaultAccountStats = {
     balance: '0',

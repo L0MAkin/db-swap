@@ -1,9 +1,9 @@
 import React, { FC, useEffect } from 'react';
 import { useNearWallet } from 'react-near';
-import { useWhitelistedContext } from '../contexts/WhitelistedContext';
+import { useWhitelistedContext } from '../hooks/useWhitelistedContext';
 import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
 
-import Router from '../routes/Router';
+import Router from './Router';
 import Loader from './Loader';
 
 const AppLayout: FC = ({ children }) => <>{children}</>; // utility wrapper

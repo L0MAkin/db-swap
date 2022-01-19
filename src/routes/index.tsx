@@ -1,8 +1,8 @@
-import PageLayout from '../../layouts/PageLayout';
-import LoginButton from '../../components/login/LoginButton';
-import { useWalletAuthorized } from '../../hooks/useWalletAuthorized';
-import { useWhitelistedContext } from '../../contexts/WhitelistedContext';
 import { Link } from 'react-router-dom';
+import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
+import { useWhitelistedContext } from '../hooks/useWhitelistedContext';
+import PageLayout from '../components/layouts/PageLayout';
+import LoginButton from '../components/login/LoginButton';
 
 function HomePage() {
     const { authorized } = useWalletAuthorized();

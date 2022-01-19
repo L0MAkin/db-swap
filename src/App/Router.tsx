@@ -3,14 +3,14 @@ import { Route, Routes } from 'react-router-dom';
 import {
     WalletAuthorizedProtectedRoutes,
     WhitelistProtectedRoutes
-} from './ProtectedRoutes';
+} from './Protected';
 
-import DevPage from '../pages/DevPage';
-import HomePage from '../pages/home/HomePage';
-import DocsPage from '../pages/docs/DocsPage';
-import NotFoundPage from '../pages/errors/NotFoundPage';
-import TasksetPage from '../pages/tasksets/TasksetPage';
-import TasksetSelectionPage from '../pages/tasksets/TasksetSelectionPage';
+import DevPage from '../routes/dev';
+import HomePage from '../routes/index';
+import DocsPage from '../routes/docs';
+import NotFoundPage from '../routes/404';
+import TasksetPage from '../routes/tasksets/id';
+import TasksetSelectionPage from '../routes/tasksets/index';
 
 function Router() {
     const isDev = process.env.NODE_ENV === 'development';
@@ -20,11 +20,11 @@ function Router() {
             <Route path="/" element={<HomePage />} />
             <Route path="docs" element={<DocsPage />} />
 
-            {/* wallet authorized routes */}
+            {/* wallet authorized routing */}
             <Route element={<WalletAuthorizedProtectedRoutes />}>
-                {isDev && <Route path="/dev" element={<DevPage />} />}
+                {isDev && <Route path="dev" element={<DevPage />} />}
 
-                {/* account whitelisted routes */}
+                {/* account whitelisted routing */}
                 <Route element={<WhitelistProtectedRoutes />}>
                     <Route path="tasksets">
                         <Route index element={<TasksetSelectionPage />} />
