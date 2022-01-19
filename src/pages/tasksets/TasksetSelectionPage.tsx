@@ -17,7 +17,7 @@ function TasksetSelectionPage() {
     });
 
     return (
-        <PageLayout withAuth>
+        <PageLayout>
             <h1 className="text-4xl mb-5 font-medium">Select task-set</h1>
 
             <div className="flex flex-col gap-5">

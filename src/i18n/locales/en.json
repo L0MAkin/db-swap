@@ -5,7 +5,7 @@
         "logout": "Logout"
     },
     "navigation": {
-        "tasks": "Tasks",
+        "tasksets": "Tasks",
         "docs": "Docs"
     },
     "docs": {

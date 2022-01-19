@@ -9,7 +9,7 @@ const NAV_ITEMS = [
     {
         id: 1,
         to: '/tasksets',
-        translationKey: 'navigation.tasks',
+        translationKey: 'navigation.tasksets',
         requireAuth: true
     },
     {

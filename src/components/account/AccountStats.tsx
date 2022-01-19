@@ -1,5 +1,5 @@
 import { FC } from 'react';
-import * as nearcrowd from '../../contracts/nearcrowd';
+import * as nearcrowd from '../../contracts/nearcrowd-v1';
 
 const Stat: FC<{
     value: number | string;

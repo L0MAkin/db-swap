@@ -5,7 +5,7 @@
         "logout": "Выйти"
     },
     "navigation": {
-        "tasks": "Мои задачи",
+        "tasksets": "Мои задачи",
         "docs": "Как это работает"
     },
     "docs": {
