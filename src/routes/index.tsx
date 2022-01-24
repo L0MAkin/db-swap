@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
 import { useWhitelistedContext } from '../hooks/useWhitelistedContext';
-import PageLayout from '../components/layouts/PageLayout';
+import PageLayout from '../components/layout/PageLayout';
 import LoginButton from '../components/login/LoginButton';
 
 function HomePage() {

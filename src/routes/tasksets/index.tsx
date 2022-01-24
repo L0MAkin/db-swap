@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import TasksetCard from '../../components/tasksets/TasksetCard';
-import PageLayout from '../../components/layouts/PageLayout';
+import PageLayout from '../../components/layout/PageLayout';
 import { fetchTasksetList, Taskset } from '../../services/tasksets';
 
 function TasksetSelectionPage() {
@@ -14,7 +14,12 @@ function TasksetSelectionPage() {
         }
 
         fetchTasksetsData();
-    });
+
+        return () => {
+            // cleanup
+            setTasksetList([]);
+        };
+    }, []);
 
     return (
         <PageLayout>

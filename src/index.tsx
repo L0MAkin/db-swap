@@ -7,7 +7,6 @@ import './styles/index.css';
 import { Buffer } from 'buffer';
 import App from './App/App';
 import { NearEnvironment, NearProvider } from 'react-near';
-import { WhitelistedProvider } from './contexts/WhitelistedContext';
 import { BrowserRouter } from 'react-router-dom';
 
 // NOTE: necessary fix for a client because `Buffer` object is used by 'near-api-js' lib.
@@ -16,11 +15,9 @@ global.Buffer = Buffer;
 ReactDOM.render(
     <React.StrictMode>
         <NearProvider environment={NearEnvironment.TestNet}>
-            <WhitelistedProvider>
-                <BrowserRouter>
-                    <App />
-                </BrowserRouter>
-            </WhitelistedProvider>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
         </NearProvider>
     </React.StrictMode>,
     document.getElementById('root')
