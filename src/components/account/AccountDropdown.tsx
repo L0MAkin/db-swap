@@ -15,9 +15,8 @@ const defaultAccountStats = {
 };
 
 function AccountDropdown() {
-    const wallet = useNearWallet()!;
+    const { contract, wallet } = useNearcrowdContract();
     const account = wallet.account();
-    const contract = useNearcrowdContract();
 
     const { whitelisted } = useWhitelistedContext();
 
