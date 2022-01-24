@@ -1,3 +1,5 @@
+import { sleep } from './api';
+
 export interface Taskset {
     id: string;
     name: string;
@@ -28,11 +30,15 @@ const TASKSET_MOCK_LIST: Taskset[] = [
 ];
 
 export async function fetchTasksetList(): Promise<Taskset[]> {
+    await sleep(300);
+
     return TASKSET_MOCK_LIST;
 }
 
 export async function fetchTaskset(
     tasksetId: string
 ): Promise<Taskset | undefined> {
+    await sleep(300);
+
     return TASKSET_MOCK_LIST.find((taskset) => taskset.id === tasksetId);
 }

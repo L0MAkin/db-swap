@@ -1,7 +1,6 @@
-// TODO: make v1 scope
-
 import { NearContract } from 'react-near/core/contract';
-import { useNearContract } from 'react-near';
+import { useNearContract, useNearWallet } from 'react-near';
+import { useCallback } from 'react';
 
 export const CONTRACT_ID = 'nearcrowd.testnet';
 export const VIEW_METHODS = [
@@ -9,8 +8,9 @@ export const VIEW_METHODS = [
     'get_account_stats',
     'get_account_state',
     'get_taskset_state',
-    'get_current_taskset',
-    'get_task_review_state'
+    'get_task_review_state',
+    'get_current_assignment',
+    'get_current_taskset'
 
     /* OTHER (defined in the original nearcrowd prototype) */
     // 'get_estimated_atto_tasks_per_share',
@@ -65,8 +65,8 @@ export interface TaskSetState {
     num_reviews: string;
 }
 
-interface Assignment {
-    task_hash: string;
+export interface Assignment {
+    task_hash: number[];
     ordinal: number;
 }
 
@@ -77,7 +77,7 @@ type AccountStateIdle = 'Idle';
 type AccountStateWaitsForAssignment = {
     WaitsForAssignment: {
         bid: string;
-        until: string;
+        time_left: string;
     };
 };
 
@@ -95,26 +95,96 @@ export type AccountState =
     | AccountStateWaitsForAssignment
     | AccountStateHasAssignment;
 
-export type NEARCrowdContract = NearContract & {
-    // TODO: describe all the methods of the contract
+export function isAccountStateIdle(
+    state: AccountState
+): state is AccountStateIdle {
+    return typeof state === 'string' && state === 'Idle';
+}
 
+export function isAccountNonExistent(
+    state: AccountState
+): state is AccountStateNonExistent {
+    return typeof state === 'string' && state === 'NonExistent';
+}
+
+export function isAccountStateWaitsForAssignment(
+    state: AccountState
+): state is AccountStateWaitsForAssignment {
+    return (
+        typeof state === 'object' && state.hasOwnProperty('WaitsForAssignment')
+    );
+}
+
+export function isAccountStateHasAssignment(
+    state: AccountState
+): state is AccountStateHasAssignment {
+    return typeof state === 'object' && state.hasOwnProperty('HasAssignment');
+}
+
+export type NEARCrowdContract = NearContract & {
     is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
     is_account_banned(args: { account_id: string }): Promise<boolean>;
     get_account_stats(args: { account_id: string }): Promise<AccountStats>;
 
-    change_taskset(args: { new_task_ord: number }): Promise<boolean>;
-    apply_for_assignment(args: { task_ordinal: number }): Promise<boolean>;
-    // claim_assignment(args: { ? }): Promise<>;
     get_account_state(args: {
         account_id: string;
         task_ordinal: number;
     }): Promise<AccountState>;
+
+    change_taskset(args: { new_task_ord: number }): Promise<string>;
     get_taskset_state(args: { task_ordinal: number }): Promise<TaskSetState>;
+    apply_for_assignment(args: { task_ordinal: number }): Promise<string>;
+    claim_assignment(args: {
+        task_ordinal: number;
+        bid: string;
+    }): Promise<boolean>;
+    get_current_assignment(args: {
+        account_id: string;
+        task_ordinal: number;
+    }): Promise<Assignment | null>;
+    get_current_taskset(args: { account_id: string }): Promise<number>;
 };
 
 export function useNearcrowdContract() {
-    return useNearContract(CONTRACT_ID, {
+    // should be used after wallet initialization
+
+    const wallet = useNearWallet()!;
+    const { accountId } = wallet.account();
+
+    const contract = useNearContract(CONTRACT_ID, {
         viewMethods: VIEW_METHODS,
         changeMethods: CHANGE_METHODS
     }) as NEARCrowdContract;
+
+    // Wrapped methods
+    const isAccountWhitelisted = useCallback(() => {
+        return contract.is_account_whitelisted({
+            account_id: accountId
+        });
+    }, [accountId, contract]);
+
+    const getAccountStats = useCallback(() => {
+        return contract.get_account_stats({
+            account_id: accountId
+        });
+    }, [accountId, contract]);
+
+    const getAccountState = useCallback(
+        (tasksetOrdinal: number) => {
+            return contract.get_account_state({
+                account_id: accountId,
+                task_ordinal: tasksetOrdinal
+            });
+        },
+        [accountId, contract]
+    );
+
+    return {
+        contract,
+        wallet,
+
+        isAccountWhitelisted,
+        getAccountStats,
+        getAccountState
+    };
 }

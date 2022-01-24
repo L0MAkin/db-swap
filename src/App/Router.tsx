@@ -1,9 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import {
-    WalletAuthorizedProtectedRoutes,
-    WhitelistProtectedRoutes
-} from './Protected';
+import Protected from './Protected';
 
 import DevPage from '../routes/dev';
 import HomePage from '../routes/index';
@@ -21,14 +18,14 @@ function Router() {
             <Route path="docs" element={<DocsPage />} />
 
             {/* wallet authorized routing */}
-            <Route element={<WalletAuthorizedProtectedRoutes />}>
+            <Route element={<Protected.WalletAuthorized />}>
                 {isDev && <Route path="dev" element={<DevPage />} />}
 
                 {/* account whitelisted routing */}
-                <Route element={<WhitelistProtectedRoutes />}>
+                <Route element={<Protected.Whitelisted />}>
                     <Route path="tasksets">
                         <Route index element={<TasksetSelectionPage />} />
-                        <Route path=":tasksetId" element={<TasksetPage />} />
+                        <Route path=":id" element={<TasksetPage />} />
                     </Route>
                 </Route>
             </Route>
