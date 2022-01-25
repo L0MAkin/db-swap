@@ -1,22 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import TasksetCard from '../../components/tasksets/TasksetCard';
 import PageLayout from '../../components/layout/PageLayout';
-import { fetchTasksetList, Taskset } from '../../services/tasksets';
+import { fetchTasksetList } from '../../services/tasksets';
+import { useRecoilState } from 'recoil';
+import { tasksetListState } from '../../state/taskset';
 
 function TasksetListPage() {
-    const [tasksetList, setTasksetList] = useState<Taskset[]>([]);
+    const [tasksetList, setTasksetList] = useRecoilState(tasksetListState);
 
     useEffect(() => {
         async function fetchTasksetsData() {
             const list = await fetchTasksetList();
-
             setTasksetList(list);
         }
 
-        fetchTasksetsData();
+        fetchTasksetsData().catch(console.error);
 
+        // cleanup
         return () => {
-            // cleanup
             setTasksetList([]);
         };
     }, []);
