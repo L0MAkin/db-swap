@@ -19,7 +19,7 @@ function AccountDropdown() {
 
     const { account } = useWorkerContext();
 
-    const [accountStats, setAccountStats] = useState<nearcrowd.AccountStats>(defaultAccountStats);
+    const [accountStats, setAccountStats] = useState<nearcrowd.AccountStatsOnChain>(defaultAccountStats);
 
     useEffect(() => {
         async function callGetAccountStats() {

@@ -50,7 +50,7 @@ export const CHANGE_METHODS = [
     // 'push_queue'
 ];
 
-export interface AccountStats {
+export interface AccountStatsOnChain {
     balance: string;
     successful: number;
     failed: number;
@@ -58,14 +58,14 @@ export interface AccountStats {
     invites?: number;
 }
 
-export interface TaskSetState {
+export interface TasksetStateOnChain {
     next_price: string;
     wait_time: string;
     num_unassigned: string;
     num_reviews: string;
 }
 
-export interface Assignment {
+export interface AssignmentOnChain {
     task_hash: number[];
     ordinal: number;
 }
@@ -83,46 +83,46 @@ type AccountStateWaitsForAssignment = {
 
 type AccountStateHasAssignment = {
     HasAssignment: {
-        assignment: Assignment;
+        assignment: AssignmentOnChain;
         bid: string;
         since: string;
     };
 };
 
-export type AccountState =
+export type AccountStateOnChain =
     | AccountStateNonExistent
     | AccountStateIdle
     | AccountStateWaitsForAssignment
     | AccountStateHasAssignment;
 
-export function isAccountStateIdle(state: AccountState): state is AccountStateIdle {
+export function isAccountStateIdle(state: AccountStateOnChain): state is AccountStateIdle {
     return typeof state === 'string' && state === 'Idle';
 }
 
-export function isAccountNonExistent(state: AccountState): state is AccountStateNonExistent {
+export function isAccountNonExistent(state: AccountStateOnChain): state is AccountStateNonExistent {
     return typeof state === 'string' && state === 'NonExistent';
 }
 
-export function isAccountStateWaitsForAssignment(state: AccountState): state is AccountStateWaitsForAssignment {
+export function isAccountStateWaitsForAssignment(state: AccountStateOnChain): state is AccountStateWaitsForAssignment {
     return typeof state === 'object' && state.hasOwnProperty('WaitsForAssignment');
 }
 
-export function isAccountStateHasAssignment(state: AccountState): state is AccountStateHasAssignment {
+export function isAccountStateHasAssignment(state: AccountStateOnChain): state is AccountStateHasAssignment {
     return typeof state === 'object' && state.hasOwnProperty('HasAssignment');
 }
 
 export type NEARCrowdContract = NearContract & {
     is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
     is_account_banned(args: { account_id: string }): Promise<boolean>;
-    get_account_stats(args: { account_id: string }): Promise<AccountStats>;
+    get_account_stats(args: { account_id: string }): Promise<AccountStatsOnChain>;
 
-    get_account_state(args: { account_id: string; task_ordinal?: number }): Promise<AccountState>;
+    get_account_state(args: { account_id: string; task_ordinal?: number }): Promise<AccountStateOnChain>;
 
     change_taskset(args: { new_task_ord: number }): Promise<string>;
-    get_taskset_state(args: { task_ordinal: number }): Promise<TaskSetState>;
+    get_taskset_state(args: { task_ordinal: number }): Promise<TasksetStateOnChain>;
     apply_for_assignment(args: { task_ordinal: number }): Promise<string>;
     claim_assignment(args: { task_ordinal: number; bid: string }): Promise<boolean>;
-    get_current_assignment(args: { account_id: string; task_ordinal: number }): Promise<Assignment | null>;
+    get_current_assignment(args: { account_id: string; task_ordinal: number }): Promise<AssignmentOnChain | null>;
     get_current_taskset(args: { account_id: string }): Promise<number>;
 };
 
@@ -179,6 +179,15 @@ export function useNearcrowdContract() {
         contract,
         wallet,
 
+        methods: {
+            isAccountWhitelisted,
+            getAccountStats,
+            getAccountState,
+            getCurrentTaskset,
+            getCurrentAssignment
+        },
+
+        // TODO: remove this
         isAccountWhitelisted,
         getAccountStats,
         getAccountState,

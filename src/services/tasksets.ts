@@ -1,43 +1,35 @@
 import { sleep } from './api';
 
-export interface Taskset {
-    id: string;
+export interface TasksetDTO {
+    id: number;
     name: string;
-    ordinal: number;
-    reward: number;
     description: string;
     requirements: string;
 }
 
-const TASKSET_MOCK_LIST: Taskset[] = [
+const TASKSET_MOCK_LIST: TasksetDTO[] = [
     {
-        id: 'uuid-1',
+        id: 0,
         name: 'Localized Narratives',
         description: '...',
-        ordinal: 0,
-        reward: 0.04,
         requirements: ''
     },
     {
-        id: 'uuid-2',
+        id: 1,
         name: 'Simple Puzzles',
         description: '...',
-        ordinal: 1,
-        reward: 0.07,
         requirements:
             'Ability to create simple colored images (either paper with pensils and a phone camera, or knowledge of how to use image processing software)'
     }
 ];
 
-export async function fetchTasksetList(): Promise<Taskset[]> {
+export async function fetchTasksetList(): Promise<TasksetDTO[]> {
     await sleep(300);
 
     return TASKSET_MOCK_LIST;
 }
 
-export async function fetchTaskset(
-    tasksetId: string
-): Promise<Taskset | undefined> {
+export async function fetchTaskset(tasksetId: number): Promise<TasksetDTO | undefined> {
     await sleep(300);
 
     return TASKSET_MOCK_LIST.find((taskset) => taskset.id === tasksetId);
