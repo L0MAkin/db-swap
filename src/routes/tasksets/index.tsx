@@ -3,7 +3,7 @@ import TasksetCard from '../../components/tasksets/TasksetCard';
 import PageLayout from '../../components/layout/PageLayout';
 import { fetchTasksetList, Taskset } from '../../services/tasksets';
 
-function TasksetSelectionPage() {
+function TasksetListPage() {
     const [tasksetList, setTasksetList] = useState<Taskset[]>([]);
 
     useEffect(() => {
@@ -34,4 +34,4 @@ function TasksetSelectionPage() {
     );
 }
 
-export default TasksetSelectionPage;
+export default TasksetListPage;

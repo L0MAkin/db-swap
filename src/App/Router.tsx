@@ -7,7 +7,7 @@ import HomePage from '../routes/index';
 import DocsPage from '../routes/docs';
 import NotFoundPage from '../routes/404';
 import TasksetPage from '../routes/tasksets/id';
-import TasksetSelectionPage from '../routes/tasksets/index';
+import TasksetListPage from '../routes/tasksets/index';
 
 function Router() {
     const isDev = process.env.NODE_ENV === 'development';
@@ -24,7 +24,7 @@ function Router() {
                 {/* account whitelisted routing */}
                 <Route element={<Protected.Whitelisted />}>
                     <Route path="tasksets">
-                        <Route index element={<TasksetSelectionPage />} />
+                        <Route index element={<TasksetListPage />} />
                         <Route path=":id" element={<TasksetPage />} />
                     </Route>
                 </Route>

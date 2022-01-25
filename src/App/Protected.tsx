@@ -1,16 +1,16 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useWhitelistedContext } from '../hooks/useWhitelistedContext';
 import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
 import Loader from './Loader';
+import { useWorkerContext } from '../contexts/Worker';
 
 function Whitelisted() {
-    const { whitelisted, whitelistChecked } = useWhitelistedContext();
+    const { account } = useWorkerContext();
 
-    if (!whitelistChecked) {
+    if (account.whitelisted === null) {
         return <Loader />;
     }
 
-    return whitelisted ? <Outlet /> : <Navigate to="/" />;
+    return account.whitelisted ? <Outlet /> : <Navigate to="/" />;
 }
 
 function WalletAuthorized() {

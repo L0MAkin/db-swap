@@ -1,12 +1,11 @@
 import { Fragment, useEffect, useState } from 'react';
-import { useNearWallet } from 'react-near';
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import LogoutButton from './LogoutButton';
 import AccountStats from './AccountStats';
 import { useNearcrowdContract } from '../../contracts/nearcrowd-v1';
 import * as nearcrowd from '../../contracts/nearcrowd-v1';
-import { useWhitelistedContext } from '../../hooks/useWhitelistedContext';
+import { useWorkerContext } from '../../contexts/Worker';
 
 const defaultAccountStats = {
     balance: '0',
@@ -16,23 +15,22 @@ const defaultAccountStats = {
 
 function AccountDropdown() {
     const { contract, wallet } = useNearcrowdContract();
-    const account = wallet.account();
+    const { accountId } = wallet.account();
 
-    const { whitelisted } = useWhitelistedContext();
+    const { account } = useWorkerContext();
 
-    const [accountStats, setAccountStats] =
-        useState<nearcrowd.AccountStats>(defaultAccountStats);
+    const [accountStats, setAccountStats] = useState<nearcrowd.AccountStats>(defaultAccountStats);
 
     useEffect(() => {
         async function callGetAccountStats() {
             const stats = await contract.get_account_stats({
-                account_id: account.accountId
+                account_id: accountId
             });
 
             setAccountStats(stats);
         }
 
-        if (whitelisted) {
+        if (account.whitelisted) {
             callGetAccountStats();
         }
 
@@ -40,7 +38,7 @@ function AccountDropdown() {
             // cleanup
             setAccountStats(defaultAccountStats);
         };
-    }, [account, contract, whitelisted]);
+    }, [accountId, contract, account.whitelisted]);
 
     // TODO: ui for not whitelisted account
 
@@ -57,8 +55,8 @@ function AccountDropdown() {
                             space-x-2"
                     >
                         <UserCircleIcon className="w-5 h-5" />
-                        <span>{account.accountId}</span>
-                        {!whitelisted && <span>| not whitelisted</span>}
+                        <span>{accountId}</span>
+                        {!account.whitelisted && <span>| not whitelisted</span>}
                     </Popover.Button>
 
                     <Transition

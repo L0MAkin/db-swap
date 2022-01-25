@@ -95,29 +95,19 @@ export type AccountState =
     | AccountStateWaitsForAssignment
     | AccountStateHasAssignment;
 
-export function isAccountStateIdle(
-    state: AccountState
-): state is AccountStateIdle {
+export function isAccountStateIdle(state: AccountState): state is AccountStateIdle {
     return typeof state === 'string' && state === 'Idle';
 }
 
-export function isAccountNonExistent(
-    state: AccountState
-): state is AccountStateNonExistent {
+export function isAccountNonExistent(state: AccountState): state is AccountStateNonExistent {
     return typeof state === 'string' && state === 'NonExistent';
 }
 
-export function isAccountStateWaitsForAssignment(
-    state: AccountState
-): state is AccountStateWaitsForAssignment {
-    return (
-        typeof state === 'object' && state.hasOwnProperty('WaitsForAssignment')
-    );
+export function isAccountStateWaitsForAssignment(state: AccountState): state is AccountStateWaitsForAssignment {
+    return typeof state === 'object' && state.hasOwnProperty('WaitsForAssignment');
 }
 
-export function isAccountStateHasAssignment(
-    state: AccountState
-): state is AccountStateHasAssignment {
+export function isAccountStateHasAssignment(state: AccountState): state is AccountStateHasAssignment {
     return typeof state === 'object' && state.hasOwnProperty('HasAssignment');
 }
 
@@ -126,30 +116,20 @@ export type NEARCrowdContract = NearContract & {
     is_account_banned(args: { account_id: string }): Promise<boolean>;
     get_account_stats(args: { account_id: string }): Promise<AccountStats>;
 
-    get_account_state(args: {
-        account_id: string;
-        task_ordinal: number;
-    }): Promise<AccountState>;
+    get_account_state(args: { account_id: string; task_ordinal?: number }): Promise<AccountState>;
 
     change_taskset(args: { new_task_ord: number }): Promise<string>;
     get_taskset_state(args: { task_ordinal: number }): Promise<TaskSetState>;
     apply_for_assignment(args: { task_ordinal: number }): Promise<string>;
-    claim_assignment(args: {
-        task_ordinal: number;
-        bid: string;
-    }): Promise<boolean>;
-    get_current_assignment(args: {
-        account_id: string;
-        task_ordinal: number;
-    }): Promise<Assignment | null>;
+    claim_assignment(args: { task_ordinal: number; bid: string }): Promise<boolean>;
+    get_current_assignment(args: { account_id: string; task_ordinal: number }): Promise<Assignment | null>;
     get_current_taskset(args: { account_id: string }): Promise<number>;
 };
 
 export function useNearcrowdContract() {
     // should be used after wallet initialization
-
     const wallet = useNearWallet()!;
-    const { accountId } = wallet.account();
+    const accountId = wallet ? wallet.getAccountId() : '';
 
     const contract = useNearContract(CONTRACT_ID, {
         viewMethods: VIEW_METHODS,
@@ -170,10 +150,26 @@ export function useNearcrowdContract() {
     }, [accountId, contract]);
 
     const getAccountState = useCallback(
-        (tasksetOrdinal: number) => {
+        (tasksetOrdinal?: number) => {
             return contract.get_account_state({
                 account_id: accountId,
                 task_ordinal: tasksetOrdinal
+            });
+        },
+        [accountId, contract]
+    );
+
+    const getCurrentTaskset = useCallback(() => {
+        return contract.get_current_taskset({
+            account_id: accountId
+        });
+    }, [accountId, contract]);
+
+    const getCurrentAssignment = useCallback(
+        (tasksetOrdinal: number) => {
+            return contract.get_current_assignment({
+                task_ordinal: tasksetOrdinal,
+                account_id: accountId
             });
         },
         [accountId, contract]
@@ -185,6 +181,8 @@ export function useNearcrowdContract() {
 
         isAccountWhitelisted,
         getAccountStats,
-        getAccountState
+        getAccountState,
+        getCurrentTaskset,
+        getCurrentAssignment
     };
 }
