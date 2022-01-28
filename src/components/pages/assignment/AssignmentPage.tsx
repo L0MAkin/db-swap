@@ -1,47 +1,33 @@
-import PageLayout from '../components/layout/PageLayout';
+import PageLayout from '../../layout/PageLayout';
 import { useCallback, useEffect, useState } from 'react';
-import { useAccountState } from '../hooks/useAccountState';
-import { useCurrentTaskset } from '../hooks/useCurrentTaskset';
-import CustomButton from '../components/shared/CustomButton';
+import { useAccountState } from '../../../hooks/useAccountState';
+import { useCurrentTaskset } from '../../../hooks/useCurrentTaskset';
+import CustomButton from '../../shared/CustomButton';
 import { Link } from 'react-router-dom';
-import { fetchTask } from '../services/tasks';
-import { useRecoilState } from 'recoil';
-import { currentTaskAtom } from '../state/task';
+import { api } from '../../../services/api';
+import { atom, useRecoilState } from 'recoil';
+import { TaskDTO } from '../../../services/api/tasks';
 
-//  if (has assignment)
-//      fetch current task and show it
-//  if (waits for assignment)
-//      show [claim assignment] button
-//  if (idle)
-//      show [apply for assignment] button
-//  if (non existent)
-//
+export const currentTaskAtom = atom<TaskDTO | null>({
+    key: 'currentTaskAtom',
+    default: null
+});
 
 function AssignmentPage() {
-    const { currentTaskset, fetchCurrentTaskset } = useCurrentTaskset();
-    const { taskHash, accountStateEnum, fetchAccountState } = useAccountState();
+    const { currentTaskset } = useCurrentTaskset(true);
+    const { assignmentHash, accountStateEnum } = useAccountState(true);
+    // todo: useCurrentAssignment
+    const [currentTask, setCurrentTask] = useRecoilState(currentTaskAtom);
 
     const [loading, setLoading] = useState<boolean>(false);
-    const [currnetTask, setCurrentTask] = useRecoilState(currentTaskAtom);
-    // const { currentTask, fetchCurrentTask } = useTask();
-
-    useEffect(() => {
-        fetchCurrentTaskset().catch(console.error);
-    }, []);
-
-    useEffect(() => {
-        if (currentTaskset) {
-            fetchAccountState(currentTaskset.id).catch(console.error);
-        }
-    }, [currentTaskset]);
 
     const fetchCurrentTask = useCallback(async () => {
-        if (!taskHash) return;
+        if (!assignmentHash) return;
 
-        const task = await fetchTask(taskHash);
+        const task = await api.tasks.fetchTask(assignmentHash);
 
         setCurrentTask(task);
-    }, [taskHash]);
+    }, [assignmentHash]);
 
     useEffect(() => {
         if (accountStateEnum === 'TaskAssigned') {
@@ -80,7 +66,7 @@ function AssignmentPage() {
     function Assignment() {
         return (
             <div>
-                <code>{JSON.stringify(currnetTask)}</code>s
+                <code>{JSON.stringify(currentTask)}</code>
             </div>
         );
     }
@@ -88,6 +74,7 @@ function AssignmentPage() {
     function Content() {
         return (
             <div className="flex flex-col items-center outline rounded p-3">
+                {accountStateEnum === null && <div>...</div>}
                 {accountStateEnum === 'TasksetNotSelected' && <SelectTasksetMessage />}
                 {accountStateEnum === 'TasksetSelected' && <ApplyForAssignment />}
                 {accountStateEnum === 'WaitingForTaskAssignment' && <div>Claiming & Fetching task...</div>}

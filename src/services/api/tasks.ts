@@ -1,4 +1,4 @@
-import { sleep } from './api';
+import { sleep } from '../../utils/sleep';
 
 export interface TaskDTO {
     hash: string;

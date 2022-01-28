@@ -1,8 +1,9 @@
-import { NearContract } from 'react-near/core/contract';
 import { useNearContract, useNearWallet } from 'react-near';
 import { useCallback } from 'react';
+import { NEARCrowdContract, OnChain } from './contract';
 
 export const CONTRACT_ID = 'nearcrowd.testnet';
+
 export const VIEW_METHODS = [
     'is_account_whitelisted',
     'get_account_stats',
@@ -50,84 +51,28 @@ export const CHANGE_METHODS = [
     // 'push_queue'
 ];
 
-export interface AccountStatsOnChain {
-    balance: string;
-    successful: number;
-    failed: number;
-    pending?: number;
-    invites?: number;
-}
-
-export interface TasksetStateOnChain {
-    next_price: string;
-    wait_time: string;
-    num_unassigned: string;
-    num_reviews: string;
-}
-
-export interface AssignmentOnChain {
-    task_hash: number[];
-    ordinal: number;
-}
-
-type AccountStateNonExistent = 'NonExistent';
-
-type AccountStateIdle = 'Idle';
-
-type AccountStateWaitsForAssignment = {
-    WaitsForAssignment: {
-        bid: string;
-        time_left: string;
-    };
-};
-
-type AccountStateHasAssignment = {
-    HasAssignment: {
-        assignment: AssignmentOnChain;
-        bid: string;
-        since: string;
-    };
-};
-
-export type AccountStateOnChain =
-    | AccountStateNonExistent
-    | AccountStateIdle
-    | AccountStateWaitsForAssignment
-    | AccountStateHasAssignment;
-
-export function isAccountStateIdle(state: AccountStateOnChain): state is AccountStateIdle {
+export function isAccountStateIdle(state: OnChain.AccountState): state is OnChain.AccountStateIdle {
     return typeof state === 'string' && state === 'Idle';
 }
 
-export function isAccountStateNonExistent(state: AccountStateOnChain): state is AccountStateNonExistent {
+export function isAccountStateNonExistent(state: OnChain.AccountState): state is OnChain.AccountStateNonExistent {
     return typeof state === 'string' && state === 'NonExistent';
 }
 
-export function isAccountStateWaitsForAssignment(state: AccountStateOnChain): state is AccountStateWaitsForAssignment {
+export function isAccountStateWaitsForAssignment(
+    state: OnChain.AccountState
+): state is OnChain.AccountStateWaitsForAssignment {
     return typeof state === 'object' && state.hasOwnProperty('WaitsForAssignment');
 }
 
-export function isAccountStateHasAssignment(state: AccountStateOnChain): state is AccountStateHasAssignment {
+export function isAccountStateHasAssignment(state: OnChain.AccountState): state is OnChain.AccountStateHasAssignment {
     return typeof state === 'object' && state.hasOwnProperty('HasAssignment');
 }
 
-export type NEARCrowdContract = NearContract & {
-    is_account_whitelisted(args: { account_id: string }): Promise<boolean>;
-    is_account_banned(args: { account_id: string }): Promise<boolean>;
-    get_account_stats(args: { account_id: string }): Promise<AccountStatsOnChain>;
-
-    get_account_state(args: { account_id: string; task_ordinal?: number }): Promise<AccountStateOnChain>;
-
-    change_taskset(args: { new_task_ord: number }): Promise<string>;
-    get_taskset_state(args: { task_ordinal: number }): Promise<TasksetStateOnChain>;
-    apply_for_assignment(args: { task_ordinal: number }): Promise<string>;
-    claim_assignment(args: { task_ordinal: number; bid: string }): Promise<boolean>;
-    get_current_assignment(args: { account_id: string; task_ordinal: number }): Promise<AssignmentOnChain | null>;
-    get_current_taskset(args: { account_id: string }): Promise<number>;
-};
-
+/**
+ * NOTE: This hook should be used after wallet initialization and user authorization!
+ */
 export function useNearcrowdContract() {
-    // should be used after wallet initialization
     const wallet = useNearWallet()!;
     const accountId = wallet ? wallet.getAccountId() : '';
 
@@ -216,14 +161,6 @@ export function useNearcrowdContract() {
             changeCurrentTaskset,
             claimAssignment,
             applyForAssignment
-        },
-
-        // TODO: remove this
-        isAccountWhitelisted,
-        getAccountStats,
-        getAccountState,
-        getCurrentTaskset,
-        getCurrentAssignment,
-        changeCurrentTaskset
+        }
     };
 }

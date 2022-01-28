@@ -1,35 +1,98 @@
-import { useNearcrowdContract } from '../contracts/nearcrowd-v1';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { ocs } from '../state/on-chain';
-import { useCallback } from 'react';
+import {
+    isAccountStateHasAssignment,
+    isAccountStateIdle,
+    isAccountStateNonExistent,
+    isAccountStateWaitsForAssignment,
+    useNearcrowdContract
+} from '../contracts/nearcrowd/useNearcrowdContract';
+import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
+import { useCallback, useEffect } from 'react';
+import { OnChain } from '../contracts/nearcrowd/contract';
+
+export const accountStateAtom = atom<OnChain.AccountState | null>({
+    key: 'accountStateAtom',
+    default: null
+});
+
+enum AccountStateEnum {
+    TasksetNotSelected = 'TasksetNotSelected',
+    TasksetSelected = 'TasksetSelected',
+    WaitingForTaskAssignment = 'WaitingForTaskAssignment',
+    TaskAssigned = 'TaskAssigned'
+}
+
+export const accountStateEnumSelector = selector<AccountStateEnum | null>({
+    key: 'accountStateEnumSelector',
+    get: ({ get }) => {
+        const state = get(accountStateAtom);
+
+        if (state === null) return null;
+
+        if (isAccountStateNonExistent(state)) {
+            return AccountStateEnum.TasksetNotSelected;
+        }
+
+        if (isAccountStateIdle(state)) {
+            return AccountStateEnum.TasksetSelected;
+        }
+
+        if (isAccountStateWaitsForAssignment(state)) {
+            return AccountStateEnum.WaitingForTaskAssignment;
+        }
+
+        if (isAccountStateHasAssignment(state)) {
+            return AccountStateEnum.TaskAssigned;
+        }
+
+        return null;
+    }
+});
+
+export const assignmentHashSelector = selector<string | null>({
+    key: 'assignmentHashSelector',
+    get: ({ get }) => {
+        const s = get(accountStateAtom);
+
+        if (s && isAccountStateHasAssignment(s)) {
+            return s.HasAssignment.assignment.task_hash.join('');
+        }
+
+        return null;
+    }
+});
 
 /**
  * Hook logic for current assignment and account state.
  *
- * NOTE: Account state is bound to the currently selected taskset.
+ * NOTE: Account state is bound to the currently selected tasksets.
  */
-export function useAccountState() {
+export function useAccountState(fetchOnUsage = false) {
     const { methods } = useNearcrowdContract();
 
-    // on-chain state
-    const [accountState, setAccountState] = useRecoilState(ocs.accountStateAtom);
+    const [accountState, setAccountState] = useRecoilState(accountStateAtom);
 
-    // selectors
-    const taskHash = useRecoilValue(ocs.assignmentTaskHashSelector);
-    const accountStateEnum = useRecoilValue(ocs.accountStateEnumSelector);
+    const assignmentHash = useRecoilValue(assignmentHashSelector);
+    const accountStateEnum = useRecoilValue(accountStateEnumSelector);
 
-    const fetchAccountState = useCallback(
-        async (currentTasksetId: number) => {
-            const data = await methods.getAccountState(currentTasksetId);
+    const fetchAccountState = useCallback(async () => {
+        const currentTasksetOrdinal = await methods.getCurrentTaskset();
+        const result = await methods.getAccountState(currentTasksetOrdinal);
 
-            setAccountState(data);
-        },
-        [methods]
-    );
+        setAccountState(result);
+    }, [methods]);
+
+    // fetch once on usage
+    useEffect(() => {
+        if (!fetchOnUsage) {
+            return;
+        }
+
+        fetchAccountState().catch(console.error);
+    }, []);
 
     return {
         accountStateEnum,
-        taskHash,
+        assignmentHash,
 
         fetchAccountState
     };

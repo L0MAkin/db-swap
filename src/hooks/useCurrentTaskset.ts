@@ -1,22 +1,21 @@
-import { useNearcrowdContract } from '../contracts/nearcrowd-v1';
-import { useRecoilState } from 'recoil';
-import { currentTasksetState } from '../state/taskset';
-import { useCallback } from 'react';
-import { fetchTopic } from '../services/topics';
-import { currentTaskAtom } from '../state/task';
+import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContract';
+import { atom, useRecoilState } from 'recoil';
+import { useCallback, useEffect } from 'react';
+import { api } from '../services/api';
+import { TopicDTO } from '../services/api/topics';
 
-export function useCurrentTaskset() {
+const currentTasksetAtom = atom<TopicDTO | null>({
+    key: 'currentTasksetAtom',
+    default: null
+});
+
+export function useCurrentTaskset(fetchOnUsage = false) {
     const { methods } = useNearcrowdContract();
-    const [currentTaskset, setCurrentTaskset] = useRecoilState(currentTasksetState);
-    const [currentTask, setCurrentTask] = useRecoilState(currentTaskAtom);
-
-    const getCurrentTasksetId = useCallback(async () => {
-        return methods.getCurrentTaskset();
-    }, [methods]);
+    const [currentTaskset, setCurrentTaskset] = useRecoilState(currentTasksetAtom);
 
     const fetchCurrentTaskset = useCallback(async () => {
         const ordinal = await methods.getCurrentTaskset();
-        const data = await fetchTopic(ordinal);
+        const data = await api.topics.fetchTopic(ordinal);
 
         if (data) {
             setCurrentTaskset(data);
@@ -25,19 +24,18 @@ export function useCurrentTaskset() {
         return data;
     }, [methods]);
 
-    // const fetchCurrentTask = useCallback(async () => {
-    //     const ordinal = await methods.getCurrentTaskset();
-    //     const assignment = await methods.getCurrentAssignment(ordinal);
-    //
-    //     if (assignment) {
-    //         setCurrentTask(data);
-    //     }
-    // }, [methods]);
+    // fetch once on usage
+    useEffect(() => {
+        if (!fetchOnUsage) {
+            return;
+        }
+
+        fetchCurrentTaskset().catch(console.error);
+    }, []);
 
     return {
         currentTaskset,
 
-        getCurrentTasksetId,
         fetchCurrentTaskset
     };
 }

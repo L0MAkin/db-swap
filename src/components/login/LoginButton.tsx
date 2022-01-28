@@ -2,7 +2,7 @@ import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../shared/CustomButton';
 import logo from '../../assets/images/near-logo.png';
-import { CONTRACT_ID } from '../../contracts/nearcrowd-v1';
+import { CONTRACT_ID } from '../../contracts/nearcrowd/useNearcrowdContract';
 
 function LoginButton() {
     const wallet = useNearWallet()!;

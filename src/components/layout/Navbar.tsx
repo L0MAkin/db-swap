@@ -2,8 +2,8 @@ import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import LoginButton from '../login/LoginButton';
-import AccountDropdown from '../account/AccountDropdown';
-import { useWalletAuthorized } from '../../hooks/useWalletAuthorized';
+import Dropdown from './account/Dropdown';
+import { useAuthorized } from '../../hooks/useAuthorized';
 
 const NAV_ITEMS = [
     {
@@ -21,7 +21,7 @@ const NAV_ITEMS = [
 ];
 
 const Navbar: FC = () => {
-    const { authorized } = useWalletAuthorized();
+    const { authorized } = useAuthorized();
     const { t } = useTranslation();
 
     return (
@@ -39,7 +39,7 @@ const Navbar: FC = () => {
 
             {!authorized && <LoginButton />}
 
-            {authorized && <AccountDropdown />}
+            {authorized && <Dropdown />}
         </nav>
     );
 };

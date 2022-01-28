@@ -1,6 +1,6 @@
 import { FC } from 'react';
-import * as nearcrowd from '../../contracts/nearcrowd-v1';
 import { utils } from 'near-api-js';
+import { OnChain } from '../../../contracts/nearcrowd/contract';
 
 const Stat: FC<{
     value: number | string;
@@ -17,7 +17,7 @@ const Stat: FC<{
     );
 };
 
-const AccountStats: FC<{ stats: nearcrowd.AccountStatsOnChain }> = ({ stats }) => {
+const Stats: FC<{ stats: OnChain.AccountStats }> = ({ stats }) => {
     return (
         <div className="space-y-2">
             <Stat title="Successful tasks" value={stats.successful} />
@@ -32,4 +32,4 @@ const AccountStats: FC<{ stats: nearcrowd.AccountStatsOnChain }> = ({ stats }) =
     );
 };
 
-export default AccountStats;
+export default Stats;

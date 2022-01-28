@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom';
-import PageLayout from '../components/layout/PageLayout';
-import LoginButton from '../components/login/LoginButton';
-import { useWorkerContext } from '../contexts/Worker';
+import PageLayout from '../../layout/PageLayout';
+import LoginButton from '../../login/LoginButton';
+import { useAuthorized } from '../../../hooks/useAuthorized';
+import { useWhitelisted } from '../../../hooks/useWhitelisted';
 
 function HomePage() {
-    const { account, authorized } = useWorkerContext();
+    const { authorized } = useAuthorized();
+    const { whitelisted } = useWhitelisted();
 
-    const invited = authorized && account.whitelisted;
-    const notInvited = authorized && !account.whitelisted;
+    const invited = authorized && whitelisted;
+    const notInvited = authorized && !whitelisted;
 
     return (
         <PageLayout>
