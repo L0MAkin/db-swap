@@ -15,7 +15,7 @@ export const currentTaskAtom = atom<TaskDTO | null>({
 
 function AssignmentPage() {
     const { currentTaskset } = useCurrentTaskset(true);
-    const { assignmentHash, accountStateEnum } = useAccountState(true);
+    const { assignmentHash, isAccountState } = useAccountState(true);
     // todo: useCurrentAssignment
     const [currentTask, setCurrentTask] = useRecoilState(currentTaskAtom);
 
@@ -30,16 +30,16 @@ function AssignmentPage() {
     }, [assignmentHash]);
 
     useEffect(() => {
-        if (accountStateEnum === 'TaskAssigned') {
+        if (isAccountState?.hasAssignment) {
             fetchCurrentTask().catch(console.error);
         }
 
-        if (accountStateEnum === 'WaitingForTaskAssignment') {
+        if (isAccountState?.waitsForAssignment) {
             console.log('claiming task');
         }
-    }, [accountStateEnum]);
+    }, [isAccountState]);
 
-    console.log({ accountStateEnum, currentTaskset });
+    console.log({ currentTaskset, isAccountState });
 
     // components
     function SelectTasksetMessage() {
@@ -74,11 +74,11 @@ function AssignmentPage() {
     function Content() {
         return (
             <div className="flex flex-col items-center outline rounded p-3">
-                {accountStateEnum === null && <div>...</div>}
-                {accountStateEnum === 'TasksetNotSelected' && <SelectTasksetMessage />}
-                {accountStateEnum === 'TasksetSelected' && <ApplyForAssignment />}
-                {accountStateEnum === 'WaitingForTaskAssignment' && <div>Claiming & Fetching task...</div>}
-                {accountStateEnum === 'TaskAssigned' && <Assignment />}
+                {isAccountState === null && <div>...</div>}
+                {isAccountState?.nonExistent && <SelectTasksetMessage />}
+                {isAccountState?.idle && <ApplyForAssignment />}
+                {isAccountState?.waitsForAssignment && <div>Claiming & Fetching task...</div>}
+                {isAccountState?.hasAssignment && <Assignment />}
             </div>
         );
     }
