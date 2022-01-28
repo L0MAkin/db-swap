@@ -8,6 +8,7 @@ import DocsPage from '../routes/docs';
 import NotFoundPage from '../routes/404';
 import TasksetPage from '../routes/tasksets/id';
 import TasksetListPage from '../routes/tasksets/index';
+import AssignmentPage from '../routes/assignment';
 
 function Router() {
     const isDev = process.env.NODE_ENV === 'development';
@@ -27,6 +28,8 @@ function Router() {
                         <Route index element={<TasksetListPage />} />
                         <Route path=":id" element={<TasksetPage />} />
                     </Route>
+
+                    <Route path="assignment" element={<AssignmentPage />} />
                 </Route>
             </Route>
 

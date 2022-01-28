@@ -1,12 +1,12 @@
 import React, { createContext, ReactNode, useCallback, useContext, useEffect, useState } from 'react';
-import { AccountStats, AccountState, useNearcrowdContract } from '../contracts/nearcrowd-v1';
+import { AccountStatsOnChain, AccountStateOnChain, useNearcrowdContract } from '../contracts/nearcrowd-v1';
 
 interface Worker {
     authorized: boolean;
     account: {
         whitelisted: boolean | null;
-        stats: AccountStats | null;
-        state: AccountState | null;
+        stats: AccountStatsOnChain | null;
+        state: AccountStateOnChain | null;
     };
 
     // currentTaskset: {
@@ -18,6 +18,7 @@ interface Worker {
     // };
 
     viewIsAccountWhitelisted(): Promise<void>;
+    viewGetAccountState(tasksetOrdinal?: number): Promise<void>;
 }
 
 const WorkerContext = createContext<Worker>({
@@ -34,7 +35,8 @@ const WorkerContext = createContext<Worker>({
     //     hash: []
     // }
 
-    viewIsAccountWhitelisted: () => Promise.resolve()
+    viewIsAccountWhitelisted: () => Promise.resolve(),
+    viewGetAccountState: (tasksetOrdinal?: number) => Promise.resolve()
 });
 
 export const useWorkerContext = () => useContext(WorkerContext);
@@ -44,8 +46,8 @@ export function WorkerProvider({ children }: { children: ReactNode }) {
     const authorized = wallet.isSignedIn();
 
     const [whitelisted, setWhitelisted] = useState<boolean | null>(null);
-    const [accountState, setAccountState] = useState<AccountState | null>(null);
-    const [accountStats, setAccountStats] = useState<AccountStats | null>(null);
+    const [accountState, setAccountState] = useState<AccountStateOnChain | null>(null);
+    const [accountStats, setAccountStats] = useState<AccountStatsOnChain | null>(null);
     const [currentTaskset, setCurrentTaskset] = useState<{ ordinal: number } | null>(null);
 
     const viewIsAccountWhitelisted = useCallback(async () => {
@@ -76,7 +78,8 @@ export function WorkerProvider({ children }: { children: ReactNode }) {
                     state: accountState
                 },
 
-                viewIsAccountWhitelisted
+                viewIsAccountWhitelisted,
+                viewGetAccountState
 
                 // checkAccountWhitelisted
             }}

@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import TasksetCard from '../../components/tasksets/TasksetCard';
 import PageLayout from '../../components/layout/PageLayout';
-import { fetchTasksetList } from '../../services/tasksets';
+import { fetchTopicsList } from '../../services/topics';
 import { useRecoilState } from 'recoil';
 import { tasksetListState } from '../../state/taskset';
 
@@ -10,7 +10,7 @@ function TasksetListPage() {
 
     useEffect(() => {
         async function fetchTasksetsData() {
-            const list = await fetchTasksetList();
+            const list = await fetchTopicsList();
             setTasksetList(list);
         }
 

@@ -99,7 +99,7 @@ export function isAccountStateIdle(state: AccountStateOnChain): state is Account
     return typeof state === 'string' && state === 'Idle';
 }
 
-export function isAccountNonExistent(state: AccountStateOnChain): state is AccountStateNonExistent {
+export function isAccountStateNonExistent(state: AccountStateOnChain): state is AccountStateNonExistent {
     return typeof state === 'string' && state === 'NonExistent';
 }
 
@@ -175,6 +175,34 @@ export function useNearcrowdContract() {
         [accountId, contract]
     );
 
+    const changeCurrentTaskset = useCallback(
+        (newTasksetOrdinal: number) => {
+            return contract.change_taskset({
+                new_task_ord: newTasksetOrdinal
+            });
+        },
+        [contract]
+    );
+
+    const applyForAssignment = useCallback(
+        (tasksetOrdinal: number) => {
+            return contract.apply_for_assignment({
+                task_ordinal: tasksetOrdinal
+            });
+        },
+        [contract]
+    );
+
+    const claimAssignment = useCallback(
+        (tasksetOrdinal: number, bid: string) => {
+            return contract.claim_assignment({
+                task_ordinal: tasksetOrdinal,
+                bid
+            });
+        },
+        [contract]
+    );
+
     return {
         contract,
         wallet,
@@ -184,7 +212,10 @@ export function useNearcrowdContract() {
             getAccountStats,
             getAccountState,
             getCurrentTaskset,
-            getCurrentAssignment
+            getCurrentAssignment,
+            changeCurrentTaskset,
+            claimAssignment,
+            applyForAssignment
         },
 
         // TODO: remove this
@@ -192,6 +223,7 @@ export function useNearcrowdContract() {
         getAccountStats,
         getAccountState,
         getCurrentTaskset,
-        getCurrentAssignment
+        getCurrentAssignment,
+        changeCurrentTaskset
     };
 }

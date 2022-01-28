@@ -1,5 +1,6 @@
 import { FC } from 'react';
 import * as nearcrowd from '../../contracts/nearcrowd-v1';
+import { utils } from 'near-api-js';
 
 const Stat: FC<{
     value: number | string;
@@ -22,7 +23,11 @@ const AccountStats: FC<{ stats: nearcrowd.AccountStatsOnChain }> = ({ stats }) =
             <Stat title="Successful tasks" value={stats.successful} />
             <Stat title="Failed tasks" value={stats.failed} />
             {stats.pending && <Stat title="Pending review" value={stats.pending} />}
-            <Stat title="Reward collected" value={stats.balance} formatter={(s) => `${s} Ⓝ`} />
+            <Stat
+                title="Reward collected"
+                value={stats.balance}
+                formatter={(s) => `${utils.format.formatNearAmount(String(s), 3)} Ⓝ`}
+            />
         </div>
     );
 };

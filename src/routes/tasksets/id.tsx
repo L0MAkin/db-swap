@@ -1,94 +1,138 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import { useNearWallet } from 'react-near';
-import * as nearcrowdv1 from '../../contracts/nearcrowd-v1';
-import { useNearcrowdContract } from '../../contracts/nearcrowd-v1';
-import { fetchTaskset, Taskset } from '../../services/tasksets';
-import PageLayout from '../../components/layouts/PageLayout';
+import {
+    isAccountStateHasAssignment,
+    isAccountStateIdle,
+    isAccountStateWaitsForAssignment,
+    useNearcrowdContract
+} from '../../contracts/nearcrowd-v1';
+import { fetchTopic, TopicDTO } from '../../services/topics';
+import PageLayout from '../../components/layout/PageLayout';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { currentTasksetState } from '../../state/taskset';
 import CustomButton from '../../components/shared/CustomButton';
+import { ocs } from '../../state/on-chain';
+import { Link } from 'react-router-dom';
+
+const LoadingTasksetMessage = () => (
+    <div className="flex flex-row items-center">
+        <span>Selecting taskset... </span>
+        <div
+            className="
+                w-5 h-5 border-4 border-solid
+                border-yellow-600 border-t-transparent
+                rounded-full animate-spin"
+        />
+    </div>
+);
+
+// --- logic ---
+// 1. fetch taskset api data
+// 2. fetch current taskset on-chain data
+// 3.
+//      if (taskset from api === taskset on-chain)
+//          if (already has and assigment)
+//              display [go to assigment] button
+//          else
+//              display [apply for assigment] button
+//      else
+//          display [change taskset] button
+
+const ChangeTasksetButton = () => (
+    <CustomButton onClick={() => console.log('change taskset')}>Change Taskset</CustomButton>
+);
+
+function isTasksetIdValid(id: number | string | undefined) {
+    return !Number.isNaN(Number(id)) && Number(id) >= 0;
+}
 
 function TasksetPage() {
-    const params = useParams();
-    const [taskset, setTaskset] = useState<Taskset>();
+    const { id } = useParams();
+    const { methods } = useNearcrowdContract();
 
-    const { tasksetId } = params;
+    const [taskset, setTaskset] = useState<TopicDTO | null>();
+    const [currentTaskset, setCurrentTaskset] = useRecoilState(currentTasksetState);
 
-    const wallet = useNearWallet()!;
-    const contract = useNearcrowdContract();
+    const isIdParamValid = isTasksetIdValid(id);
+    const isTasksetMatchedWithOnChain = isIdParamValid && Number(id) === currentTaskset?.id;
+    const accountStateEnum = useRecoilValue(ocs.accountStateEnumSelector);
 
-    const [accountState, setAccountState] =
-        useState<nearcrowdv1.AccountState>();
+    const fetchTasksetData = useCallback(async () => {
+        if (!isTasksetIdValid) return;
 
-    const [applied, setApplied] = useState<boolean>(false);
-    async function callApplyForAssignment() {
+        const data = await fetchTopic(Number(id));
+
+        if (data) {
+            setTaskset(data);
+        }
+    }, [isIdParamValid]);
+
+    const fetchCurrentTasksetData = useCallback(async () => {
+        const ordinal = await methods.getCurrentTaskset();
+        const data = await fetchTopic(ordinal);
+
+        if (data) {
+            setCurrentTaskset(data);
+        }
+    }, [methods]);
+
+    const changeTaskset = useCallback(async () => {
         if (!taskset) return;
 
-        const result = await contract.apply_for_assignment({
-            task_ordinal: taskset.ordinal
-        });
+        await methods.changeCurrentTaskset(taskset.id);
+    }, [taskset, methods]);
 
-        console.log('apply_for_assignment', { result });
-        setApplied(result);
-    }
+    const getAccountStateForCurrentTaskset = useCallback(async () => {
+        const data = await methods.getAccountState(currentTaskset?.id);
+
+        console.log({ data });
+        // setAccountState(data);
+    }, [currentTaskset]);
 
     useEffect(() => {
-        async function callGetAccountState(
-            tasksetOrdinal: number,
-            accountId: string
-        ) {
-            const result = await contract.get_account_state({
-                account_id: accountId,
-                task_ordinal: tasksetOrdinal
-            });
-
-            setAccountState(result);
-        }
-
-        async function callChangeTaskset(tasksetOrdinal: number) {
-            const result = await contract.change_taskset({
-                new_task_ord: tasksetOrdinal
-            });
-            console.log('change_taskset', { result });
-        }
-
-        async function fetchTasksetData() {
-            const data = await fetchTaskset(tasksetId!);
-
-            if (data) {
-                setTaskset(data);
-                // await callChangeTaskset(data.ordinal);
-                // await callGetAccountState(
-                //     data.ordinal,
-                //     wallet.account().accountId
-                // );
-            }
-        }
-
-        if (tasksetId) {
-            fetchTasksetData();
-        }
+        // fetch taskset from api and blockchain once
+        fetchTasksetData().catch(console.error);
+        fetchCurrentTasksetData().catch(console.error);
 
         return () => {
             // cleanup
-            setTaskset(undefined);
+            setTaskset(null);
         };
-    }, []);
+    }, [id]);
+
+    useEffect(() => {
+        if (currentTaskset) {
+            getAccountStateForCurrentTaskset().catch(console.error);
+        }
+    }, [currentTaskset]);
 
     return (
         <PageLayout>
             <div className="flex flex-col items-center">
-                <h1 className="text-l">{taskset?.name}</h1>
+                <div className="text-xl font-medium mb-4">{taskset?.title}</div>
 
-                <div>Accaount state: {accountState}</div>
-
-                {taskset && (
-                    <CustomButton
-                        className="my-20"
-                        onClick={callApplyForAssignment}
-                    >
-                        Apply for assignment
-                    </CustomButton>
+                {accountStateEnum === 'TaskAssigned' && !isTasksetMatchedWithOnChain && (
+                    <div>
+                        You have a running assignment for a
+                        <Link to={`/tasksets/${currentTaskset?.id}`} className="text-yellow-300">
+                            {' '}
+                            different
+                        </Link>{' '}
+                        taskset.
+                    </div>
                 )}
+
+                {accountStateEnum === 'TaskAssigned' && isTasksetMatchedWithOnChain && (
+                    <div>
+                        <span>You have a running </span>
+                        <Link to="/assignment" className="text-yellow-300">
+                            assignment
+                        </Link>{' '}
+                        <span>for this taskset.</span>
+                    </div>
+                )}
+
+                {!isTasksetMatchedWithOnChain && <ChangeTasksetButton />}
             </div>
         </PageLayout>
     );

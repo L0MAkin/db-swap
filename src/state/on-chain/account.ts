@@ -1,21 +1,52 @@
-import { atom } from 'recoil';
-import { AccountStateOnChain, AccountStatsOnChain } from '../../contracts/nearcrowd-v1';
+import { atom, selector } from 'recoil';
+import {
+    AccountStateOnChain,
+    isAccountStateNonExistent,
+    isAccountStateHasAssignment,
+    isAccountStateIdle,
+    isAccountStateWaitsForAssignment
+} from '../../contracts/nearcrowd-v1';
 
-export const whitelistedOnChain = atom<boolean | null>({
-    key: 'whitelistedOnChain',
+export const whitelistedAtom = atom<boolean | null>({
+    key: 'OnChain/whitelistedAtom',
     default: null
 });
 
-export const accountStateOnChain = atom<AccountStateOnChain>({
-    key: 'accountStateOnChain',
-    default: 'NonExistent'
+export const accountStateAtom = atom<AccountStateOnChain | null>({
+    key: 'OnChain/accountStateAtom',
+    default: null
 });
 
-export const accountStatsOnChain = atom<AccountStatsOnChain>({
-    key: 'accountStatsOnChain',
-    default: {
-        balance: '0',
-        successful: 0,
-        failed: 0
+enum AccountStateEnum {
+    TasksetNotSelected = 'TasksetNotSelected',
+    TasksetSelected = 'TasksetSelected',
+    WaitingForTaskAssignment = 'WaitingForTaskAssignment',
+    TaskAssigned = 'TaskAssigned'
+}
+
+export const accountStateEnumSelector = selector<AccountStateEnum | null>({
+    key: 'OnChain/accountStateEnumSelector',
+    get: ({ get }) => {
+        const state = get(accountStateAtom);
+
+        if (state === null) return null;
+
+        if (isAccountStateNonExistent(state)) {
+            return AccountStateEnum.TasksetNotSelected;
+        }
+
+        if (isAccountStateIdle(state)) {
+            return AccountStateEnum.TasksetSelected;
+        }
+
+        if (isAccountStateWaitsForAssignment(state)) {
+            return AccountStateEnum.WaitingForTaskAssignment;
+        }
+
+        if (isAccountStateHasAssignment(state)) {
+            return AccountStateEnum.TaskAssigned;
+        }
+
+        return null;
     }
 });
