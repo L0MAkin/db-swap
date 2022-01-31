@@ -1,46 +1,17 @@
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import LogoutButton from './LogoutButton';
 import Stats from './Stats';
-import { useNearcrowdContract } from '../../../contracts/nearcrowd/useNearcrowdContract';
-import { OnChain } from '../../../contracts/nearcrowd/contract';
 import { useWhitelisted } from '../../../hooks/useWhitelisted';
-
-const defaultAccountStats = {
-    balance: '0',
-    successful: 0,
-    failed: 0
-};
+import { useAccountStats } from '../../../hooks/useAccountStats';
+import { useNearWallet } from 'react-near';
 
 function Dropdown() {
-    const { contract, wallet } = useNearcrowdContract();
-    const { accountId } = wallet.account();
-
     const { whitelisted } = useWhitelisted();
+    const { accountStats } = useAccountStats(true);
 
-    const [accountStats, setAccountStats] = useState<OnChain.AccountStats>(defaultAccountStats);
-
-    useEffect(() => {
-        async function callGetAccountStats() {
-            const stats = await contract.get_account_stats({
-                account_id: accountId
-            });
-
-            setAccountStats(stats);
-        }
-
-        if (whitelisted) {
-            callGetAccountStats();
-        }
-
-        return () => {
-            // cleanup
-            setAccountStats(defaultAccountStats);
-        };
-    }, [accountId, contract, whitelisted]);
-
-    // TODO: ui for not whitelisted account
+    const { accountId } = useNearWallet()!.account();
 
     return (
         <Popover className="relative">
@@ -56,7 +27,6 @@ function Dropdown() {
                     >
                         <UserCircleIcon className="w-5 h-5" />
                         <span>{accountId}</span>
-                        {!whitelisted && <span>| not whitelisted</span>}
                     </Popover.Button>
 
                     <Transition
@@ -71,7 +41,8 @@ function Dropdown() {
                         <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 right-0">
                             <div className="overflow-hidden rounded shadow-lg ring-1 ring-black ring-opacity-5">
                                 <div className="p-7 bg-white text-gray-900">
-                                    <Stats stats={accountStats} />
+                                    {accountStats && <Stats stats={accountStats} />}
+                                    {!whitelisted && <span>Account is not whitelisted.</span>}
                                 </div>
 
                                 <div className="p-7 bg-gray-100 flex justify-end">

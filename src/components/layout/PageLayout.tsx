@@ -6,7 +6,7 @@ const PageLayout: FC = ({ children }) => {
         <div className="h-screen flex flex-col bg-gray-100">
             <Navbar />
 
-            <main className="flex-1 h-max container p-6">{children}</main>
+            <main className="flex-1 h-max container p-6 mx-auto">{children}</main>
         </div>
     );
 };
