@@ -24,6 +24,13 @@ export function useCurrentTaskset(fetchOnUsage = false) {
         return data;
     }, [methods]);
 
+    const requestChangeCurrentTaskset = useCallback(
+        async (newTasksetOrdinal: number) => {
+            await methods.changeCurrentTaskset(newTasksetOrdinal);
+        },
+        [methods]
+    );
+
     // fetch once on usage
     useEffect(() => {
         if (!fetchOnUsage) {
@@ -36,6 +43,7 @@ export function useCurrentTaskset(fetchOnUsage = false) {
     return {
         currentTaskset,
 
-        fetchCurrentTaskset
+        fetchCurrentTaskset,
+        requestChangeCurrentTaskset
     };
 }

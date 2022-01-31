@@ -24,7 +24,8 @@ export const CHANGE_METHODS = [
     'claim_assignment',
     'return_assignment',
     'submit_solution',
-    'submit_review'
+    'submit_review',
+    'submit_approved_solution'
 
     /* ADMIN METHODS */
     // 'new',
@@ -40,7 +41,6 @@ export const CHANGE_METHODS = [
     // 'claim_reward',
     // 'return_own_review',
     // 'remove_duplicate_review',
-    // 'submit_approved_solution',
     // 'honeypot_partial_credit',
     // 'finalize_task',
     // 'finalize_challenged_task',
@@ -148,6 +148,26 @@ export function useNearcrowdContract() {
         [contract]
     );
 
+    const submitSolution = useCallback(
+        (tasksetOrdinal: number, solutionData: number[]) => {
+            return contract.submit_solution({
+                task_ordinal: tasksetOrdinal,
+                solution_data: solutionData
+            });
+        },
+        [contract]
+    );
+
+    const submitApprovedSolution = useCallback(
+        (tasksetOrdinal: number, solutionHash: number[]) => {
+            return contract.submit_approved_solution({
+                task_ordinal: tasksetOrdinal,
+                solution_hash: solutionHash
+            });
+        },
+        [contract]
+    );
+
     return {
         contract,
         wallet,
@@ -160,7 +180,10 @@ export function useNearcrowdContract() {
             getCurrentAssignment,
             changeCurrentTaskset,
             claimAssignment,
-            applyForAssignment
+            applyForAssignment,
+
+            submitSolution,
+            submitApprovedSolution
         }
     };
 }

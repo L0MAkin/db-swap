@@ -1,4 +1,3 @@
-import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContract';
 import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
 import { api } from '../services/api';
@@ -10,15 +9,7 @@ export const tasksetListAtom = atom<TopicDTO[] | null>({
 });
 
 export function useTasksets(fetchOnUsage = false) {
-    const { methods } = useNearcrowdContract();
     const [tasksetList, setTasksetList] = useRecoilState(tasksetListAtom);
-
-    const requestChangeTaskset = useCallback(
-        async (tasksetOrdinal: number) => {
-            await methods.changeCurrentTaskset(tasksetOrdinal);
-        },
-        [methods]
-    );
 
     const fetchTasksetList = useCallback(async () => {
         const list = await api.topics.fetchTopicsList();
@@ -38,7 +29,6 @@ export function useTasksets(fetchOnUsage = false) {
     return {
         tasksetList,
 
-        fetchTasksetList,
-        requestChangeTaskset
+        fetchTasksetList
     };
 }

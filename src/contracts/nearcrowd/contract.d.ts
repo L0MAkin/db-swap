@@ -61,4 +61,6 @@ export type NEARCrowdContract = NearContract & {
     apply_for_assignment(args: { task_ordinal: number }): Promise<string>;
     claim_assignment(args: { task_ordinal: number; bid: string }): Promise<boolean>;
     get_current_assignment(args: { account_id: string; task_ordinal: number }): Promise<OnChain.Assignment | null>;
+    submit_solution(args: { task_ordinal: number; solution_data: number[] }): Promise<void>;
+    submit_approved_solution(args: { task_ordinal: number; solution_hash: number[] }): Promise<void>;
 };

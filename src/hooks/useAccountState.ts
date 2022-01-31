@@ -48,6 +48,21 @@ const isAccountStateSelector = selector({
     }
 });
 
+const nextBidSelector = selector({
+    key: 'nextBidSelector',
+    get: ({ get }) => {
+        const state = get(accountStateAtom);
+
+        if (state === null) return null;
+
+        if (isAccountStateWaitsForAssignment(state)) {
+            return state.WaitsForAssignment.bid;
+        }
+
+        return null;
+    }
+});
+
 /**
  * Hook logic for current assignment and account state.
  *
@@ -59,6 +74,7 @@ export function useAccountState(fetchOnUsage = false) {
     const [accountState, setAccountState] = useRecoilState(accountStateAtom);
 
     const assignmentHash = useRecoilValue(assignmentHashSelector);
+    const nextBid = useRecoilValue(nextBidSelector);
     const isAccountState = useRecoilValue(isAccountStateSelector);
 
     const fetchAccountState = useCallback(async () => {
@@ -77,9 +93,14 @@ export function useAccountState(fetchOnUsage = false) {
         fetchAccountState().catch(console.error);
     }, []);
 
+    useEffect(() => {
+        console.log({ accountState });
+    }, [accountState]);
+
     return {
         isAccountState,
         assignmentHash,
+        nextBid,
 
         fetchAccountState
     };

@@ -1,39 +1,71 @@
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { TopicDTO } from '../../../services/api/topics';
 import { useTasksets } from '../../../hooks/useTasksets';
+import { useNavigate } from 'react-router';
+import { useCurrentTaskset } from '../../../hooks/useCurrentTaskset';
+import { useAccountState } from '../../../hooks/useAccountState';
 
-const Card: FC<{ taskset: TopicDTO; selected?: boolean }> = ({ taskset, selected }) => {
-    const { requestChangeTaskset } = useTasksets();
+const Card: FC<{ taskset: TopicDTO; selected?: boolean; onSelect(): Promise<void> }> = ({
+    taskset,
+    selected,
+    onSelect
+}) => {
+    const navigate = useNavigate();
 
     const [loading, setLoading] = useState<boolean>(false);
 
     async function onClick() {
         setLoading(true);
-        await requestChangeTaskset(taskset.id);
+        await onSelect().catch(console.error);
         setLoading(false);
     }
+
+    useEffect(() => {
+        return () => {
+            // cleanup
+            setLoading(false);
+        };
+    }, []);
 
     return (
         <div
             className={
                 `flex flex-col justify-between
-                bg-white rounded border shadow-md leading-normal p-4
-                hover:shadow-lg hover:scale-105 transition ease-out ` + (selected && ' border-green-500')
+                bg-white rounded border-2 shadow-md leading-normal p-4
+                hover:shadow-lg hover:scale-105 transition ease-out ` + (selected && ' border-blue-500')
             }
         >
-            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{taskset.title}</h5>
+            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 space-x-3 flex items-end">
+                <span>{taskset.title}</span>
+                {selected && <span className="rounded text-blue-500 text-[12px] p-1">selected</span>}
+            </h5>
             <p className="mb-3 font-normal italic">{taskset.description}</p>
 
-            <button
-                type="button"
-                className="py-2 px-3 rounded bg-yellow-400 font-medium"
-                disabled={loading}
-                onClick={() => {
-                    onClick().catch(console.error);
-                }}
-            >
-                Select
-            </button>
+            {!selected && (
+                <button
+                    type="button"
+                    className="py-2 px-3 rounded bg-yellow-400 font-medium disabled:opacity-50 disabled:cursor-wait"
+                    disabled={loading}
+                    onClick={() => {
+                        onClick();
+                    }}
+                >
+                    Select
+                </button>
+            )}
+
+            {selected && (
+                <button
+                    type="button"
+                    className="py-2 px-3 rounded bg-blue-400 font-medium"
+                    disabled={loading}
+                    onClick={() => {
+                        navigate('/assignment');
+                    }}
+                >
+                    Take assignment
+                </button>
+            )}
         </div>
     );
 };
