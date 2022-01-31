@@ -8,15 +8,21 @@ import { useAuthorized } from '../../hooks/useAuthorized';
 const NAV_ITEMS = [
     {
         id: 1,
+        to: '/docs',
+        translationKey: 'navigation.docs',
+        requireAuth: false
+    },
+    {
+        id: 2,
         to: '/tasksets',
         translationKey: 'navigation.tasksets',
         requireAuth: true
     },
     {
-        id: 2,
-        to: '/docs',
-        translationKey: 'navigation.docs',
-        requireAuth: false
+        id: 3,
+        to: '/assignment',
+        translationKey: 'navigation.assignment',
+        requireAuth: true
     }
 ];
 

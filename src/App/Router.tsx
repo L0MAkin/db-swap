@@ -7,7 +7,7 @@ import HomePage from '../components/pages/home/HomePage';
 import DocsPage from '../components/pages/docs/DocsPage';
 import NotFoundPage from '../components/pages/errors/NotFoundPage';
 import TasksetListPage from '../components/pages/tasksets/TasksetListPage';
-import AssignmentPage from '../components/pages/assignment/AssignmentPage';
+import CurrentAssignmentPage from '../components/pages/assignment/CurrentAssignmentPage';
 
 function Router() {
     return (
@@ -17,7 +17,7 @@ function Router() {
 
             <Route element={<Protected.Authorized />}>
                 <Route element={<Protected.Whitelisted />}>
-                    <Route path="assignment" element={<AssignmentPage />} />
+                    <Route path="assignment" element={<CurrentAssignmentPage />} />
                     <Route path="tasksets">
                         <Route index element={<TasksetListPage />} />
                         {/*<Route path=":id" element={<TasksetPage />} />*/}

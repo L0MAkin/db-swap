@@ -5,7 +5,8 @@
         "logout": "Выйти"
     },
     "navigation": {
-        "tasksets": "Мои задачи",
+        "tasksets": "Наборы задач",
+        "assignment": "Задача",
         "docs": "Как это работает"
     },
     "docs": {

@@ -1,45 +1,27 @@
 import PageLayout from '../../layout/PageLayout';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useAccountState } from '../../../hooks/useAccountState';
 import { useCurrentTaskset } from '../../../hooks/useCurrentTaskset';
 import CustomButton from '../../shared/CustomButton';
 import { Link } from 'react-router-dom';
-import { api } from '../../../services/api';
-import { atom, useRecoilState } from 'recoil';
-import { TaskDTO } from '../../../services/api/tasks';
+import { useCurrentAssignment } from '../../../hooks/useCurrentAssignment';
 
-export const currentTaskAtom = atom<TaskDTO | null>({
-    key: 'currentTaskAtom',
-    default: null
-});
-
-function AssignmentPage() {
+function CurrentAssignmentPage() {
+    const { isAccountState } = useAccountState(true);
     const { currentTaskset } = useCurrentTaskset(true);
-    const { assignmentHash, isAccountState } = useAccountState(true);
-    // todo: useCurrentAssignment
-    const [currentTask, setCurrentTask] = useRecoilState(currentTaskAtom);
+    const { currentAssignment } = useCurrentAssignment(true);
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    const fetchCurrentTask = useCallback(async () => {
-        if (!assignmentHash) return;
-
-        const task = await api.tasks.fetchTask(assignmentHash);
-
-        setCurrentTask(task);
-    }, [assignmentHash]);
-
     useEffect(() => {
-        if (isAccountState?.hasAssignment) {
-            fetchCurrentTask().catch(console.error);
-        }
+        if (!isAccountState) return;
 
-        if (isAccountState?.waitsForAssignment) {
-            console.log('claiming task');
+        if (isAccountState.hasAssignment) {
+            // fetchCurrentTask().catch(console.error);
+        } else if (isAccountState.waitsForAssignment) {
+            console.log('TODO: call claim_assignment');
         }
     }, [isAccountState]);
-
-    console.log({ currentTaskset, isAccountState });
 
     // components
     function SelectTasksetMessage() {
@@ -64,11 +46,7 @@ function AssignmentPage() {
     }
 
     function Assignment() {
-        return (
-            <div>
-                <code>{JSON.stringify(currentTask)}</code>
-            </div>
-        );
+        return <div>{currentAssignment && <code>{currentAssignment.contents}</code>}</div>;
     }
 
     function Content() {
@@ -90,4 +68,4 @@ function AssignmentPage() {
     return <PageLayout>{loading ? <Loader /> : <Content />}</PageLayout>;
 }
 
-export default AssignmentPage;
+export default CurrentAssignmentPage;

@@ -5,7 +5,8 @@
         "logout": "Logout"
     },
     "navigation": {
-        "tasksets": "Tasks",
+        "tasksets": "Tasksets",
+        "assignment": "Assignment",
         "docs": "Docs"
     },
     "docs": {
