@@ -11,9 +11,11 @@ function LoginButton() {
     return (
         <CustomButton
             onClick={() => {
-                wallet.requestSignIn({
-                    contractId: CONTRACT_ID
-                });
+                wallet
+                    .requestSignIn({
+                        contractId: CONTRACT_ID
+                    })
+                    .catch(console.error);
             }}
         >
             <div className="flex items-center space-x-3">

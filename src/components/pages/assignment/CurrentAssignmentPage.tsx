@@ -7,22 +7,29 @@ import { Link } from 'react-router-dom';
 import { useCurrentAssignment } from '../../../hooks/useCurrentAssignment';
 import SolutionBox from './SolutionBox';
 import { useNearcrowdContract } from '../../../contracts/nearcrowd/useNearcrowdContract';
+import { toast } from 'react-toastify';
 
 function CurrentAssignmentPage() {
     const { isAccountState, nextBid, fetchAccountState } = useAccountState(true);
-    const { currentTaskset } = useCurrentTaskset(true);
-    const { currentAssignment, claimAssignment, applyForAssignment } = useCurrentAssignment(true);
+    const { currentTaskset, requestChangeCurrentTaskset } = useCurrentTaskset(true);
+    const { currentAssignment, claimAssignment, applyForAssignment, fetchCurrentAssignment } =
+        useCurrentAssignment(true);
 
     const [loading, setLoading] = useState<boolean>(false);
 
-    useEffect(() => {
-        if (!isAccountState) return;
+    async function claimAndFetchCurrentAssignment() {
+        if (!currentTaskset || !nextBid) {
+            return;
+        }
 
-        if (isAccountState.waitsForAssignment) {
-            if (currentTaskset && nextBid) {
-                console.log('call claim_assignment');
-                // claimAssignment(currentTaskset.id, nextBid).catch(console.error);
-            }
+        await claimAssignment(currentTaskset.id, nextBid);
+        await fetchAccountState();
+        await fetchCurrentAssignment();
+    }
+
+    useEffect(() => {
+        if (isAccountState?.waitsForAssignment) {
+            claimAndFetchCurrentAssignment().catch(console.error);
         }
     }, [isAccountState]);
 
@@ -71,13 +78,32 @@ function CurrentAssignmentPage() {
     }
 
     const { methods } = useNearcrowdContract();
-
     function Assignment() {
+        const [solutionSubmitted, setSolutionSubmitted] = useState(false);
+
         if (!currentAssignment) {
             return <div>Loading assignment...</div>;
         }
 
         const { contents, forReview } = currentAssignment;
+
+        async function submitSolution(solution: object) {
+            const toastId = toast.loading('Submitting solution...', { type: 'info' });
+
+            const solutionData = '12345123451234512345123451234500'.split('').map(Number);
+            await methods.submitSolution(currentTaskset!.id, solutionData).catch(console.error);
+
+            toast.update(toastId, { render: 'Your solution submitted!', type: 'success', delay: 5000 });
+            setSolutionSubmitted(true);
+
+            // NOTE: call change_taskset with current taskset ordinal to force "Idle" state
+            await requestChangeCurrentTaskset(currentTaskset!.id).catch(console.error);
+            await fetchAccountState().catch(console.error);
+        }
+
+        if (solutionSubmitted) {
+            return <div>...</div>;
+        }
 
         return (
             <SolutionBox
@@ -86,18 +112,7 @@ function CurrentAssignmentPage() {
                 onSolutionChange={(solution) => {
                     // console.log('New solution object', solution);
                 }}
-                onSolutionSubmit={(solution) => {
-                    // TODO: refactor
-                    console.log('Submit solution', solution);
-                    const solutionData = '12345123451234512345123451234500'.split('').map(Number);
-
-                    methods
-                        .submitSolution(currentTaskset!.id, solutionData)
-                        .then((result) => {
-                            console.log('successfully submitted solution', result);
-                        })
-                        .catch(console.error);
-                }}
+                onSolutionSubmit={submitSolution}
             />
         );
     }

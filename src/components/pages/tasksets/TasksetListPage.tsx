@@ -3,13 +3,24 @@ import PageLayout from '../../layout/PageLayout';
 import { useCurrentTaskset } from '../../../hooks/useCurrentTaskset';
 import { useTasksets } from '../../../hooks/useTasksets';
 import { useAccountState } from '../../../hooks/useAccountState';
+import { toast } from 'react-toastify';
 
 function TasksetListPage() {
     const { tasksetList } = useTasksets(true);
-    const { fetchAccountState } = useAccountState(true);
+    const { fetchAccountState, isAccountState } = useAccountState(true);
     const { currentTaskset, requestChangeCurrentTaskset, fetchCurrentTaskset } = useCurrentTaskset(true);
 
     const list = tasksetList || [];
+
+    const notifyUnableChangeTaskset = () =>
+        toast.warn('You already have and assignment from a different taskset.', {
+            position: 'top-right',
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true
+        });
 
     return (
         <PageLayout>
@@ -18,6 +29,11 @@ function TasksetListPage() {
                     const selected = taskset.id === currentTaskset?.id;
 
                     async function onSelect() {
+                        if (isAccountState?.hasAssignment) {
+                            notifyUnableChangeTaskset();
+                            return;
+                        }
+
                         await requestChangeCurrentTaskset(taskset.id);
                         await fetchCurrentTaskset();
                         await fetchAccountState();

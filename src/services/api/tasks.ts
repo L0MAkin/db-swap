@@ -30,7 +30,7 @@ const TASKSET_MOCK_LIST: TaskDTO[] = [
 ];
 
 export async function fetchTask(hash: string): Promise<TaskDTO> {
-    console.error('fetching ', hash);
+    console.log('fetching ', hash);
     await sleep(300);
 
     return TASKSET_MOCK_LIST[0];
