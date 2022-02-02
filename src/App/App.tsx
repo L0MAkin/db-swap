@@ -5,6 +5,9 @@ import Router from './Router';
 import Loader from './Loader';
 import { useWhitelisted } from '../hooks/useWhitelisted';
 
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 function App() {
     // wait wallet for initialization
     const wallet = useNearWallet();
@@ -21,6 +24,7 @@ function App() {
     return (
         <WithWallet>
             <Router />
+            <ToastContainer />
         </WithWallet>
     );
 }
