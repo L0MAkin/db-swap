@@ -10,7 +10,7 @@ import { useNearcrowdContract } from '../../../contracts/nearcrowd/useNearcrowdC
 import { toast } from 'react-toastify';
 
 function CurrentAssignmentPage() {
-    const { isAccountState, nextBid, fetchAccountState } = useAccountState(true);
+    const { isAccountState, nextBid, fetchAccountState, secondsPassedSinceAssignment } = useAccountState(true);
     const { currentTaskset, requestChangeCurrentTaskset } = useCurrentTaskset(true);
     const { currentAssignment, claimAssignment, applyForAssignment, fetchCurrentAssignment } =
         useCurrentAssignment(true);
@@ -88,12 +88,17 @@ function CurrentAssignmentPage() {
         const { contents, forReview } = currentAssignment;
 
         async function submitSolution(solution: object) {
+            if (secondsPassedSinceAssignment !== null && secondsPassedSinceAssignment < 2 * 60) {
+                toast.warn('You spend to little time creating solution 🤔');
+                return;
+            }
+
             const toastId = toast.loading('Submitting solution...', { type: 'info' });
 
             const solutionData = '12345123451234512345123451234500'.split('').map(Number);
             await methods.submitSolution(currentTaskset!.id, solutionData).catch(console.error);
 
-            toast.update(toastId, { render: 'Your solution submitted!', type: 'success', delay: 5000 });
+            toast.update(toastId, { render: 'Your solution submitted!', type: 'success', isLoading: false });
             setSolutionSubmitted(true);
 
             // NOTE: call change_taskset with current taskset ordinal to force "Idle" state

@@ -37,9 +37,9 @@ export namespace OnChain {
 
     type AccountStateHasAssignment = {
         HasAssignment: {
-            assignment: AssignmentOnChain;
+            assignment: OnChain.Assignment;
             bid: string;
-            since: string;
+            time_passed: string;
         };
     };
 

@@ -63,6 +63,21 @@ const nextBidSelector = selector({
     }
 });
 
+const secondsPassedSinceAssignmentSelector = selector({
+    key: 'secondsPassedSinceAssignmentSelector',
+    get: ({ get }) => {
+        const state = get(accountStateAtom);
+
+        if (state === null) return null;
+
+        if (!isAccountStateHasAssignment(state)) {
+            return null;
+        }
+
+        return Number(state.HasAssignment.time_passed) / 10 ** 9;
+    }
+});
+
 /**
  * Hook logic for current assignment and account state.
  *
@@ -76,6 +91,7 @@ export function useAccountState(fetchOnUsage = false) {
     const assignmentHash = useRecoilValue(assignmentHashSelector);
     const nextBid = useRecoilValue(nextBidSelector);
     const isAccountState = useRecoilValue(isAccountStateSelector);
+    const secondsPassedSinceAssignment = useRecoilValue(secondsPassedSinceAssignmentSelector);
 
     const fetchAccountState = useCallback(async () => {
         const currentTasksetOrdinal = await methods.getCurrentTaskset();
@@ -101,6 +117,7 @@ export function useAccountState(fetchOnUsage = false) {
         isAccountState,
         assignmentHash,
         nextBid,
+        secondsPassedSinceAssignment,
 
         fetchAccountState
     };
