@@ -1,8 +1,9 @@
 import { useNearContract, useNearWallet } from 'react-near';
 import { useCallback } from 'react';
 import { NEARCrowdContract, OnChain } from './contract';
+import { nearEnv } from '../../config/near-env';
 
-export const CONTRACT_ID = 'nearcrowd.testnet';
+export const CONTRACT_ID = nearEnv.isSandbox() ? 'contract.test.near' : 'nearcrowd.testnet';
 
 export const VIEW_METHODS = [
     'is_account_whitelisted',

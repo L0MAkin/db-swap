@@ -42,6 +42,8 @@
         "@typescript-eslint/indent": "off",
         "@typescript-eslint/comma-dangle": ["error", "never"],
 
+        "@typescript-eslint/naming-convention": "off",
+
         "linebreak-style": "off",
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
