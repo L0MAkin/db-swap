@@ -1,11 +1,8 @@
 import { FC, useEffect, useState } from 'react';
-import { TopicDTO } from '../../../services/api/topics';
-import { useTasksets } from '../../../hooks/useTasksets';
 import { useNavigate } from 'react-router';
-import { useCurrentTaskset } from '../../../hooks/useCurrentTaskset';
-import { useAccountState } from '../../../hooks/useAccountState';
+import { SDK } from '../../../services/api/sdk';
 
-const Card: FC<{ taskset: TopicDTO; selected?: boolean; onSelect(): Promise<void> }> = ({
+const Card: FC<{ taskset: SDK.Topic; selected?: boolean; onSelect(): Promise<void> }> = ({
     taskset,
     selected,
     onSelect

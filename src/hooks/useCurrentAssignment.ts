@@ -2,18 +2,15 @@ import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
 import { api } from '../services/api';
 import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContract';
-import { TaskDTO } from '../services/api/tasks';
+import { SDK } from '../services/api/sdk';
+import { bytesToHex } from '../utils/bytes-and-hashes';
 
-type Assignment = TaskDTO & { forReview: boolean };
+type Assignment = SDK.Task & { forReview: boolean };
 
 export const currentAssignmentAtom = atom<Assignment | null>({
     key: 'currentAssignmentAtom',
     default: null
 });
-
-function toHexString(byteArray: number[]) {
-    return Array.from(byteArray, (byte) => ('0' + (byte & 0xff).toString(16)).slice(-2)).join('');
-}
 
 export function useCurrentAssignment(fetchOnUsage = false) {
     const { methods } = useNearcrowdContract();
@@ -32,10 +29,10 @@ export function useCurrentAssignment(fetchOnUsage = false) {
             return;
         }
 
-        const hash = toHexString(assignment.task_hash);
         const forReview = assignment.ordinal > 0;
 
-        const task = await api.tasks.fetchTask(hash);
+        const hash = bytesToHex(assignment.task_hash);
+        const task = await api.getTaskByHash(hash);
 
         // TODO: if for review then fetch solutions also
         // if (forReview) {

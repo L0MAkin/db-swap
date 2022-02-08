@@ -1,9 +1,9 @@
 import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
 import { api } from '../services/api';
-import { TopicDTO } from '../services/api/topics';
+import { SDK } from '../services/api/sdk';
 
-export const tasksetListAtom = atom<TopicDTO[] | null>({
+export const tasksetListAtom = atom<SDK.Topic[] | null>({
     key: 'tasksetListAtom',
     default: null
 });
@@ -12,7 +12,7 @@ export function useTasksets(fetchOnUsage = false) {
     const [tasksetList, setTasksetList] = useRecoilState(tasksetListAtom);
 
     const fetchTasksetList = useCallback(async () => {
-        const list = await api.topics.fetchTopicsList();
+        const list = await api.getAllTopics();
 
         setTasksetList(list);
     }, []);

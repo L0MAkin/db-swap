@@ -5,6 +5,8 @@ import { useNearcrowdContract } from '../../../../../contracts/nearcrowd/useNear
 import { useCurrentTaskset } from '../../../../../hooks/useCurrentTaskset';
 import { useAccountState } from '../../../../../hooks/useAccountState';
 import { useCurrentAssignment } from '../../../../../hooks/useCurrentAssignment';
+import { api } from '../../../../../services/api';
+import { hexToBytes } from '../../../../../utils/bytes-and-hashes';
 
 export function AssignmentView() {
     const { currentTaskset, requestChangeCurrentTaskset } = useCurrentTaskset(true);
@@ -20,7 +22,7 @@ export function AssignmentView() {
 
     const { content, forReview } = currentAssignment;
 
-    async function submitSolution(solution: object) {
+    async function submitSolution(solutionData: object) {
         if (timePassedSinceAssignment !== null && timePassedSinceAssignment < 2 * 60) {
             toast.warn('You spend to little time creating solutions 🤔');
             return;
@@ -28,8 +30,9 @@ export function AssignmentView() {
 
         const toastId = toast.loading('Submitting solutions...', { type: 'info' });
 
-        const solutionData = '12345123451234512345123451234500'.split('').map(Number);
-        await methods.submitSolution(currentTaskset!.id, solutionData).catch(console.error);
+        const solution = await api.submitSolution(currentAssignment!.hash, solutionData);
+
+        await methods.submitSolution(currentTaskset!.id, hexToBytes(solution.hash)).catch(console.error);
 
         toast.update(toastId, { render: 'Your solutions submitted!', type: 'success', isLoading: false, delay: 500 });
         setSolutionSubmitted(true);

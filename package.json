@@ -16,6 +16,7 @@
         "buffer": "^6.0.3",
         "i18next": "^21.6.4",
         "i18next-browser-languagedetector": "^6.1.2",
+        "ky": "^0.28.7",
         "near-api-js": "^0.44.2",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",

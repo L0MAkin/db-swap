@@ -2,9 +2,9 @@ import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContrac
 import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
 import { api } from '../services/api';
-import { TopicDTO } from '../services/api/topics';
+import { SDK } from '../services/api/sdk';
 
-const currentTasksetAtom = atom<TopicDTO | null>({
+const currentTasksetAtom = atom<SDK.Topic | null>({
     key: 'currentTasksetAtom',
     default: null
 });
@@ -20,7 +20,7 @@ export function useCurrentTaskset(fetchOnUsage = false) {
             return;
         }
 
-        const data = await api.topics.fetchTopic(ordinal);
+        const data = await api.getTopicById(ordinal);
 
         if (data) {
             setCurrentTaskset(data);
