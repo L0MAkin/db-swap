@@ -1,8 +1,8 @@
 import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContract';
 import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
-import { api } from '../services/api';
 import { SDK } from '../services/api/sdk';
+import { useApi } from './useApi';
 
 const currentTasksetAtom = atom<SDK.Topic | null>({
     key: 'currentTasksetAtom',
@@ -10,6 +10,7 @@ const currentTasksetAtom = atom<SDK.Topic | null>({
 });
 
 export function useCurrentTaskset(fetchOnUsage = false) {
+    const api = useApi();
     const { methods } = useNearcrowdContract();
     const [currentTaskset, setCurrentTaskset] = useRecoilState(currentTasksetAtom);
 

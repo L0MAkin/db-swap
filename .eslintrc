@@ -43,6 +43,7 @@
         "@typescript-eslint/comma-dangle": ["error", "never"],
 
         "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/lines-between-class-member": "off",
 
         "linebreak-style": "off",
         "react-hooks/rules-of-hooks": "error",

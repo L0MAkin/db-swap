@@ -1,9 +1,9 @@
 import { atom, useRecoilState } from 'recoil';
 import { useCallback, useEffect } from 'react';
-import { api } from '../services/api';
 import { useNearcrowdContract } from '../contracts/nearcrowd/useNearcrowdContract';
 import { SDK } from '../services/api/sdk';
 import { bytesToHex } from '../utils/bytes-and-hashes';
+import { useApi } from './useApi';
 
 type Assignment = SDK.Task & { forReview: boolean };
 
@@ -13,6 +13,7 @@ export const currentAssignmentAtom = atom<Assignment | null>({
 });
 
 export function useCurrentAssignment(fetchOnUsage = false) {
+    const api = useApi();
     const { methods } = useNearcrowdContract();
     const [currentAssignment, setCurrentAssignment] = useRecoilState(currentAssignmentAtom);
 

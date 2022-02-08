@@ -5,10 +5,11 @@ import { useNearcrowdContract } from '../../../../../contracts/nearcrowd/useNear
 import { useCurrentTaskset } from '../../../../../hooks/useCurrentTaskset';
 import { useAccountState } from '../../../../../hooks/useAccountState';
 import { useCurrentAssignment } from '../../../../../hooks/useCurrentAssignment';
-import { api } from '../../../../../services/api';
 import { hexToBytes } from '../../../../../utils/bytes-and-hashes';
+import { useApi } from '../../../../../hooks/useApi';
 
 export function AssignmentView() {
+    const api = useApi();
     const { currentTaskset, requestChangeCurrentTaskset } = useCurrentTaskset(true);
     const { fetchAccountState, timePassedSinceAssignment } = useAccountState(true);
     const { currentAssignment } = useCurrentAssignment(true);
