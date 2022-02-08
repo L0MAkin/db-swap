@@ -27,6 +27,7 @@ export const CHANGE_METHODS = [
     'submit_solution',
     'submit_review',
     'submit_approved_solution'
+    // 'return_assignment'
 
     /* ADMIN METHODS */
     // 'new',

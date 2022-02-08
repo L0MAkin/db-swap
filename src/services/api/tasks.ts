@@ -4,34 +4,21 @@ export interface TaskDTO {
     hash: string;
 
     /**
-     * JSON containing task details
+     * JSON containing tasks details
      */
-    contents: string;
+    content: string;
 
     /**
-     * Task topic
+     * Task topics
      */
-    // topic?: TopicDTO;
+    // topics?: TopicDTO;
 
     createdAt: Date;
 }
 
-const TASKSET_MOCK_LIST: TaskDTO[] = [
-    {
-        hash: '123',
-        contents: JSON.stringify({
-            type: 'SingleImageDescriptionDev',
-            data: {
-                image: 'https://img-9gag-fun.9cache.com/photo/aeAznm5_460s.jpg'
-            }
-        }),
-        createdAt: new Date(Date.now())
-    }
-];
-
 export async function fetchTask(hash: string): Promise<TaskDTO> {
-    console.log('fetching ', hash);
-    await sleep(300);
+    const res = await fetch(process.env.REACT_APP_NEARCROWD_BACKEND_URL + '/tasks/' + hash);
+    const data = await res.json();
 
-    return TASKSET_MOCK_LIST[0];
+    return data;
 }

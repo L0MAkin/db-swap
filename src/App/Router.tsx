@@ -7,7 +7,7 @@ import HomePage from '../components/pages/home/HomePage';
 import DocsPage from '../components/pages/docs/DocsPage';
 import NotFoundPage from '../components/pages/errors/NotFoundPage';
 import TasksetListPage from '../components/pages/tasksets/TasksetListPage';
-import CurrentAssignmentPage from '../components/pages/assignment/CurrentAssignmentPage';
+import CurrentAssignmentPage from '../components/pages/assignment/CurrentAssignment/CurrentAssignmentPage';
 
 function Router() {
     return (

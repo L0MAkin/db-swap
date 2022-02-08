@@ -15,6 +15,11 @@ export function useCurrentTaskset(fetchOnUsage = false) {
 
     const fetchCurrentTaskset = useCallback(async () => {
         const ordinal = await methods.getCurrentTaskset();
+
+        if (ordinal === null) {
+            return;
+        }
+
         const data = await api.topics.fetchTopic(ordinal);
 
         if (data) {

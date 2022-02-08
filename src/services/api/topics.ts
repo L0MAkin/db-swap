@@ -1,5 +1,3 @@
-import { sleep } from '../../utils/sleep';
-
 export interface TopicDTO {
     id: number;
     title: string;
@@ -7,30 +5,19 @@ export interface TopicDTO {
     description: string;
 }
 
-const TOPIC_MOCK_LIST: TopicDTO[] = [
-    {
-        id: 0,
-        title: 'Localized Narratives',
-        description: 'Good written russian',
-        reward: '0.02'
-    },
-    {
-        id: 1,
-        title: 'Simple Puzzles',
-        description:
-            'Ability to create simple colored images (either paper with pensils and a phone camera, or knowledge of how to use image processing software)',
-        reward: '0.01'
-    }
-];
-
 export async function fetchTopicsList(): Promise<TopicDTO[]> {
-    await sleep(300);
+    const res = await fetch(process.env.REACT_APP_NEARCROWD_BACKEND_URL + '/topics');
+    const data = await res.json();
 
-    return TOPIC_MOCK_LIST;
+    return data || [];
 }
 
-export async function fetchTopic(tasksetId: number): Promise<TopicDTO | undefined> {
-    await sleep(300);
+export async function fetchTopic(tasksetId: number): Promise<TopicDTO> {
+    const res = await fetch(process.env.REACT_APP_NEARCROWD_BACKEND_URL + '/topics/' + tasksetId);
+    const data = await res.json();
 
-    return TOPIC_MOCK_LIST.find(({ id }) => id === tasksetId);
+    // await sleep(300);
+    // return TOPIC_MOCK_LIST.find(({ id }) => id === tasksetId);
+
+    return data || {};
 }

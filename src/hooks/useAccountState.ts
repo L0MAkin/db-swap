@@ -8,6 +8,7 @@ import {
 import { atom, selector, useRecoilState, useRecoilValue } from 'recoil';
 import { useCallback, useEffect } from 'react';
 import { OnChain } from '../contracts/nearcrowd/contract';
+import { nanosec2sec } from '../utils/nanosec';
 
 const accountStateAtom = atom<OnChain.AccountState | null>({
     key: 'accountStateAtom',
@@ -53,9 +54,7 @@ const nextBidSelector = selector({
     get: ({ get }) => {
         const state = get(accountStateAtom);
 
-        if (state === null) return null;
-
-        if (isAccountStateWaitsForAssignment(state)) {
+        if (state && isAccountStateWaitsForAssignment(state)) {
             return state.WaitsForAssignment.bid;
         }
 
@@ -63,18 +62,29 @@ const nextBidSelector = selector({
     }
 });
 
-const secondsPassedSinceAssignmentSelector = selector({
+const timeLeftToWaitSelector = selector({
+    key: 'timeLeftToWaitSelector',
+    get: ({ get }) => {
+        const state = get(accountStateAtom);
+
+        if (state && isAccountStateWaitsForAssignment(state)) {
+            return nanosec2sec(state.WaitsForAssignment.time_left);
+        }
+
+        return null;
+    }
+});
+
+const timePassedSinceAssignmentSelector = selector({
     key: 'secondsPassedSinceAssignmentSelector',
     get: ({ get }) => {
         const state = get(accountStateAtom);
 
-        if (state === null) return null;
-
-        if (!isAccountStateHasAssignment(state)) {
-            return null;
+        if (state && isAccountStateHasAssignment(state)) {
+            return nanosec2sec(state.HasAssignment.time_passed);
         }
 
-        return Number(state.HasAssignment.time_passed) / 10 ** 9;
+        return null;
     }
 });
 
@@ -89,13 +99,16 @@ export function useAccountState(fetchOnUsage = false) {
     const [accountState, setAccountState] = useRecoilState(accountStateAtom);
 
     const assignmentHash = useRecoilValue(assignmentHashSelector);
-    const nextBid = useRecoilValue(nextBidSelector);
     const isAccountState = useRecoilValue(isAccountStateSelector);
-    const secondsPassedSinceAssignment = useRecoilValue(secondsPassedSinceAssignmentSelector);
+
+    const timePassedSinceAssignment = useRecoilValue(timePassedSinceAssignmentSelector);
+    const timeLeftToWait = useRecoilValue(timeLeftToWaitSelector);
+    const nextBid = useRecoilValue(nextBidSelector);
 
     const fetchAccountState = useCallback(async () => {
         const currentTasksetOrdinal = await methods.getCurrentTaskset();
-        const result = await methods.getAccountState(currentTasksetOrdinal);
+
+        const result = await methods.getAccountState(currentTasksetOrdinal ?? 0);
 
         setAccountState(result);
     }, [methods]);
@@ -109,15 +122,17 @@ export function useAccountState(fetchOnUsage = false) {
         fetchAccountState().catch(console.error);
     }, []);
 
-    useEffect(() => {
-        console.log({ accountState });
-    }, [accountState]);
+    // useEffect(() => {
+    //     console.log({ accountState });
+    // }, [accountState]);
 
     return {
         isAccountState,
         assignmentHash,
+
+        timePassedSinceAssignment,
+        timeLeftToWait,
         nextBid,
-        secondsPassedSinceAssignment,
 
         fetchAccountState
     };

@@ -7,9 +7,11 @@ enum TasksetType {
 
 type TasksetDataFields = { image: string };
 
+// todo: more generic type
 interface AssignmentMeta {
-    type: TasksetType;
-    data: TasksetDataFields;
+    // type: TasksetType;
+    // data: TasksetDataFields;
+    img: string;
 }
 
 interface Props {
@@ -23,9 +25,9 @@ export default function SolutionBox({ onSolutionChange, onSolutionSubmit, assign
     // TODO: show view depending on assignment type
 
     const [solution, setSolution] = useState({ description: '' });
-    const meta = JSON.parse(assignmentMetadata) as AssignmentMeta;
+    const metadata = JSON.parse(assignmentMetadata) as AssignmentMeta;
 
-    const { image } = meta.data;
+    const { img } = metadata;
 
     useEffect(() => {
         onSolutionChange(solution);
@@ -39,7 +41,7 @@ export default function SolutionBox({ onSolutionChange, onSolutionSubmit, assign
                     : '[Regular] Describe what you see on image 👇'}
             </div>
 
-            <img src={image} alt="image" className="rounded shadow-2xl" />
+            <img src={img} alt="image" className="object-cover h-96 w-96 rounded shadow-2xl" />
 
             <textarea
                 className="border-yellow-500 border-2 rounded p-2"
