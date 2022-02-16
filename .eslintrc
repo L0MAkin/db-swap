@@ -39,8 +39,11 @@
     ],
     "rules": {
         "@typescript-eslint/no-non-null-assertion": "off",
-        "@typescript-eslint/indent": ["error", 4],
+        "@typescript-eslint/indent": "off",
         "@typescript-eslint/comma-dangle": ["error", "never"],
+
+        "@typescript-eslint/naming-convention": "off",
+        "@typescript-eslint/lines-between-class-member": "off",
 
         "linebreak-style": "off",
         "react-hooks/rules-of-hooks": "error",
@@ -50,7 +53,7 @@
             "error",
             {
                 "singleQuote": true,
-                "printWidth": 80,
+                "printWidth": 120,
                 "tabWidth": 4,
                 "useTabs": false,
                 "trailingComma": "none"

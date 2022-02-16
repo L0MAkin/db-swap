@@ -1,35 +1,31 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC } from 'react';
 import { useNearWallet } from 'react-near';
-import { useWhitelistedContext } from '../contexts/WhitelistedContext';
-import { useWalletAuthorized } from '../hooks/useWalletAuthorized';
 
-import Router from '../routes/Router';
+import Router from './Router';
 import Loader from './Loader';
+import { useWhitelisted } from '../hooks/useWhitelisted';
 
-const AppLayout: FC = ({ children }) => <>{children}</>; // utility wrapper
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function App() {
+    // wait wallet for initialization
     const wallet = useNearWallet();
-
-    console.log(wallet);
-
-    const { authorized } = useWalletAuthorized();
-    const { callIsAccountWhitelisted } = useWhitelistedContext();
-
-    useEffect(() => {
-        if (authorized) {
-            callIsAccountWhitelisted();
-        }
-    }, [authorized, callIsAccountWhitelisted]);
-    // check if wallet even initialized
     if (!wallet) {
         return <Loader />;
     }
 
+    const WithWallet: FC = ({ children }) => {
+        useWhitelisted(true);
+
+        return <>{children}</>;
+    };
+
     return (
-        <AppLayout>
+        <WithWallet>
             <Router />
-        </AppLayout>
+            <ToastContainer />
+        </WithWallet>
     );
 }
 
