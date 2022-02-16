@@ -35,7 +35,12 @@ export function AssignmentView() {
 
         await methods.submitSolution(currentTaskset!.id, hexToBytes(solution.hash)).catch(console.error);
 
-        toast.update(toastId, { render: 'Your solutions submitted!', type: 'success', isLoading: false, delay: 500 });
+        toast.update(toastId, {
+            render: 'Your solutions submitted!',
+            type: 'success',
+            isLoading: false,
+            autoClose: 3000
+        });
         setSolutionSubmitted(true);
 
         // NOTE: call change_taskset with current taskset ordinal to force "Idle" state
