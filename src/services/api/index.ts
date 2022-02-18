@@ -1,21 +1,18 @@
-// eslint-disable-next-line import/named
-import ky, { NormalizedOptions } from 'ky';
+import { WalletConnection } from 'near-api-js';
+import ky from 'ky';
+
 import { SDK } from './sdk';
 import env from '../../config/env';
-import { Account, transactions } from 'near-api-js';
-import { CONTRACT_ID } from '../../contracts/nearcrowd/useNearcrowdContract';
-
-type BeforeRequestHookOptionsWithJSONBody = NormalizedOptions & { json: object | undefined };
 
 export class ClientAPI {
     private client;
 
     private clientWithNearAuth;
 
-    private account: Account | null;
+    public wallet: WalletConnection | null;
 
     constructor() {
-        this.account = null;
+        this.wallet = null;
 
         this.client = ky.create({
             prefixUrl: env.BACKEND_URL
@@ -27,49 +24,35 @@ export class ClientAPI {
                     /**
                      * Body signature hook for authorization headers
                      */
-                    async (request, options) => {
-                        const { json } = options as BeforeRequestHookOptionsWithJSONBody;
-
-                        if (!json) {
-                            console.warn('Request body not provided. Signing empty request.', options);
+                    async (request, { body }) => {
+                        if (this.wallet === null) {
+                            throw Error('WalletConnection is null. Can not sign body without keyPair.');
                         }
 
-                        const body = (json || {}) as object;
+                        if (typeof body !== 'string') {
+                            throw Error('Request body should be typeof string.');
+                        }
 
                         const { signature, publicKey, accountId } = await this.signRequestBody(body);
 
                         request.headers.set('Near-Auth-Account', accountId);
-                        request.headers.set('Near-Auth-Signature', signature);
-                        request.headers.set('Near-Auth-Public-Key', publicKey);
+                        request.headers.set('Near-Auth-Public-Key', publicKey.toString());
+                        request.headers.set('Near-Auth-Signature', Buffer.from(signature).toString('base64'));
                     }
                 ]
             }
         });
     }
 
-    setAccount(account: Account) {
-        this.account = account;
-    }
+    protected async signRequestBody(body: string) {
+        const message = Buffer.from(body);
 
-    protected async signRequestBody(body: Uint8Array | object) {
-        if (this.account === null) {
-            throw Error('Can not sign body without defined account instance!');
-        }
+        const networkId = this.wallet!._networkId;
+        const accountId = this.wallet!.getAccountId() as string;
 
-        const action = transactions.functionCall('api_request', body, 0, 0);
+        const keyPair = await this.wallet!._keyStore.getKey(networkId, accountId);
 
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        const [, signedTx] = await this.account.signTransaction(CONTRACT_ID, [action]);
-
-        const sig = Buffer.from(signedTx.signature.data).toString('base64');
-        console.log(sig, sig.length);
-
-        console.log(signedTx.transaction.publicKey.toString());
-
-        const accountId = signedTx.transaction.signerId;
-        const signature = Buffer.from(signedTx.signature.data).toString('base64');
-        const publicKey = signedTx.transaction.publicKey.toString();
+        const { signature, publicKey } = keyPair.sign(message);
 
         return { accountId, signature, publicKey };
     }

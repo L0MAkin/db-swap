@@ -1,16 +1,16 @@
 import { ClientAPI } from '../services/api';
-import { useNearAccount } from 'react-near';
+import { useNearWallet } from 'react-near';
 import { useEffect, useMemo } from 'react';
 
 export function useApi() {
-    const account = useNearAccount();
+    const wallet = useNearWallet();
     const api = useMemo(() => new ClientAPI(), []);
 
     useEffect(() => {
-        if (account) {
-            api.setAccount(account);
+        if (wallet) {
+            api.wallet = wallet;
         }
-    }, [account]);
+    }, [wallet]);
 
     return api;
 }
