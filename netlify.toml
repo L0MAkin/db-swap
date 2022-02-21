@@ -1,0 +1,26 @@
+# NOTE: do not store any sencetive/secret data here. This file is commited to git and used by Netlify.
+
+# Mainnet env vatiables
+[context.mainnet.environment]
+REACT_APP_NEAR_ENV = "testnet"
+REACT_APP_CONTRACT_ID = "nearcrowd.testnet"
+REACT_APP_NEARCROWD_BACKEND_URL = "https://nearcrowd-backend-d4e6qxmvmq-nw.a.run.app/"
+
+# Testnet env vatiables
+[context.testnet.environment]
+REACT_APP_NEAR_ENV = "testnet"
+REACT_APP_CONTRACT_ID = "nearcrowd.testnet"
+REACT_APP_NEARCROWD_BACKEND_URL = "https://nearcrowd-backend-d4e6qxmvmq-nw.a.run.app/"
+
+
+[[plugins]]
+package = 'netlify-plugin-contextual-env'
+    # This plugin allows to specify context-prefixed ENV.
+    # Good for storing production or staging secific secret values.
+    # Specify these envs using Netlify UI.
+    # Example: If you are deploying form `testnet` brunch then your `TESTNET_CONTRACT_ID` env will be replaced to `CONTRACT_ID` during build.
+    [plugins.inputs]
+    mode = 'prefix'
+
+[build.environment]
+CI = "false"
