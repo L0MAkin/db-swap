@@ -24,3 +24,4 @@ package = 'netlify-plugin-contextual-env'
 
 [build.environment]
 CI = ""
+
