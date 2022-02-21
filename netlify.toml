@@ -22,6 +22,3 @@ package = 'netlify-plugin-contextual-env'
     [plugins.inputs]
     mode = 'prefix'
 
-[build.environment]
-CI = ""
-
