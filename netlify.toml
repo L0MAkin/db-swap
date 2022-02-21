@@ -23,4 +23,4 @@ package = 'netlify-plugin-contextual-env'
     mode = 'prefix'
 
 [build.environment]
-CI = "false"
+CI = ""
