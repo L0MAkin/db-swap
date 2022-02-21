@@ -3,7 +3,9 @@ import { useCallback } from 'react';
 import { NEARCrowdContract, OnChain } from './contract';
 import { nearEnv } from '../../config/near-env';
 
-export const CONTRACT_ID = nearEnv.isSandbox() ? 'contract.test.near' : 'nearcrowd.testnet';
+const { REACT_APP_CONTRACT_ID } = process.env;
+
+export const CONTRACT_ID = nearEnv.isSandbox() ? 'contract.test.near' : REACT_APP_CONTRACT_ID || 'nearcrowd.testnet';
 
 export const VIEW_METHODS = [
     'is_account_whitelisted',
