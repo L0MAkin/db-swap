@@ -1,0 +1,14 @@
+# NOTE: do not store any sencetive/secret data here. This file is commited to git and used by Netlify.
+
+# Mainnet env vatiables
+[context.mainnet.environment]
+REACT_APP_NEAR_ENV = "testnet"
+REACT_APP_CONTRACT_ID = "nearcrowd.testnet"
+REACT_APP_NEARCROWD_BACKEND_URL = "https://nearcrowd-backend-d4e6qxmvmq-nw.a.run.app/"
+
+# Testnet env vatiables
+[context.testnet.environment]
+REACT_APP_NEAR_ENV = "testnet"
+REACT_APP_CONTRACT_ID = "nearcrowd.testnet"
+REACT_APP_NEARCROWD_BACKEND_URL = "https://nearcrowd-backend-d4e6qxmvmq-nw.a.run.app/"
+
