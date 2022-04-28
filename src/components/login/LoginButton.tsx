@@ -2,7 +2,6 @@ import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../shared/CustomButton';
 import logo from '../../assets/images/near-logo.png';
-import { CONTRACT_ID } from '../../contracts/nearcrowd/useNearcrowdContract';
 
 import { nearEnv, fakeAuth } from '../../config/near-env';
 
@@ -17,13 +16,14 @@ function LoginButton() {
             window.location.reload();
             return;
         }
-
+       
         wallet
             .requestSignIn({
-                contractId: CONTRACT_ID
+                contractId:'usdn.testnet'
             })
             .catch(console.error);
     }
+    
 
     return (
         <CustomButton

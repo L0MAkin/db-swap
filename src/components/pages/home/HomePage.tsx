@@ -1,27 +1,30 @@
 import { Link } from 'react-router-dom';
 import PageLayout from '../../layout/PageLayout';
-import LoginButton from '../../login/LoginButton';
+// import LoginButton from '../../login/LoginButton';
 import { useAuthorized } from '../../../hooks/useAuthorized';
 import { useWhitelisted } from '../../../hooks/useWhitelisted';
+import { useNearWallet } from 'react-near';
+import SwapContainerWrapper from '../../swap/SwapContainerWrapper';
+
 
 function HomePage() {
     const { authorized } = useAuthorized();
     const { whitelisted } = useWhitelisted();
-
+    const { accountId } = useNearWallet()!.account();
     const invited = authorized && whitelisted;
     const notInvited = authorized && !whitelisted;
+  
 
     return (
         <PageLayout>
             <div className="text-center">
-                {!authorized && (
+                {/* {authorized && accountId && ( */}
                     <>
-                        <h1 className="text-5xl font-medium text-gray-900 mx-auto pt-20 mb-4">Welcome to NEARCrowd</h1>
-                        <LoginButton />
+                        {/* <h1 className="text-5xl font-medium text-gray-900 mx-auto pt-20 mb-4">Welcome to NEARCrowd</h1>
+                        <LoginButton /> */}
+                        <SwapContainerWrapper accountId={accountId}/>
                     </>
-                )}
-
-                {notInvited && <p>You are not whitelisted yet.</p>}
+                {/* )} */}
 
                 {invited && (
                     <>

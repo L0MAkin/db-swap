@@ -36,11 +36,11 @@ const Navbar: FC = () => {
                 <li className="text-3xl mr-5">
                     <NavLink to="/">NEARCrowd</NavLink>
                 </li>
-                {NAV_ITEMS.map(({ id, to, translationKey, requireAuth }) => {
+                {/* {NAV_ITEMS.map(({ id, to, translationKey, requireAuth }) => {
                     const Link = () => <NavLink to={to}>{t(translationKey)}</NavLink>;
 
                     return <li key={id}>{!requireAuth ? <Link /> : authorized && <Link />}</li>;
-                })}
+                })} */}
             </ul>
 
             {!authorized && <LoginButton />}

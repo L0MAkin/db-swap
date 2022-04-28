@@ -7,6 +7,7 @@ import { useWhitelisted } from '../hooks/useWhitelisted';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import GlobalStyle from '../styles/GlobalStyle';
 
 function App() {
     // wait wallet for initialization
@@ -15,7 +16,7 @@ function App() {
         return <Loader />;
     }
 
-    const WithWallet: FC = ({ children }) => {
+    const WithWallet= ({ children }) => {
         useWhitelisted(true);
 
         return <>{children}</>;
@@ -23,6 +24,7 @@ function App() {
 
     return (
         <WithWallet>
+            <GlobalStyle />
             <Router />
             <ToastContainer />
         </WithWallet>
