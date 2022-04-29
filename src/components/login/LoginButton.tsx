@@ -5,6 +5,9 @@ import logo from '../../assets/images/near-logo.png';
 
 import { nearEnv, fakeAuth } from '../../config/near-env';
 
+const { REACT_APP_NEAR_ENV } = process.env;
+const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
+
 function LoginButton() {
     const wallet = useNearWallet()!;
     const { t } = useTranslation();
@@ -19,7 +22,7 @@ function LoginButton() {
        
         wallet
             .requestSignIn({
-                contractId:'usdn.testnet'
+                contractId: contractId
             })
             .catch(console.error);
     }
