@@ -23,10 +23,10 @@ const SwapIconTwoArrows = ({ color, width, height, margin }) => {
                 transform="translate(1 1)"
                 // style="stroke:#24272a;fill:none;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-width:2"
             >
-                <path d="m9 27h27" fill="none"/>
-                <path d="m9 36-9-9 9-9" fill="none"/>
-                <path d="m27 9h-27"  fill="none"/>
-                <path d="m27 0 9 9-9 9" fill="none"/>
+                <path d="m9 27h27" fill="none" id='left'/>
+                <path d="m9 36-9-9 9-9" fill="none" id='left'/>
+                <path d="m27 9h-27"  fill="none" id='right'/>
+                <path d="m27 0 9 9-9 9" fill="none" id='right'/>
             </g>
         </svg>
     );

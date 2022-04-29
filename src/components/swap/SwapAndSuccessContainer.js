@@ -22,6 +22,7 @@ const StyledContainer = styled(Container)`
     position: relative;
     .wrap {
         position:relative;
+        height: 60px;
     }
 
     h1 {
@@ -34,19 +35,25 @@ const StyledContainer = styled(Container)`
     }
 
     .iconSwap {
-        margin: 0 auto;
-        width: fit-content;
-        margin-bottom: 30px;
+        width: 50px;
+        height: 50px;
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 9px 10px 5px 5px;
+        /* padding: 9px 10px 5px 5px; */
         border-radius: 50%;
-        border: 1px solid #3170c7;
+        border: 1px solid #FFF;
+        position: relative;
 
         :hover {
             box-shadow: 0px 0px 1px 4px #D6EDFF;
-            svg {
+            svg {   
+                #left {
+                    transform: translateX(-2.5px);
+                } 
+                #right {
+                    transform: translateX(2.5px);
+                }
                 g, path {
                     stroke: #0072ce;
                     fill: #0072ce;
@@ -55,8 +62,16 @@ const StyledContainer = styled(Container)`
         }
 
         svg {
-            transform: rotate(90deg);
+            /* margin: 2px 0px 2px 10px; */
+            position: absolute;
+            top: calc(50% - 9px);
+            left: calc(50% - 7.5px);
+            z-index: 10;
             cursor: pointer;
+            #left {
+               position: absolute;
+               z-index: 10;
+            } 
 
             g:hover {
                 stroke: #0072ce;

@@ -89,9 +89,16 @@ const CustomButton = styled.button`
                 opacity: 0.8;
             }
         }
-
+        &.dark-gold {
+            width: 490px;
+            background-color: #2A2A34;
+            border: 2px solid #C1B582;
+            color: #C1B583;
+            border-radius: 0px;
+            margin: 0 auto;
+        }
         &.light-blue {
-            background-color: #D6EDFF;
+            background-color: #C1B583;
             border: 0;
             color: #0072CE;
             border-radius: 4px;
@@ -110,8 +117,8 @@ const CustomButton = styled.button`
             }
 
             :hover {
-                color: white;
-                background-color: #0072CE;
+                color: black;
+                background-color: #FEFDEE;
             }
 
             :disabled {

@@ -10,13 +10,15 @@ const EXPLORER_URL = REACT_APP_NEAR_ENV === 'testnet' ? 'https://near-contract-h
 
 
 const SwapContainer = styled.div`
-    width: 100%;
-    height: 96px;
-    background: #ffffff;
-    border: 1px solid #3170c7;
+    width: 311px;
+    height: 60px;
+    background: #FEFDEE;
+    border: 1px solid #2A2B34;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     box-sizing: border-box;
-    border-radius: 10px;
-    padding: 20px;
+    padding: 16px 20px;
     &.error {
         border: 1px solid #ec6563;
     }
@@ -26,13 +28,14 @@ const SwapContainer = styled.div`
         padding-right: 3px;
         height: auto;
         border: 0;
-        background-color: white;
+        background-color: #FEFDEE;
         width: 150px;
         margin-left: auto;
         font-weight: 500;
         font-size: 18px;
         line-height: 22px;
         color: #252729;
+        margin-bottom: 10px;
     }
 
     .exchange {
@@ -40,7 +43,7 @@ const SwapContainer = styled.div`
         padding: 0;
         height: auto;
         border: 0;
-        background-color: white;
+        background-color: #FEFDEE;
         width: fit-content;
         margin-left: auto;
         font-weight: 500;
@@ -57,6 +60,9 @@ const SwapContainer = styled.div`
         display: flex;
         width: 100%;
         align-items: center;
+        justify-content: space-between;
+        align-items: center;
+        box-sizing: border-box;
     }
     .icon {
         width: 32px;
@@ -70,6 +76,7 @@ const SwapContainer = styled.div`
         border-radius: 50%;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
         align-self: center;
+        
 
         img,
         svg {
@@ -104,7 +111,6 @@ const SwapContainer = styled.div`
 `;
 
 const SwapTokenContainer = ({
-    text,
     fromToToken,
     value,
     setInputValueFrom,
@@ -135,9 +141,6 @@ const SwapTokenContainer = ({
 
     return (
         <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
-            <div className="text">
-                {text}
-            </div>
             <div className="symbolFlex">
                 <div className="icon">
                     <TokenIcon

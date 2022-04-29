@@ -5,6 +5,9 @@ const Container = styled.div`
     margin: 30px auto 0 auto;
     max-width: 100%;
     padding: 0 14px;
+    background: #2A2B34;
+    border-radius: 30px;
+    padding: 10px 50px 47px 50px;
 
     @media (min-width: 768px) {
         width: 720px;
@@ -20,7 +23,9 @@ const Container = styled.div`
     }
 
     &.small-centered, &.xs-centered {
-        max-width: 500px;
+        max-width: 832px;
+        padding: 10px 50px 47px 50px;
+        
 
         @media (min-width: 768px) {
             &.border {

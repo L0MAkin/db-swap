@@ -11,9 +11,9 @@ const StyledAvailableContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     text-align: right;
-    width: 100%;
+    max-width: 311px;
     margin-top: 5px;
-    color: #252729;
+    color: #fff;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;

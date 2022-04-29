@@ -198,7 +198,7 @@ export default createGlobalStyle`
 
         :focus {
             border-color: #0072ce;
-            background-color: #fff;
+            background-color: #FEFDEE;;
             box-shadow: 0 0 0 2pt #C8E3FC;
         }
 

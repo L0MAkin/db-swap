@@ -31,10 +31,10 @@ const Navbar: FC = () => {
     const { t } = useTranslation();
 
     return (
-        <nav className="p-4 bg-gray-800 flex items-center text-white justify-between">
+        <nav className="p-4 flex items-center text-white justify-between" style={{background: ' #FEFDEE'}}>
             <ul className="flex items-center space-x-4">
                 <li className="text-3xl mr-5">
-                    <NavLink to="/">USN ⇄ NEAR Swap</NavLink>
+                    <NavLink to="/" color='black !Important'>USN ⇄ NEAR Swap</NavLink>
                 </li>
             </ul>
 

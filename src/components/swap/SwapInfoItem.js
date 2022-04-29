@@ -25,7 +25,7 @@ const StyledInfoItem = styled.div`
         width: 67px;
         height: 26px;
         background: #ffffff;
-        border: 1px solid #0072ce;
+        border: 2px solid #C1B582;
         box-sizing: border-box;
         border-radius: 60px;
         text-align: right;
@@ -41,7 +41,9 @@ const StyledInfoItem = styled.div`
         font-weight: 700;
         font-size: 14px;
         line-height: 32px;
-        color: #252729;
+        color: #fff;
+        /* text-align: right;
+        flex: 40%; */
     }
 
     .right_text {
@@ -50,9 +52,12 @@ const StyledInfoItem = styled.div`
         font-size: 14px;
         line-height: 32px;
         text-align: right;
-        color: #252729;
+        color: #fff;
         position: relative;
         min-width: 0px;
+        margin-left: 110px;
+        /* text-align: left;
+        flex: 40%; */
         
         &.dots {
             ::after {
