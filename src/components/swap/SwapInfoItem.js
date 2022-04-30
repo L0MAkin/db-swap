@@ -37,7 +37,8 @@ const StyledInfoItem = styled.div`
     }
 
     .left_text {
-        font-style: normal;
+        font-family: 'Inter';
+        font-style: bold;
         font-weight: 700;
         font-size: 14px;
         line-height: 32px;
@@ -47,6 +48,7 @@ const StyledInfoItem = styled.div`
     }
 
     .right_text {
+        font-family: 'Inter';
         font-style: normal;
         font-weight: 400;
         font-size: 14px;

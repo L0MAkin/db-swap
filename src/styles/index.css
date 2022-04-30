@@ -3,5 +3,10 @@
 @tailwind utilities;
 
 body {
+    font-family: 'EksellDisplaySubset', regular;
     @apply leading-normal tracking-normal;
+}
+@font-face {
+    font-family: 'EksellDisplaySubset';
+    src: local('EksellDisplaySubset'), url('./fonts/EksellDisplaySubset.woff2') format('woff2');
 }
