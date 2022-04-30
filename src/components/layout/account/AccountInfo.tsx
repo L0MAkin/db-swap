@@ -61,7 +61,7 @@ const AccountInfo: FC = () => {
         <AccountContainer className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
                 <AppNameContainer className="text-2xl sm:text-4xl">
-                    DecentralBank  SWAP
+                    DecentralBank SWAP
                 </AppNameContainer>
             </div>
 
