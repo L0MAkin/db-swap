@@ -194,11 +194,6 @@ export default createGlobalStyle`
             color: #A2A2A8;
         }
 
-        :focus {
-            border-color: #0072ce;
-            background-color: #FEFDEE;;
-            box-shadow: 0 0 0 2pt #C8E3FC;
-        }
 
         &.stake-amount-input,
         &.send-amount-input {
