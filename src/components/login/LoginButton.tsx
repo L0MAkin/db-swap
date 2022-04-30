@@ -1,6 +1,5 @@
 import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
-import {useState, useEffect} from 'react';
 import styled from 'styled-components';
 
 import { nearEnv, fakeAuth } from '../../config/near-env';
@@ -15,6 +14,7 @@ const LoginButtonContainer = styled.div`
     height: 40px;
     display: flex;
     justify-content: space-evenly;
+    font-weight: 600;
 `
 
 const { REACT_APP_NEAR_ENV } = process.env;
@@ -31,14 +31,14 @@ function LoginButton() {
             window.location.reload();
             return;
         }
-       
+
         wallet
             .requestSignIn({
                 contractId: contractId
             })
             .catch(console.error);
     }
-    
+
 
     return (
         <LoginButtonContainer
