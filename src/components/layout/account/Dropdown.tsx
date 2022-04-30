@@ -40,10 +40,6 @@ function Dropdown() {
                     >
                         <Popover.Panel className="absolute z-10 w-screen max-w-sm px-4 mt-3 right-0">
                             <div className="overflow-hidden rounded shadow-lg ring-1 ring-black ring-opacity-5">
-                                <div className="p-7 bg-white text-gray-900">
-                                    {accountStats && <Stats stats={accountStats} />}
-                                    {!whitelisted && <span>Account is not whitelisted.</span>}
-                                </div>
 
                                 <div className="p-7 bg-gray-100 flex justify-end">
                                     <LogoutButton />

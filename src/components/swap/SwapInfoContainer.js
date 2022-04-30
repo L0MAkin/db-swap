@@ -14,6 +14,7 @@ const StyledContainer = styled.div`
     margin-top: 30px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
 `;
 
 function formatAmount({ amount, symbol, tradingFee, value }) {
@@ -48,7 +49,7 @@ function SwapInfoContainer({
     return (
         <StyledContainer>
             <SwapInfoItem
-                leftText="Slippage"
+                leftText="Slippage tolerance"
                 slippageError={slippageError}
                 slippageValue={slippageValue}
                 setSlippageValue={setSlippageValue}

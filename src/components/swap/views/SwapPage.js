@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
+import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 
 import { fetchMultiplier } from '../../../redux/slices/multiplier';
-import FormButton from '../common/FormButtun';
+import FormButton from '../common/FormButton';
 import SwapIconTwoArrows from '../../../assets/svg/SwapIconTwoArrows';
 import AvailableToSwap from '../AvailableToSwap';
 import { formatNearAmount, formatTokenAmount } from '../formatToken';
@@ -15,6 +16,13 @@ import { useNearWallet } from 'react-near';
 
 const { REACT_APP_NEAR_ENV } = process.env;
 const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
+
+const StyledWrapper = styled.div`
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
+`
 
 const balanceForError = (from) => {
     return from?.onChainFTMetadata?.symbol === 'NEAR'
@@ -75,50 +83,51 @@ const SwapPage = ({
         .catch(console.error);
     }
 
-    
+
     return (
         <>
-            <div className='wrap'>
-                <Loader onRefreshMultiplier={() => dispatch(fetchMultiplier())}/>
-                <h1>
-                    Swap
-                </h1>
-            </div>
-            
-            <SwapTokenContainer
-                text="From"
+            {/*<div className='wrap'>*/}
+            {/*    <Loader onRefreshMultiplier={() => dispatch(fetchMultiplier())}/>*/}
+            {/*</div>*/}
+            <StyledWrapper>
+                <SwapTokenContainer
                 fromToToken={from}
                 value={inputValueFrom}
                 setInputValueFrom={setInputValueFrom}
             />
-            <AvailableToSwap
-                onClick={(balance) => {
-                    setInputValueFrom(balance);
-                    from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
-                }}
-                balance={from?.balance}
-                symbol={from?.onChainFTMetadata?.symbol}
-                decimals={from?.onChainFTMetadata?.decimals}
-            />
-            <div
-                className="iconSwap"
-                onClick={() => {
-                    onSwap();
-                    setIsSwapped((prev) => !prev);
-                }}
-            >
-                <SwapIconTwoArrows
-                    width="23"
-                    height="23"
-                    color="#72727A"
+                <AvailableToSwap
+                    onClick={(balance) => {
+                        setInputValueFrom(balance);
+                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                    }}
+                    balance={from?.balance}
+                    symbol={from?.onChainFTMetadata?.symbol}
+                    decimals={from?.onChainFTMetadata?.decimals}
                 />
-            </div>
-            <SwapTokenContainer
-                text="To"
+                <div
+                    className="iconSwapContainer"
+                >
+                    <div
+                        className="iconSwap"
+                        onClick={() => {
+                            onSwap();
+                            setIsSwapped((prev) => !prev);
+                        }}
+                    >
+                        <SwapIconTwoArrows
+                            width="23"
+                            height="23"
+                            color="#FFF"
+                        />
+                    </div>
+                    <div className="iconSwapDivider"/>
+                </div>
+                <SwapTokenContainer
                 fromToToken={to}
                 multiplier={multiplier}
                 value={inputValueFrom}
-            />
+                />
+            </StyledWrapper>
             <SwapInfoContainer
                 slippageError={slippageError}
                 slippageValue={slippageValue}
@@ -133,14 +142,15 @@ const SwapPage = ({
             <div className="buttons-bottom-buttons">
                 <FormButton
                     type="submit"
+                    color='dark-gold'
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
-                    onClick={() => accountId 
+                    onClick={() => accountId
                         ? onHandleSwapTokens(accountId, multiplier, slippageValue, +inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
                         : signIn()}
                     sending={isLoading}
                 >
-                  {accountId ? <>Swap</> : <>Connect to Wallet</>} 
+                  {accountId ? <>Continue</> : <>Connect to Wallet</>}
                 </FormButton>
                 {/* <FormButton
                     type="button"

@@ -16,7 +16,7 @@ function Loader({ onRefreshMultiplier }) {
                 strokeWidth={2}
                 isPlaying
                 duration={30}
-                colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                colors={['#C1B583', '#C1B583', '#C1B583', '#C1B583']}
                 colorsTime={[7, 5, 2, 0]}
                 onComplete={() => {
                     onRefreshMultiplier();

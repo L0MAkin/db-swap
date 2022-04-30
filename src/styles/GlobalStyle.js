@@ -55,9 +55,7 @@ export default createGlobalStyle`
         text-decoration: underline;
     }
 
-    body, p, h1, h2, h3, h4, h5, h6, button, .button, input, select, textarea {
-        font-family: "Inter", Lato, "Lucida Grande", Tahoma, Sans-Serif;
-    }
+  
 
     .font-monospace {
         font-family: 'IBM Plex Mono', monospace;
@@ -196,11 +194,6 @@ export default createGlobalStyle`
             color: #A2A2A8;
         }
 
-        :focus {
-            border-color: #0072ce;
-            background-color: #fff;
-            box-shadow: 0 0 0 2pt #C8E3FC;
-        }
 
         &.stake-amount-input,
         &.send-amount-input {
