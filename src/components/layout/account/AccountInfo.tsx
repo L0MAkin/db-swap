@@ -1,8 +1,6 @@
 import { FC } from 'react';
-import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
 import LoginButton from '../../login/LoginButton';
-import Dropdown from './../account/Dropdown';
 import { useAuthorized } from '../../../hooks/useAuthorized';
 import { useNearWallet } from 'react-near';
 
@@ -25,34 +23,56 @@ const AccountContainer = styled.div`
         width: 610px;
     }
 `
-const NameContainer = styled.div`
+const AppNameContainer = styled.div`
     font-family: 'EksellDisplaySubset', regular;
     font-weight: 400;
     color:  #2A2B34;
 `
 
+const AccountNameContainer = styled.div`
+    color: #2A2B34;
+`
+const LogOutContainer = styled.div`
+    font-weight: 700;
+    color: #2A2B34;
+    cursor: pointer;
+`
+
 const AccountInfo: FC = () => {
     const { authorized } = useAuthorized();
     const { accountId } = useNearWallet()!.account();
+    const wallet = useNearWallet();
+
 
 
     return (
-        <AccountContainer className="flex items-center ">
+        <AccountContainer className="flex items-center justify-between">
             <div className="flex items-center space-x-4">
-                <NameContainer className="text-4xl">
+                <AppNameContainer className="text-4xl">
                     DecentralBank  SWAP
-                </NameContainer>
+                </AppNameContainer>
             </div>
 
             {!authorized && <LoginButton />}
 
-            {authorized && (
-                <div>
+            {authorized && (<div>
+                <AccountNameContainer>
+                    Account {accountId}
+                </AccountNameContainer>
+                <div
+                    onClick={() => {
+                        // NOTE: this method only clears data from local storage
+                        // which does not make state changes or trigger updates
+                        wallet?.signOut();
+                        // HACK: refresh browser page
+                        window.location.reload();
+                    }}
+                    className="flex justify-end"
+                >
+                    <LogOutContainer>Log Out</LogOutContainer></div>
+            </div>
 
-                   Account {accountId}
-                </div>
             )}
-            {/* {authorized && <Dropdown />} */}
         </AccountContainer>
     );
 };
