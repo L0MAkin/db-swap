@@ -55,9 +55,7 @@ export default createGlobalStyle`
         text-decoration: underline;
     }
 
-    body, p, h1, h2, h3, h4, h5, h6, button, .button, input, select, textarea {
-        font-family: "Inter", Lato, "Lucida Grande", Tahoma, Sans-Serif;
-    }
+  
 
     .font-monospace {
         font-family: 'IBM Plex Mono', monospace;
