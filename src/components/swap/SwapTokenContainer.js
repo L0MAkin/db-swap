@@ -16,7 +16,6 @@ const SwapContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    padding: 16px 20px;
 
     &.error {
         border: 1px solid #ec6563;
@@ -66,11 +65,18 @@ const SwapContainer = styled.div`
     .symbolContainer {
         display: flex;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
+        min-width: 100px;
     }
 
     .inputContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
+        max-width: 350px;
+        height: 60px;
+        padding-right: 20px;
         background-color: #FEFDEE;
     }
 

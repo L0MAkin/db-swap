@@ -105,17 +105,22 @@ const SwapPage = ({
                     decimals={from?.onChainFTMetadata?.decimals}
                 />
                 <div
-                    className="iconSwap"
-                    onClick={() => {
-                        onSwap();
-                        setIsSwapped((prev) => !prev);
-                    }}
+                    className="iconSwapContainer"
                 >
-                    <SwapIconTwoArrows
-                        width="23"
-                        height="23"
-                        color="#FFF"
-                    />
+                    <div
+                        className="iconSwap"
+                        onClick={() => {
+                            onSwap();
+                            setIsSwapped((prev) => !prev);
+                        }}
+                    >
+                        <SwapIconTwoArrows
+                            width="23"
+                            height="23"
+                            color="#FFF"
+                        />
+                    </div>
+                    <div className="iconSwapDivider"/>
                 </div>
                 <SwapTokenContainer
                 fromToToken={to}

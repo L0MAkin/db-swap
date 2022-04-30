@@ -6,29 +6,17 @@ const SwapIconTwoArrows = ({ color, width, height, margin }) => {
     const currentHeight = height || '20';
     // const currentMargin = margin || '0px';
     return (
-        <svg
-            style={{ marginTop: margin }}
-            height={currentHeight}
-            viewBox="0 0 50 50"
-            width={currentWidth}
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <g
-                fill={color}
-                fillRule="evenodd"
-                stroke={color}
-                strokeWidth="3.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                transform="translate(1 1)"
-                // style="stroke:#24272a;fill:none;fill-rule:evenodd;stroke-linecap:round;stroke-linejoin:round;stroke-width:2"
-            >
-                <path d="m9 27h27" fill="none" id='left'/>
-                <path d="m9 36-9-9 9-9" fill="none" id='left'/>
-                <path d="m27 9h-27"  fill="none" id='right'/>
-                <path d="m27 0 9 9-9 9" fill="none" id='right'/>
-            </g>
-        </svg>
+                <svg width="50"
+                     height="50"
+                     viewBox="0 0 50 50"
+                     fill="none"
+                     xmlns="http://www.w3.org/2000/svg"
+                     transform="translate(0 0)"
+                >
+                    <circle cx="25" cy="25" r="24.5" transform="rotate(180 25 25)" fill="#2A2B34" stroke="white"/>
+                    <path d="M21.7654 35.0417L21.7654 16.2716L23.645 17.9899C24.0544 18.3642 24.7179 18.3642 25.1273 17.9899C25.3322 17.8026 25.4344 17.5577 25.4344 17.3124C25.4344 17.0671 25.3322 16.8222 25.1273 16.6349L21.4583 13.2807C21.0489 12.9064 20.3854 12.9064 19.976 13.2807L16.307 16.6349C15.8977 17.0091 15.8977 17.6157 16.307 17.9899C16.7164 18.3642 17.3799 18.3642 17.7893 17.9899L19.6689 16.2716L19.6689 35.0417C19.6689 35.5707 20.1385 36 20.7171 36C21.2958 36 21.7654 35.5707 21.7654 35.0417Z" fill="white"/>
+                    <path d="M28.6983 13.9583L28.6983 32.7284L26.8187 31.0101C26.4093 30.6358 25.7457 30.6358 25.3364 31.0101C24.927 31.3838 24.927 31.9914 25.3364 32.3651L29.0054 35.7193C29.4148 36.0936 30.0783 36.0936 30.4877 35.7193L34.1567 32.3651C34.3617 32.1783 34.4639 31.9329 34.4639 31.6876C34.4639 31.4423 34.3617 31.1969 34.1567 31.0101C33.7474 30.6358 33.0838 30.6358 32.6744 31.0101L30.7948 32.7284L30.7948 13.9583C30.7948 13.4293 30.3252 13 29.7466 13C29.1679 13 28.6983 13.4293 28.6983 13.9583Z" fill="white"/>
+                </svg>
     );
 };
 
