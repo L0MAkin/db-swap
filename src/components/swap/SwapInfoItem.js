@@ -10,7 +10,7 @@ const StyledInfoItem = styled.div`
     justify-content: space-between;
     align-items: center;
     position: relative;
-        
+
     > span {
         position: absolute;
         top: 12px;
@@ -25,7 +25,7 @@ const StyledInfoItem = styled.div`
         width: 67px;
         height: 26px;
         background: #ffffff;
-        border: 2px solid #C1B582;
+        border: 1px solid #2A2B34;
         box-sizing: border-box;
         border-radius: 60px;
         text-align: right;
@@ -58,7 +58,7 @@ const StyledInfoItem = styled.div`
         margin-left: 110px;
         /* text-align: left;
         flex: 40%; */
-        
+
         &.dots {
             ::after {
                 position: absolute;

@@ -4,28 +4,27 @@ const Container = styled.div`
     width: auto;
     margin: 30px auto 0 auto;
     max-width: 100%;
-    padding: 0 14px;
     background: #2A2B34;
     border-radius: 30px;
     padding: 10px 50px 47px 50px;
 
     @media (min-width: 768px) {
-        width: 720px;
+        width: 610px;
     }
 
     @media (min-width: 992px) {
-        width: 920px;
+        width: 610px;
         padding: 10px 0 10px 0;
     }
 
     @media (min-width: 1200px) {
-        width: 1000px;
+        width: 610px;
     }
 
     &.small-centered, &.xs-centered {
         max-width: 832px;
         padding: 10px 50px 47px 50px;
-        
+
 
         @media (min-width: 768px) {
             &.border {
@@ -68,7 +67,7 @@ const Container = styled.div`
                 flex: 1.5;
                 margin-right: 40px;
             }
-    
+
             .right {
                 flex: 1;
                 max-width: 365px;
@@ -97,11 +96,11 @@ const Container = styled.div`
         &&& {
             button {
                 margin-top: 25px;
-    
+
                 &.blue {
                     width: 100%;
                 }
-    
+
                 &.remove-all-keys {
                     min-height: 56px;
                     height: auto;

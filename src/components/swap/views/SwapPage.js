@@ -20,6 +20,7 @@ const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
 const StyledWrapper = styled.div`
     display: flex;
     align-items: center;
+    flex-direction: column;
     justify-content: space-between;
 `
 
@@ -82,7 +83,7 @@ const SwapPage = ({
         .catch(console.error);
     }
 
-    
+
     return (
         <>
             <div className='wrap'>
@@ -94,6 +95,15 @@ const SwapPage = ({
                 value={inputValueFrom}
                 setInputValueFrom={setInputValueFrom}
             />
+                <AvailableToSwap
+                    onClick={(balance) => {
+                        setInputValueFrom(balance);
+                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                    }}
+                    balance={from?.balance}
+                    symbol={from?.onChainFTMetadata?.symbol}
+                    decimals={from?.onChainFTMetadata?.decimals}
+                />
                 <div
                     className="iconSwap"
                     onClick={() => {
@@ -113,15 +123,6 @@ const SwapPage = ({
                 value={inputValueFrom}
                 />
             </StyledWrapper>
-             <AvailableToSwap
-                onClick={(balance) => {
-                    setInputValueFrom(balance);
-                    from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
-                }}
-                balance={from?.balance}
-                symbol={from?.onChainFTMetadata?.symbol}
-                decimals={from?.onChainFTMetadata?.decimals}
-            />
             <SwapInfoContainer
                 slippageError={slippageError}
                 slippageValue={slippageValue}
@@ -139,12 +140,12 @@ const SwapPage = ({
                     color='dark-gold'
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
-                    onClick={() => accountId 
+                    onClick={() => accountId
                         ? onHandleSwapTokens(accountId, multiplier, slippageValue, +inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
                         : signIn()}
                     sending={isLoading}
                 >
-                  {accountId ? <>Continue</> : <>Connect to Wallet</>} 
+                  {accountId ? <>Continue</> : <>Connect to Wallet</>}
                 </FormButton>
                 {/* <FormButton
                     type="button"

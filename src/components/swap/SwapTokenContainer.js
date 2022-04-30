@@ -10,15 +10,14 @@ const EXPLORER_URL = REACT_APP_NEAR_ENV === 'testnet' ? 'https://near-contract-h
 
 
 const SwapContainer = styled.div`
-    width: 311px;
+    width: 100%;
     height: 60px;
-    background: #FEFDEE;
-    border: 1px solid #2A2B34;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
     padding: 16px 20px;
+
     &.error {
         border: 1px solid #ec6563;
     }
@@ -61,9 +60,20 @@ const SwapContainer = styled.div`
         width: 100%;
         align-items: center;
         justify-content: space-between;
-        align-items: center;
         box-sizing: border-box;
     }
+
+    .symbolContainer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .inputContainer {
+        width: 100%;
+        background-color: #FEFDEE;
+    }
+
     .icon {
         width: 32px;
         height: 32px;
@@ -76,7 +86,7 @@ const SwapContainer = styled.div`
         border-radius: 50%;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
         align-self: center;
-        
+
 
         img,
         svg {
@@ -96,12 +106,11 @@ const SwapContainer = styled.div`
         .symbol {
             font-weight: 700;
             font-size: 16px;
-            color: #24272a;
+            color: #ffffff;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
             display: block;
-            margin-right: 10px;
 
             a {
                 color: inherit;
@@ -142,34 +151,37 @@ const SwapTokenContainer = ({
     return (
         <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
             <div className="symbolFlex">
-                <div className="icon">
-                    <TokenIcon
-                        symbol={fromToToken?.onChainFTMetadata?.symbol}
-                        icon={fromToToken?.onChainFTMetadata?.icon}
-                    />
-                </div>
-                <div className="desc">
-                    {fromToToken?.contractName ? (
-                        <span
-                            className="symbol"
-                            title={fromToToken?.contractName}
-                        >
-                            <a
-                                href={`${EXPLORER_URL}/accounts/${fromToToken?.contractName}`}
-                                onClick={(e) => e.stopPropagation()}
-                                target="_blank"
-                                rel="noopener noreferrer"
+                <div className="symbolContainer">
+                    <div className="icon">
+                        <TokenIcon
+                            symbol={fromToToken?.onChainFTMetadata?.symbol}
+                            icon={fromToToken?.onChainFTMetadata?.icon}
+                        />
+                    </div>
+                    <div className="desc">
+                        {fromToToken?.contractName ? (
+                            <span
+                                className="symbol"
+                                title={fromToToken?.contractName}
                             >
-                                {fromToToken?.onChainFTMetadata?.name ||
-                                    fromToToken?.onChainFTMetadata?.symbol}
-                            </a>
-                        </span>
-                    ) : (
-                        <span className="symbol">
-                            {fromToToken?.onChainFTMetadata?.symbol === 'NEAR' ? 'NEAR' : 'USN'}
-                        </span>
-                    )}
+                                <a
+                                    href={`${EXPLORER_URL}/accounts/${fromToToken?.contractName}`}
+                                    onClick={(e) => e.stopPropagation()}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    {fromToToken?.onChainFTMetadata?.name ||
+                                        fromToToken?.onChainFTMetadata?.symbol}
+                                </a>
+                            </span>
+                        ) : (
+                            <span className="symbol">
+                                {fromToToken?.onChainFTMetadata?.symbol === 'NEAR' ? 'NEAR' : 'USN'}
+                            </span>
+                        )}
+                    </div>
                 </div>
+                <div className="inputContainer">
                 {setInputValueFrom ? (
                     <input
                         ref={inputRef}
@@ -192,6 +204,7 @@ const SwapTokenContainer = ({
                         </>
                     </div>
                 ) : null}
+                </div>
             </div>
         </SwapContainer>
     );

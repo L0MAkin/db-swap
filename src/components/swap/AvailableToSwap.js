@@ -7,18 +7,14 @@ import { formatNearAmount, formatTokenAmount } from './formatToken';
 
 const StyledAvailableContainer = styled.div`
     display: flex;
-    padding-left: 4px;
     justify-content: space-between;
     align-items: center;
-    text-align: right;
-    max-width: 311px;
-    margin-top: 5px;
+    width: 100%;
     color: #fff;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
-    margin-bottom: 15px;
 
     span {
         color: green;
