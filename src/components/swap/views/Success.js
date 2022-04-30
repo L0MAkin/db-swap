@@ -1,6 +1,6 @@
 import React from 'react';
 
-import FormButton from '../common/FormButtun';
+import FormButton from '../common/FormButton';
 import { exchangeRateTranslation } from '../helpers';
 import ImageContainer from '../ImageContainer';
 import TextInfoSuccess from '../TextInfoSuccess';
