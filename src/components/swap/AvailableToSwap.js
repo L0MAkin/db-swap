@@ -5,7 +5,7 @@ import { formatNearAmount, formatTokenAmount } from './formatToken';
 
 const StyledAvailableContainer = styled.div`
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     width: 100%;
     color: #fff;
@@ -14,6 +14,13 @@ const StyledAvailableContainer = styled.div`
     font-size: 14px;
     line-height: 17px;
     margin-top: 12px;
+
+    .textContainer {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        max-width: 350px;
+    }
 
     span {
         color: #71BA92;
@@ -30,27 +37,29 @@ function AvailableToSwap({ balance, symbol, decimals, onClick }) {
 
     return (
         <StyledAvailableContainer>
-            <div>
-                <>Available to swap</>{' '}
-                <span>
+            <div className="textContainer">
+                <div>
+                    <>Available to swap</>{' '}
+                    <span>
                     {balance && (
                         <>
                             {' '}
                             {symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals, 5)}
                         </>
                     )}
-                    {!balance && <span className="dots"/>}
-                    {' '}
-                    <>{symbol}</>
+                        {!balance && <span className="dots"/>}
+                        {' '}
+                        <>{symbol}</>
                 </span>
-            </div>
-            <div>
+                </div>
+                <div>
                 <span
                     onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals, 5))}
                     className="useMaxButton"
                 >
                      <>Use Max</>
                 </span>
+                </div>
             </div>
         </StyledAvailableContainer>
     );

@@ -31,7 +31,7 @@ const CustomButton = styled.button`
             height: 36px;
             border-radius: 20px;
             padding: 0px 0px;
-            
+
             font-size: 14px;
         }
 
@@ -58,7 +58,7 @@ const CustomButton = styled.button`
                 color: #A2A2A8;
             }
         }
-        
+
         &.dark-gray-light-blue {
             background-color: #37383C;
             border-color: #37383C;
@@ -90,7 +90,7 @@ const CustomButton = styled.button`
             }
         }
         &.dark-gold {
-            width: 490px;
+            max-width: 490px;
             background-color: #2A2A34;
             border: 2px solid #C1B582;
             color: #C1B583;
@@ -198,7 +198,7 @@ const CustomButton = styled.button`
         &.green {
             border-color: #5ace84;
             background: #5ace84;
-            
+
 
             :disabled {
                 border-color: #e6e6e6;
@@ -409,7 +409,7 @@ const CustomButton = styled.button`
             :after {
                 content: '.';
                 animation: dots 1s steps(5, end) infinite;
-            
+
                 @keyframes dots {
                     0%, 20% {
                         color: rgba(0,0,0,0);
@@ -454,7 +454,7 @@ const CustomButton = styled.button`
             :after {
                 content: '.';
                 animation: link 1s steps(5, end) infinite;
-            
+
                 @keyframes link {
                     0%, 20% {
                         color: rgba(0,0,0,0);
@@ -490,10 +490,10 @@ const CustomButton = styled.button`
     }
 `;
 
-const FormButton = ({ 
-    children, 
-    type, 
-    color = 'blue', 
+const FormButton = ({
+    children,
+    type,
+    color = 'blue',
     disabled = false,
     onClick,
     sending = false,
