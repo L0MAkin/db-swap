@@ -1,9 +1,21 @@
 import { useNearWallet } from 'react-near';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../shared/CustomButton';
-import logo from '../../assets/images/near-logo.png';
+import styled from 'styled-components';
 
 import { nearEnv, fakeAuth } from '../../config/near-env';
+
+
+const LoginButtonContainer = styled.div`
+    width: 150px;
+    background-color: #2A2A34;
+    border: 2px solid #C1B582;
+    color: #C1B583;
+    border-radius: 0px;
+    height: 40px;
+    display: flex;
+    justify-content: space-evenly;
+    font-weight: 600;
+`
 
 const { REACT_APP_NEAR_ENV } = process.env;
 const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
@@ -19,26 +31,25 @@ function LoginButton() {
             window.location.reload();
             return;
         }
-       
+
         wallet
             .requestSignIn({
                 contractId: contractId
             })
             .catch(console.error);
     }
-    
+
 
     return (
-        <CustomButton
+        <LoginButtonContainer
             onClick={() => {
                 authorize();
             }}
         >
             <div className="flex items-center space-x-3">
                 <span>{t('buttons.login')}</span>
-                <img src={logo} alt="near-icon" className="w-6" />
             </div>
-        </CustomButton>
+        </LoginButtonContainer>
     );
 }
 

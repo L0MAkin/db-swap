@@ -6,7 +6,6 @@ import { useWhitelisted } from '../../../hooks/useWhitelisted';
 import { useNearWallet } from 'react-near';
 import SwapContainerWrapper from '../../swap/SwapContainerWrapper';
 
-
 function HomePage() {
     const { authorized } = useAuthorized();
     const { whitelisted } = useWhitelisted();
@@ -14,6 +13,7 @@ function HomePage() {
     const invited = authorized && whitelisted;
     const notInvited = authorized && !whitelisted;
   
+
 
     return (
         <PageLayout>

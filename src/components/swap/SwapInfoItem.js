@@ -10,13 +10,13 @@ const StyledInfoItem = styled.div`
     justify-content: space-between;
     align-items: center;
     position: relative;
-        
+
     > span {
         position: absolute;
         top: 12px;
         right: 5px;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 20px;
         color: #252729;
     }
@@ -25,40 +25,42 @@ const StyledInfoItem = styled.div`
         width: 67px;
         height: 26px;
         background: #ffffff;
-        border: 2px solid #C1B582;
+        border: 1px solid #2A2B34;
         box-sizing: border-box;
         border-radius: 60px;
         text-align: right;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 20px;
         color: #252729;
         padding-right: 18px;
     }
 
     .left_text {
-        font-style: normal;
+        font-family: 'Inter';
+        font-style: bold;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 0.8rem;
         line-height: 32px;
         color: #fff;
+        white-space: nowrap;
         /* text-align: right;
         flex: 40%; */
     }
 
     .right_text {
+        font-family: 'Inter';
         font-style: normal;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 0.8rem;
         line-height: 32px;
         text-align: right;
         color: #fff;
         position: relative;
         min-width: 0px;
-        margin-left: 110px;
-        /* text-align: left;
+        white-space: nowrap;        /* text-align: left;
         flex: 40%; */
-        
+
         &.dots {
             ::after {
                 position: absolute;

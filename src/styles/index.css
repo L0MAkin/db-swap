@@ -3,5 +3,14 @@
 @tailwind utilities;
 
 body {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
     @apply leading-normal tracking-normal;
+    background-color: #FEFDEE;
+    background-image: url(../assets/svg/bg.svg);
+    background-size: cover;
+}
+@font-face {
+    font-family: 'EksellDisplaySubset';
+    src: local('EksellDisplaySubset'), url('./fonts/EksellDisplaySubset.woff2') format('woff2');
 }

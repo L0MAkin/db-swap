@@ -6,6 +6,7 @@ import { fetchMultiplier, selectMetadataSlice } from '../../redux/slices/multipl
 import { fetchNearBalance } from '../../redux/slices/near';
 import { actions as tokensActions } from '../../redux/slices/tokens';
 import SwapAndSuccessContainer from './SwapAndSuccessContainer';
+import AccountInfo from '../layout/account/AccountInfo';
 
 const { fetchTokens } = tokensActions;
 
@@ -15,22 +16,25 @@ const SwapContainerWrapper = ({ accountId }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if(!accountId) {
+        if (!accountId) {
             dispatch(fetchMultiplier());
             return;
         }
         dispatch(fetchMultiplier());
         dispatch(fetchTokens({ accountId }));
         dispatch(fetchNearBalance(accountId))
-       
+
     }, [accountId]);
 
     return (
-        <SwapAndSuccessContainer
-            fungibleTokensList={fungibleTokensList}
-            accountId={accountId}
-            multiplier={multiplier}
-        />
+        <>
+            <AccountInfo/>
+            <SwapAndSuccessContainer
+                fungibleTokensList={fungibleTokensList}
+                accountId={accountId}
+                multiplier={multiplier}
+            />
+        </>
     );
 };
 
