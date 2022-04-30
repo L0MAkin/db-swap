@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 
 import { fetchMultiplier } from '../../../redux/slices/multiplier';
-import FormButton from '../common/FormButtun';
+import FormButton from '../common/FormButton';
 import SwapIconTwoArrows from '../../../assets/svg/SwapIconTwoArrows';
 import AvailableToSwap from '../AvailableToSwap';
 import { formatNearAmount, formatTokenAmount } from '../formatToken';
