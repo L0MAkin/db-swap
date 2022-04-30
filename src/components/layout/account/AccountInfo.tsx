@@ -30,10 +30,22 @@ const AppNameContainer = styled.div`
 `
 
 const AccountNameContainer = styled.div`
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 300;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: right;
     color: #2A2B34;
 `
 const LogOutContainer = styled.div`
+    font-family: 'Inter';
+    font-style: normal;
     font-weight: 700;
+    font-size: 15px;
+    line-height: 18px;
+    text-align: right;
+    letter-spacing: 0.5px;
     color: #2A2B34;
     cursor: pointer;
 `
@@ -57,7 +69,7 @@ const AccountInfo: FC = () => {
 
             {authorized && (<div>
                 <AccountNameContainer>
-                    Account {accountId}
+                     {accountId}
                 </AccountNameContainer>
                 <div
                     onClick={() => {
