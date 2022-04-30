@@ -23,7 +23,7 @@ const { REACT_APP_NEAR_ENV } = process.env;
 const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
 
 function LoginButton() {
-    const [isDesktop, setDesktop] = useState(window.innerWidth > 1450);
+    const [isDesktop, setDesktop] = useState(window.innerWidth > 1000);
 
   const updateMedia = () => {
     setDesktop(window.innerWidth > 1450);
