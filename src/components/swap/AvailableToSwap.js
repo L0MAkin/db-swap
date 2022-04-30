@@ -1,8 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 
-
-import FormButton from './common/FormButtun';
 import { formatNearAmount, formatTokenAmount } from './formatToken';
 
 const StyledAvailableContainer = styled.div`
@@ -15,10 +13,15 @@ const StyledAvailableContainer = styled.div`
     font-weight: 500;
     font-size: 14px;
     line-height: 17px;
+    margin-top: 12px;
 
     span {
-        color: green;
+        color: #71BA92;
         cursor: pointer;
+    }
+
+    .useMaxButton {
+        color: #fff;
     }
 `;
 
@@ -42,15 +45,12 @@ function AvailableToSwap({ balance, symbol, decimals, onClick }) {
                 </span>
             </div>
             <div>
-                <FormButton
-                    swapButton={true}
+                <span
                     onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals, 5))}
-                    type='button'
-                    color='light-blue'
-                    className='small rounded'
+                    className="useMaxButton"
                 >
                      <>Use Max</>
-                </FormButton>
+                </span>
             </div>
         </StyledAvailableContainer>
     );
