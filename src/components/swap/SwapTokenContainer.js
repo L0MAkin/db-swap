@@ -81,10 +81,6 @@ const SwapContainer = styled.div`
     }
 
     .icon {
-        width: 32px;
-        height: 32px;
-        min-width: 32px;
-        min-height: 32px;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -92,13 +88,6 @@ const SwapContainer = styled.div`
         border-radius: 50%;
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
         align-self: center;
-
-
-        img,
-        svg {
-            height: 32px;
-            width: 32px;
-        }
     }
 
     .desc {

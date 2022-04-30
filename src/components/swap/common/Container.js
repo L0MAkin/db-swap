@@ -6,25 +6,25 @@ const Container = styled.div`
     max-width: 100%;
     background: #2A2B34;
     border-radius: 30px;
-    padding: 10px 50px 47px 50px;
+    padding: 25px 10px 25px 10px;
 
     @media (min-width: 768px) {
         width: 610px;
+        padding: 60px 70px 60px 70px;
     }
 
     @media (min-width: 992px) {
         width: 610px;
-        padding: 10px 0 10px 0;
+        padding: 60px 70px 60px 70px;
     }
 
     @media (min-width: 1200px) {
         width: 610px;
+        padding: 60px 70px 60px 70px;
     }
 
     &.small-centered, &.xs-centered {
         max-width: 832px;
-        padding: 10px 50px 47px 50px;
-
 
         @media (min-width: 768px) {
             &.border {

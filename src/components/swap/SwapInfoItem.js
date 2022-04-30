@@ -16,7 +16,7 @@ const StyledInfoItem = styled.div`
         top: 12px;
         right: 5px;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 20px;
         color: #252729;
     }
@@ -30,7 +30,7 @@ const StyledInfoItem = styled.div`
         border-radius: 60px;
         text-align: right;
         font-weight: 500;
-        font-size: 14px;
+        font-size: 1rem;
         line-height: 20px;
         color: #252729;
         padding-right: 18px;
@@ -40,9 +40,10 @@ const StyledInfoItem = styled.div`
         font-family: 'Inter';
         font-style: bold;
         font-weight: 700;
-        font-size: 14px;
+        font-size: 0.8rem;
         line-height: 32px;
         color: #fff;
+        white-space: nowrap;
         /* text-align: right;
         flex: 40%; */
     }
@@ -51,14 +52,13 @@ const StyledInfoItem = styled.div`
         font-family: 'Inter';
         font-style: normal;
         font-weight: 400;
-        font-size: 14px;
+        font-size: 0.8rem;
         line-height: 32px;
         text-align: right;
         color: #fff;
         position: relative;
         min-width: 0px;
-        margin-left: 110px;
-        /* text-align: left;
+        white-space: nowrap;        /* text-align: left;
         flex: 40%; */
 
         &.dots {
