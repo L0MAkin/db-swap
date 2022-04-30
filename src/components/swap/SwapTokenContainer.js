@@ -17,10 +17,6 @@ const SwapContainer = styled.div`
     align-items: center;
     box-sizing: border-box;
 
-    &.error {
-        border: 1px solid #ec6563;
-    }
-
     input {
         text-align: right;
         padding-right: 3px;
