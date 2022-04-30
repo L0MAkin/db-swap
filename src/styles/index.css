@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    font-family: 'EksellDisplaySubset', regular;
+    font-family: 'Inter';
     @apply leading-normal tracking-normal;
     background-color: #FEFDEE;
 }
