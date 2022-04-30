@@ -1,10 +1,11 @@
 import { FC } from 'react';
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useTranslation } from 'react-i18next';
 import LoginButton from '../../login/LoginButton';
 import Dropdown from './../account/Dropdown';
 import { useAuthorized } from '../../../hooks/useAuthorized';
+import { useNearWallet } from 'react-near';
+
 
 const AccountContainer = styled.div`
     width: auto;
@@ -25,13 +26,15 @@ const AccountContainer = styled.div`
     }
 `
 const NameContainer = styled.div`
+    font-family: 'EksellDisplaySubset', regular;
     font-weight: 400;
     color:  #2A2B34;
 `
 
 const AccountInfo: FC = () => {
     const { authorized } = useAuthorized();
-    const { t } = useTranslation();
+    const { accountId } = useNearWallet()!.account();
+
 
     return (
         <AccountContainer className="flex items-center ">
@@ -43,7 +46,13 @@ const AccountInfo: FC = () => {
 
             {!authorized && <LoginButton />}
 
-            {authorized && <Dropdown />}
+            {authorized && (
+                <div>
+
+                   Account {accountId}
+                </div>
+            )}
+            {/* {authorized && <Dropdown />} */}
         </AccountContainer>
     );
 };
