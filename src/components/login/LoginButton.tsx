@@ -15,6 +15,12 @@ const LoginButtonContainer = styled.div`
     display: flex;
     justify-content: space-evenly;
     font-weight: 600;
+    cursor: pointer;
+
+    :hover {
+        background-color: #C1B583;
+        color: black;
+    }
 `
 
 const { REACT_APP_NEAR_ENV } = process.env;

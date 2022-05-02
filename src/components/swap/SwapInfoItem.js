@@ -25,7 +25,7 @@ const StyledInfoItem = styled.div`
         width: 67px;
         height: 26px;
         background: #ffffff;
-        border: 1px solid #2A2B34;
+        border: 2px solid #C1B583;
         box-sizing: border-box;
         border-radius: 60px;
         text-align: right;
@@ -44,8 +44,6 @@ const StyledInfoItem = styled.div`
         line-height: 32px;
         color: #fff;
         white-space: nowrap;
-        /* text-align: right;
-        flex: 40%; */
     }
 
     .right_text {

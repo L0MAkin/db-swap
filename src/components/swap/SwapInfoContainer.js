@@ -19,11 +19,15 @@ const StyledContainer = styled.div`
 
 function formatAmount({ amount, symbol, tradingFee, value }) {
     if (!amount && !tradingFee) {
-        return `${amount} ${symbol}`;
+        return `0 ${symbol}`;
     }
 
     if (!tradingFee) {
-        return `- ${symbol}`;
+        return `0 ${symbol}`;
+    }
+
+    if (!amount) {
+        return `0 ${symbol}`;
     }
 
     return `${value} ${symbol}`;

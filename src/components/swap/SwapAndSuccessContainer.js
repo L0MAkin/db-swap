@@ -69,6 +69,12 @@ const StyledContainer = styled(Container)`
             /* margin: 2px 0px 2px 10px; */
             z-index: 10;
             cursor: pointer;
+            :hover {
+                path {
+                    fill: #C1B583;
+                   
+                }
+            }
 
             #left {
                 position: absolute;
@@ -110,7 +116,7 @@ const SwapAndSuccessContainer = ({
     multiplier,
 }) => {
     const [from, setFrom] = useState(fungibleTokensList[0]);
-    const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: 0});
+    const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
     const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const dispatch = useDispatch()
@@ -141,14 +147,18 @@ const SwapAndSuccessContainer = ({
                     setInputValueFrom={setInputValueFrom}
                     to={to}
                     onSwap={() => {
-                        if (to?.balance === '0' || !to?.balance) return;
+                        // if (to?.balance === '0' || !to?.balance) return;
 
                         if (from?.onChainFTMetadata?.symbol === 'NEAR') {
-                            setFrom(currentToken(fungibleTokensList, 'USN'));
+                            setFrom(accountId 
+                                ? currentToken(fungibleTokensList, 'USN') 
+                                : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
                             setTo(fungibleTokensList[0]);
                         } else {
                             setFrom(fungibleTokensList[0]);
-                            setTo(currentToken(fungibleTokensList, 'USN'));
+                            setTo(accountId 
+                                ? currentToken(fungibleTokensList, 'USN') 
+                                : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
                         }
                     }}
                 />

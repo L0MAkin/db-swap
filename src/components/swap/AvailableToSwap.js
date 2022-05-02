@@ -29,6 +29,10 @@ const StyledAvailableContainer = styled.div`
 
     .useMaxButton {
         color: #fff;
+
+        :hover {
+            color: #C1B583;
+        }
     }
 `;
 
