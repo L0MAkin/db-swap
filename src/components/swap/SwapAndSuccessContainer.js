@@ -147,7 +147,6 @@ const SwapAndSuccessContainer = ({
                     setInputValueFrom={setInputValueFrom}
                     to={to}
                     onSwap={() => {
-                        // if (to?.balance === '0' || !to?.balance) return;
 
                         if (from?.onChainFTMetadata?.symbol === 'NEAR') {
                             setFrom(accountId 
