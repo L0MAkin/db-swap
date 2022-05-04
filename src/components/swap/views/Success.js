@@ -15,7 +15,6 @@ const Success = ({
 }) => {
   return (
     <>
-        {!errorFromHash && <ImageContainer />}
         <TextInfoSuccess
             errorFromHash={errorFromHash}
             valueFrom={inputValueFrom}
