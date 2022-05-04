@@ -69,7 +69,7 @@ const AccountInfo: FC = () => {
 
             {authorized && (<div>
                 <AccountNameContainer>
-                     {accountId}
+                     {accountId.length > 20 ? accountId.slice(0, 20) + '...' : accountId}
                 </AccountNameContainer>
                 <div
                     onClick={() => {

@@ -9,6 +9,13 @@ import SwapPage from './views/SwapPage';
 
 import { actions } from '../../redux/slices/tokens';
 import { fetchNearBalance } from '../../redux/slices/near';
+import { useNearWallet } from 'react-near';
+import { useLocation, useNavigate } from 'react-router';
+import { formatNearAmount, formatTokenAmount } from './formatToken';
+
+const { REACT_APP_NEAR_ENV } = process.env;
+
+const explorerUrl = REACT_APP_NEAR_ENV === 'testnet' ? 'https://explorer.testnet.near.org' : 'https://explorer.mainnet.near.org'
 
 const { fetchTokens } = actions;
 
@@ -104,10 +111,28 @@ const StyledContainer = styled(Container)`
         font-size: 20px;
         line-height: 28px;
         text-align: center;
-        color: #252729;
+        color: #fff;
         margin: 0 auto;
+
+        > div {
+            width: 100%;
+            background: #efefef;
+            padding: 5px;
+            color: gray;
+            font-weight: 400;
+        }
     }
 `;
+
+const formatDeposit = (method, res) => {
+    return method === 'buy' 
+    ? formatNearAmount(res.transaction.actions[0].FunctionCall.deposit) 
+    : formatTokenAmount(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount, 18, 0)
+}
+
+const formatError = (value) => {
+    return JSON.stringify(value);
+}
 
 
 const SwapAndSuccessContainer = ({
@@ -119,7 +144,14 @@ const SwapAndSuccessContainer = ({
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
     const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
+    const [methodFromHash, setMethodFromHash] = useState('buy')
+    const [errorFromHash, setErrorFromHash] = useState('')
+    const [transactionHash, setTransactionHash] = useState('')
+    const [deposit, setDeposit] = useState('')
+    const wallet = useNearWallet();
     const dispatch = useDispatch()
+    const { search } = useLocation()
+    const navigate = useNavigate()
 
     useEffect(() => {
         setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
@@ -128,18 +160,50 @@ const SwapAndSuccessContainer = ({
         }
     }, [fungibleTokensList]);
 
+    useEffect(() => {
+        const getHash = async (hash) => {
+            try {
+                const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
+                if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
+                setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
+                setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
+                setActiveView('success')
+            }   
+                if(res.status.Failure) {
+                    setErrorFromHash(formatError(res.status.Failure?.ActionError))
+                    setActiveView('success')
+                }
+            } catch (e) {
+                setErrorFromHash(formatError(e.message))
+                setActiveView('success')
+            }
+        }
+
+        if(wallet && search.includes('transactionHashes')) {
+            let hash = search.split('=')[1]
+            if(hash.includes('&')) {
+                hash = hash.split('&')[0]
+            }
+            getHash(hash)
+            setTransactionHash(hash)
+        }
+        
+    },[search, wallet])
+
 
     const onHandleBackToSwap = useCallback(async () => {
         await dispatch(fetchTokens({ accountId }));
         await dispatch(fetchNearBalance(accountId))
+        navigate('/')
         setActiveView('main');
     }, []);
-
+    
     return (
         <StyledContainer className='small-centered'>
             {activeView === VIEWS_SWAP.MAIN && (
                 <SwapPage
                     setActiveView={setActiveView}
+                    setErrorFromHash={setErrorFromHash}
                     accountId={accountId}
                     from={from}
                     inputValueFrom={inputValueFrom}
@@ -164,12 +228,13 @@ const SwapAndSuccessContainer = ({
             )}
             {activeView === VIEWS_SWAP.SUCCESS && (
                 <Success
-                    inputValueFrom={inputValueFrom}
-                    symbol={from.onChainFTMetadata?.symbol}
-                    to={to}
+                    errorFromHash={errorFromHash}
+                    onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
+                    inputValueFrom={deposit}
+                    symbol={methodFromHash}
                     multiplier={multiplier}
                     handleBackToSwap={async () => {
-                        setInputValueFrom(0);
+                        setInputValueFrom('');
                         await onHandleBackToSwap();
                     }}
                 />

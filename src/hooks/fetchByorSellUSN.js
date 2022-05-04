@@ -42,7 +42,6 @@ const setArgsUSNContractSell = (amount, multiplier, slippage, usnAmount) => {
 export const useFetchByorSellUSN = (account) => {
     const [isLoading, setIsLoading] = useState(false);
     const contractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
-    console.log('contractName', contractName);
     const usnMethods = {
         viewMethods: ['version', 'name', 'symbol', 'decimals', 'ft_balance_of'],
         changeMethods: ['buy', 'sell'],
@@ -61,7 +60,6 @@ export const useFetchByorSellUSN = (account) => {
             contractName,
             usnMethods
         );
-        console.log('usnContract', usnContract);
         if (symbol === 'NEAR') {
             await usnContract.buy(setArgsUSNContractBuy(multiplier, slippage, amount));
            

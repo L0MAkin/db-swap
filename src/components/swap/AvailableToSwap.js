@@ -36,14 +36,14 @@ const StyledAvailableContainer = styled.div`
     }
 `;
 
-function AvailableToSwap({ balance, symbol, decimals, onClick }) {
+function AvailableToSwap({ balance, symbol, decimals, onClick, isUSN }) {
     const amountToShow = balance && formatNearAmount(balance);
 
     return (
         <StyledAvailableContainer>
             <div className="textContainer">
                 <div>
-                    <>Available to swap</>{' '}
+                    <>Balance</>{' '}
                     <span>
                     {balance && (
                         <>
@@ -57,12 +57,14 @@ function AvailableToSwap({ balance, symbol, decimals, onClick }) {
                 </span>
                 </div>
                 <div>
-                <span
-                    onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals, 5))}
-                    className="useMaxButton"
-                >
-                     <>Use Max</>
-                </span>
+                 {!isUSN && onClick && 
+                    <span
+                        onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals, 5))}
+                        className="useMaxButton"
+                    >
+                        <>Use Max</>
+                    </span>
+                 }   
                 </div>
             </div>
         </StyledAvailableContainer>

@@ -23,7 +23,7 @@ const SwapContainer = styled.div`
         height: auto;
         border: 0;
         background-color: #FEFDEE;
-        width: 150px;
+        width: 100%;
         margin-left: auto;
         font-weight: 500;
         font-size: 18px;

@@ -49,7 +49,9 @@ function SwapInfoContainer({
         ? +amount * exchangeRate
         : +amount / exchangeRate;
     const symbol = !isNear ? 'NEAR' : 'USN';
-
+    const slicePrice = expectedPrice?.toFixed(5).length > 17 ? expectedPrice.toString().slice(0, 17) + '...' : expectedPrice?.toFixed(5)
+    const sliceAmount = amount.length > 10 ? amount.slice(0, 10) + '...' : amount
+    
     return (
         <StyledContainer>
             <SwapInfoItem
@@ -64,7 +66,7 @@ function SwapInfoContainer({
             />
             <SwapInfoItem
                 leftText={'Expected price'}
-                rightText={`${amount} ${token} = ${expectedPrice?.toFixed(5)} ${symbol}`}
+                rightText={`${sliceAmount} ${token} = ${slicePrice} ${symbol}`}
             />
             <SwapInfoItem
                 isDots={isLoading}

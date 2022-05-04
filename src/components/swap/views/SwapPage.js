@@ -38,7 +38,8 @@ const SwapPage = ({
   multiplier,
   accountId,
   onSwap,
-  setActiveView
+  setActiveView,
+  setErrorFromHash
 }) => {
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
@@ -64,11 +65,14 @@ const SwapPage = ({
             await fetchByOrSell(accountId, multiplier, slippageValue, +inputValueFrom, symbol, usnAmount);
             setActiveView('success');
         } catch (e) {
+            setErrorFromHash(e.message);
+            setActiveView('success');
             // dispatch(showCustomAlert({
             //     errorMessage: e.message,
             //     success: false,
             //     messageCodeHeader: 'error',
             // }));
+            
             console.error(e.message)
         } finally {
             setIsLoading(false);
@@ -96,6 +100,7 @@ const SwapPage = ({
                 setInputValueFrom={setInputValueFrom}
             />
                 <AvailableToSwap
+                    isUSN={false}
                     onClick={(balance) => {
                         setInputValueFrom(balance);
                         from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
@@ -126,6 +131,16 @@ const SwapPage = ({
                 fromToToken={to}
                 multiplier={multiplier}
                 value={inputValueFrom}
+                />
+                <AvailableToSwap
+                    isUSN={true}
+                    onClick={(balance) => {
+                        setInputValueFrom(balance);
+                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                    }}
+                    balance={to?.balance}
+                    symbol={to?.onChainFTMetadata?.symbol}
+                    decimals={to?.onChainFTMetadata?.decimals}
                 />
             </StyledWrapper>
             <SwapInfoContainer

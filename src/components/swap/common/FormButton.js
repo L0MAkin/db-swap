@@ -346,11 +346,11 @@ const CustomButton = styled.button`
             background: none;
             border: none;
             display: inline;
-            color: #0072ce;
+            color: #C1B583;
 
             :hover,
             :focus {
-                color: #0072ce;
+                color: #C1B583;
                 background-color: transparent;
                 text-decoration: underline;
             }

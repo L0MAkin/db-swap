@@ -17,7 +17,7 @@ function App() {
     }
 
     const WithWallet= ({ children }) => {
-        useWhitelisted(true);
+        // useWhitelisted(true);
 
         return <>{children}</>;
     };

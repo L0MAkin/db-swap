@@ -17,6 +17,12 @@ export const exchangeRateTranslation = ({ token, balance, exchangeRate }) => {
         : balance * exchangeRate;
 };
 
+export const exchangeRateTranslationFromHash = ({ method, balance, exchangeRate }) => {
+    return method === 'buy'
+        ? balance * exchangeRate
+        : balance / exchangeRate;
+};
+
 export const MinimumReceived = ({ token, balance, exchangeRate }) => {
     return token === 'NEAR' ? balance / exchangeRate : balance * exchangeRate;
 };
