@@ -3,7 +3,6 @@ import { useNearWallet } from 'react-near';
 
 import Router from './Router';
 import Loader from './Loader';
-import { useWhitelisted } from '../hooks/useWhitelisted';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';

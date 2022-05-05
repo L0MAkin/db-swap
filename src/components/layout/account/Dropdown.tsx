@@ -2,16 +2,11 @@ import { Fragment } from 'react';
 import { Popover, Transition } from '@headlessui/react';
 import { UserCircleIcon } from '@heroicons/react/outline';
 import LogoutButton from './LogoutButton';
-import Stats from './Stats';
-import { useWhitelisted } from '../../../hooks/useWhitelisted';
-import { useAccountStats } from '../../../hooks/useAccountStats';
+
 import { useNearWallet } from 'react-near';
 
 function Dropdown() {
-    const { whitelisted } = useWhitelisted();
-    const { accountStats } = useAccountStats(true);
-
-    const { accountId } = useNearWallet()!.account();
+   const { accountId } = useNearWallet()!.account();
 
     return (
         <Popover className="relative">

@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import LoginButton from '../../login/LoginButton';
-import { useAuthorized } from '../../../hooks/useAuthorized';
 import { useNearWallet } from 'react-near';
 
 
@@ -51,9 +50,9 @@ const LogOutContainer = styled.div`
 `
 
 const AccountInfo: FC = () => {
-    const { authorized } = useAuthorized();
     const { accountId } = useNearWallet()!.account();
     const wallet = useNearWallet();
+    const  authorized  = useNearWallet()!.isSignedIn();
 
 
 
