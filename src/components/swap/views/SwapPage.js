@@ -54,10 +54,11 @@ const SwapPage = ({
         isSwapped,
     });
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
-    const dispatch = useDispatch();
     const balance = balanceForError(from);
     const error = balance < +inputValueFrom || !inputValueFrom;
     const slippageError = slippageValue < 1 || slippageValue > 50;
+    const currentMultiplier = +multiplier * 10000
+   
 
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {
@@ -148,7 +149,7 @@ const SwapPage = ({
                 slippageValue={slippageValue}
                 setSlippageValue={setSlippageValue}
                 token={from?.onChainFTMetadata?.symbol}
-                exchangeRate={+multiplier / 10000}
+                exchangeRate={+multiplier}
                 amount={inputValueFrom}
                 tradingFee={commissionFee?.result}
                 isLoading={isLoadingCommission}
@@ -161,7 +162,7 @@ const SwapPage = ({
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
                     onClick={() => accountId
-                        ? onHandleSwapTokens(accountId, multiplier, slippageValue, +inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
+                        ? onHandleSwapTokens(accountId, currentMultiplier.toString(), slippageValue, +inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
                         : signIn()}
                     sending={isLoading}
                 >

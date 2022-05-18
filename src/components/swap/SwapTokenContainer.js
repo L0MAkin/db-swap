@@ -127,7 +127,6 @@ const SwapTokenContainer = ({
               );
 
     const error = setInputValueFrom && balance < +value;
-    const formatMultiplier = +multiplier / 10000;
     const handleChange = (e) => {
         const { value } = e.target;
         setInputValueFrom(value.replace(/[^.\d,]/g, ''));
@@ -190,7 +189,7 @@ const SwapTokenContainer = ({
                             {exchangeRateTranslation({
                                 token: fromToToken,
                                 balance: + value,
-                                exchangeRate: formatMultiplier
+                                exchangeRate: +multiplier
                             })?.toFixed(5)}
                         </>
                     </div>

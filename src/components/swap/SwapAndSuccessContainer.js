@@ -134,11 +134,15 @@ const formatError = (value) => {
     return JSON.stringify(value);
 }
 
+const currentMultiplier = (symbol, method, a, b) => {
+    return symbol === 'NEAR' && method === 'buy' ? Math.max(a, b).toFixed(4) : Math.min(a, b).toFixed(4);
+}
+
 
 const SwapAndSuccessContainer = ({
     fungibleTokensList,
     accountId,
-    multiplier,
+    multipliers,
 }) => {
     const [from, setFrom] = useState(fungibleTokensList[0]);
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
@@ -148,10 +152,13 @@ const SwapAndSuccessContainer = ({
     const [errorFromHash, setErrorFromHash] = useState('')
     const [transactionHash, setTransactionHash] = useState('')
     const [deposit, setDeposit] = useState('')
+    const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
     const navigate = useNavigate()
+
+    const multiplier = currentMultiplier(from?.onChainFTMetadata?.symbol, methodFromHash, multipliers.spot, multipliers.twap)
 
     useEffect(() => {
         setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
@@ -167,6 +174,7 @@ const SwapAndSuccessContainer = ({
                 if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
+                setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
                 setActiveView('success')
             }   
                 if(res.status.Failure) {
@@ -232,7 +240,7 @@ const SwapAndSuccessContainer = ({
                     onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
                     inputValueFrom={deposit}
                     symbol={methodFromHash}
-                    multiplier={multiplier}
+                    multiplier={multiplierFromHash ? +multiplierFromHash / 10000 : multiplier}
                     handleBackToSwap={async () => {
                         setInputValueFrom('');
                         await onHandleBackToSwap();

@@ -21,7 +21,7 @@ const Success = ({
             valueTo={exchangeRateTranslationFromHash({
                 method: symbol,
                 balance: + inputValueFrom,
-                exchangeRate: +multiplier / 10000
+                exchangeRate: +multiplier 
             })}
             symbol={symbol}
         />

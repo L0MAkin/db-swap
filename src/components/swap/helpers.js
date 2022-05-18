@@ -43,7 +43,7 @@ const useDebounce = (value, delay) => {
 };
 
 const roundUSNExchange = (amount, exchangeRate) => {
-    const currentExchangeRate = +exchangeRate / 10000;
+    const currentExchangeRate = +exchangeRate;
 
     return amount * currentExchangeRate;
 };
@@ -51,7 +51,7 @@ const roundUSNExchange = (amount, exchangeRate) => {
 async function fetchCommission({ accountId, amount, exchangeRate, token }) {
     const contractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
     const currentToken = token?.onChainFTMetadata?.symbol === 'NEAR';
-    const currentExchangeRate = +exchangeRate / 10000;
+    const currentExchangeRate = +exchangeRate;
     const usnMethods = {
         viewMethods: ['version', 'name', 'symbol', 'decimals', 'ft_balance_of', 'spread'],
         changeMethods: ['buy', 'sell'],
