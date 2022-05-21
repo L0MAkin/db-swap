@@ -63,7 +63,7 @@ const SwapPage = ({
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {
             setIsLoading(true);
-            await fetchByOrSell(accountId, multiplier, slippageValue, +inputValueFrom, symbol, usnAmount);
+            await fetchByOrSell(accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount);
             setActiveView('success');
         } catch (e) {
             setErrorFromHash(e.message);
@@ -162,7 +162,7 @@ const SwapPage = ({
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
                     onClick={() => accountId
-                        ? onHandleSwapTokens(accountId, currentMultiplier.toString(), slippageValue, +inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
+                        ? onHandleSwapTokens(accountId, currentMultiplier.toString(), slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
                         : signIn()}
                     sending={isLoading}
                 >
