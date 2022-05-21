@@ -25,7 +25,7 @@ const setArgsUSNContractBuy = (multiplier, slippage, amount) => {
 const setArgsUSNContractSell = (amount, multiplier, slippage, usnAmount) => {
     return {
         args: {
-            amount: usnAmount ? usnAmount : parseTokenAmount(amount * (10 ** 18), 0),
+            amount: parseTokenAmount(amount * (10 ** 18), 0),
             expected: {
                 multiplier,
                 slippage: `${Math.round(
