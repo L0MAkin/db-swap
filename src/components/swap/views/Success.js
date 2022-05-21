@@ -41,7 +41,6 @@ const Success = ({
                 type="button"
                 className="link"
                 color='dark-gold'
-                linkTo="/"
             >
                 <>View on Explorer</>
             </FormButton>

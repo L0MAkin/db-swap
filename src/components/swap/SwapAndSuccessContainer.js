@@ -194,7 +194,7 @@ const SwapAndSuccessContainer = ({
     const onHandleBackToSwap = useCallback(async () => {
         await dispatch(fetchTokens({ accountId }));
         await dispatch(fetchNearBalance(accountId))
-        navigate('/')
+        navigate('/swap')
         setActiveView('main');
     }, []);
     
