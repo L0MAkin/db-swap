@@ -148,6 +148,7 @@ const SwapAndSuccessContainer = ({
     const [errorFromHash, setErrorFromHash] = useState('')
     const [transactionHash, setTransactionHash] = useState('')
     const [deposit, setDeposit] = useState('')
+    const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
@@ -167,6 +168,7 @@ const SwapAndSuccessContainer = ({
                 if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
+                setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
                 setActiveView('success')
             }   
                 if(res.status.Failure) {
@@ -232,7 +234,7 @@ const SwapAndSuccessContainer = ({
                     onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
                     inputValueFrom={deposit}
                     symbol={methodFromHash}
-                    multiplier={multiplier}
+                    multiplier={multiplierFromHash ? +multiplierFromHash : multiplier}
                     handleBackToSwap={async () => {
                         setInputValueFrom('');
                         await onHandleBackToSwap();
