@@ -15,6 +15,8 @@ const CustomButton = styled.button`
         transition: 100ms;
         font-size: 14px;
         word-break: keep-all;
+        position: relative;
+        z-index: 2;
 
         :disabled {
             cursor: not-allowed;

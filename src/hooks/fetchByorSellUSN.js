@@ -1,6 +1,6 @@
 import * as nearApiJs from 'near-api-js';
 import { useState } from 'react';
-import { parseTokenAmount } from '../components/swap/formatToken';
+import { formatTokenAmount, parseTokenAmount } from '../components/swap/formatToken';
 
 
 const { REACT_APP_NEAR_ENV } = process.env;
@@ -25,7 +25,7 @@ const setArgsUSNContractBuy = (multiplier, slippage, amount) => {
 const setArgsUSNContractSell = (amount, multiplier, slippage, usnAmount) => {
     return {
         args: {
-            amount: usnAmount ? usnAmount : parseTokenAmount(amount * (10 ** 18), 0),
+            amount: amount === formatTokenAmount(usnAmount, 18, 5)  ? usnAmount : parseTokenAmount(amount * (10 ** 18), 0),
             expected: {
                 multiplier,
                 slippage: `${Math.round(

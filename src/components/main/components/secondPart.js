@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     padding: 57px 196px 90px 140px;
     overflow: hidden;
     position: relative;
+    z-index: 2;
 
     @media (max-width:1441px) {
         padding: 50px 60px;

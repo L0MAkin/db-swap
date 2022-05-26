@@ -8,15 +8,16 @@ import { Medium } from '../../../assets/svg/Medium'
 import { Git } from '../../../assets/svg/Git'
 import FormButton from '../../swap/common/FormButton'
 
-const Wrapper = styled.div`
+export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #FEFDEE;
-    padding: 90px 196px 90px 140px;
+    padding: 45px 196px 90px 140px;
     z-index: 2;
 
     svg {
        cursor: pointer;
+       position: relative;
        :hover {
            opacity: 0.8;
        }
@@ -64,11 +65,11 @@ const Wrapper = styled.div`
     }
 
     @media (max-width:1441px) {
-        padding: 50px 60px;
+        padding: 45px 60px;
     }
 
     @media (max-width: 426px) {
-        padding: 50px 17px;
+        padding: 45px 17px;
     }
 `
 
@@ -82,6 +83,8 @@ const TextWrapper = styled.div`
         /* height: 100%; */
         z-index: 99;
         object-fit: contain;
+        position: relative;
+        z-index: 2;
     }
 
     p {
@@ -115,6 +118,7 @@ const TextWrapper = styled.div`
 export function MainText() {
   return (
       <Wrapper>
+          <div className='first'></div>
           <TextWrapper>
             <img src={textDB} alt='mainDBtext'/>
             <p>
@@ -141,7 +145,7 @@ export function MainText() {
             >
                 <>Buy $USN</>
             </FormButton>
-            </div>
+        </div>
       </Wrapper>
   )
 }
