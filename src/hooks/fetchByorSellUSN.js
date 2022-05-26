@@ -12,7 +12,7 @@ const setArgsUSNContractBuy = (multiplier, slippage, amount) => {
             expected: {
                 multiplier,
                 slippage: `${Math.round(
-                    (multiplier / 100) * slippage
+                    (+multiplier / 100) * slippage
                 )}`,
                 decimals: 28,
             },
@@ -29,7 +29,7 @@ const setArgsUSNContractSell = (amount, multiplier, slippage, usnAmount) => {
             expected: {
                 multiplier,
                 slippage: `${Math.round(
-                    (multiplier / 100) * slippage
+                    (+multiplier / 100) * slippage
                 )}`,
                 decimals: 28,
             },

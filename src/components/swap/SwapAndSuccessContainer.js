@@ -134,11 +134,15 @@ const formatError = (value) => {
     return JSON.stringify(value);
 }
 
+const currentMultiplier = (symbol, method, a, b) => {
+    return symbol === 'NEAR' && method === 'buy' ? Math.max(a, b).toFixed(4) : Math.min(a, b).toFixed(4);
+}
+
 
 const SwapAndSuccessContainer = ({
     fungibleTokensList,
     accountId,
-    multiplier,
+    multipliers,
 }) => {
     const [from, setFrom] = useState(fungibleTokensList[0]);
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
@@ -153,6 +157,8 @@ const SwapAndSuccessContainer = ({
     const dispatch = useDispatch()
     const { search } = useLocation()
     const navigate = useNavigate()
+
+    const multiplier = currentMultiplier(from?.onChainFTMetadata?.symbol, methodFromHash, multipliers.spot, multipliers.twap)
 
     useEffect(() => {
         setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
@@ -234,7 +240,7 @@ const SwapAndSuccessContainer = ({
                     onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
                     inputValueFrom={deposit}
                     symbol={methodFromHash}
-                    multiplier={multiplierFromHash ? +multiplierFromHash : multiplier}
+                    multiplier={multiplierFromHash ? +multiplierFromHash / 10000: multiplier}
                     handleBackToSwap={async () => {
                         setInputValueFrom('');
                         await onHandleBackToSwap();
