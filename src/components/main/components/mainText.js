@@ -21,6 +21,12 @@ export const Wrapper = styled.div`
        :hover {
            opacity: 0.8;
        }
+
+       @media (max-width: 1440px) {
+            width: 80px;
+            height: 80px;
+        }
+
        @media (max-width: 426px) {
             width: 65px;
             height: 65px;
@@ -43,6 +49,11 @@ export const Wrapper = styled.div`
             display: flex;
             justify-content: space-between;
 
+            @media (max-width: 1440px) {
+                margin-right: 22px;
+                max-width: 282px;
+            }
+
             @media (max-width: 1025px) {
                 max-width: 100%;
             }
@@ -54,6 +65,12 @@ export const Wrapper = styled.div`
             width: 100%;
             display: flex;
             justify-content: space-between;
+
+            @media (max-width: 1440px) {
+                margin-right: 22px;
+                max-width: 180px;
+            }
+        
 
             @media (max-width: 1025px) {
                 max-width: 100%;
@@ -85,6 +102,13 @@ const TextWrapper = styled.div`
         object-fit: contain;
         position: relative;
         z-index: 2;
+        @media (max-width: 1440px) {
+            width: 80%;
+        }
+
+        @media (max-width: 1024px) {
+            width: 100%;
+        }
     }
 
     p {
@@ -97,6 +121,11 @@ const TextWrapper = styled.div`
         line-height: 85px;
         font-family: 'Open Sans', sans-serif;
         font-size: 75px;
+
+        @media (max-width: 1440px) {
+            font-size: 56px;
+            max-width: 1000px;
+        }
 
         @media (max-width: 769px) {
             margin-top: 50px;

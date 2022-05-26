@@ -21,7 +21,7 @@ const Wrapper = styled.div`
     }
 
     @media (max-width: 769px) {
-        padding: 50px 17px 140px;
+        padding: 50px 17px 80px;
     }
 
     @media (max-width: 426px) {
@@ -43,13 +43,14 @@ const Wrapper = styled.div`
         }
 
         @media (max-width: 769px) {
-           height: 250px;
-           width: 250px;
-           object-fit: contain;
+            height: 130px;
+            width: 250px;
+            object-fit: contain;
         } 
 
         @media (max-width: 426px) {
            height: 102px;
+           width: 220px;
         }
     }
 
@@ -64,17 +65,16 @@ const Wrapper = styled.div`
         margin-bottom: 51px;
 
         @media (max-width:1441px) {
-            font-size: 42px;
-            max-width: 700px;
+            font-size: 35px;
+            max-width: 600px;
         }
 
         @media (max-width: 1025px) {
-            font-size: 40px;
             max-width: 500px;
+            margin-bottom: 0px;
         }
 
         @media (max-width:769px) {
-            font-size: 40px;
             max-width: 100%;
             margin-bottom: 0px;
         }
