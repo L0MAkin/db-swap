@@ -4,12 +4,16 @@ import Burger from './Burger';
 
 const Nav = styled.nav`
   width: 100%;
-  height: 55px;
+  height: 80px;
   padding: 0 20px;
   display: flex;
-  background: #FEFDEE;
+  background: #2A2B33;
   justify-content: flex-end;
   align-items: center;
+
+  @media (max-width: 768px) {
+    height: 55px;
+  }
 `
 
 export const Navbar = () => {

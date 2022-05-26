@@ -14,7 +14,7 @@ const MainWrapper = styled.div`
 
     .first {
         position: absolute;
-        top: 0;
+        top: 80px;
         bottom: 0;
         left: 33%;
         background: rgba(196,179,124, 0.5);
@@ -22,6 +22,7 @@ const MainWrapper = styled.div`
         z-index: 0;
 
         @media (max-width:768px) {
+            top: 55px;
             left: 20%;
             width: 1px;
             opacity: 0.8
@@ -30,7 +31,7 @@ const MainWrapper = styled.div`
 
     .second {
         position: absolute;
-        top: 0;
+        top: 80px;
         bottom: 0;
         left: 50%;
         background: rgba(196,179,124, 0.5);
@@ -39,13 +40,14 @@ const MainWrapper = styled.div`
 
         @media (max-width:768px) {
             width: 1px;
+            top: 55px;
             opacity: 0.8
         }
     }
 
     .third {
         position: absolute;
-        top: 0;
+        top: 80px;
         bottom: 0;
         right: 33%;
         background: rgba(196,179,124, 0.5);
@@ -54,6 +56,7 @@ const MainWrapper = styled.div`
 
         @media (max-width:768px) {
             right: 20%;
+            top: 55px;
             width: 1px;
             opacity: 0.8
         }

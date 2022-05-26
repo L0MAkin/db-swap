@@ -8,7 +8,7 @@ const Ul = styled.ul`
   flex-flow: row nowrap;
   a {
     padding: 18px 10px;
-    color: black;
+    color: rgba(196,179,124,0.7);
     font-family: 'Inter';
     font-weight: 400;
     font-style: normal;
