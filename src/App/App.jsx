@@ -26,9 +26,11 @@ function App() {
     return (
         <WithWallet>
             <GlobalStyle />
+            <div className='first' />
+            <div className='second' />
+            <div className='third' />
             <Navbar />
             <Router />
-            <Footer />
             <ToastContainer />
         </WithWallet>
     );

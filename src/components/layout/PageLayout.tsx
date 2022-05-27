@@ -1,6 +1,7 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import bg from '../../assets/svg/bg.svg'
+import { Footer } from '../main/components/Footer';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -15,7 +16,10 @@ const PageLayout: FC = ({ children }) => {
         <Wrapper>
             <div className="flex flex-col">
 
-                <main className="flex-1 h-max container p-2 mx-auto" style={{marginBottom: 30}}>{children}</main>
+                <main className="flex-1 h-max container p-2 mx-auto" style={{marginBottom: 30}}>
+                    {children}
+                </main>
+                <Footer />
             </div>
         </Wrapper> 
     );

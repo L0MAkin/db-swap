@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { Accordion } from './components/Accordion'
+import { Footer } from './components/Footer'
 import { MainText } from './components/mainText'
 import { SecondPart } from './components/secondPart'
 import { USNinfo } from './components/USNinfo'
@@ -13,7 +14,7 @@ const MainWrapper = styled.div`
     .first {
         position: absolute;
         top: -80px;
-        bottom: -220px;
+        bottom: 0;
         left: 33%;
         background: rgba(196,179,124, 0.5);
         width: 1.5px;
@@ -30,7 +31,7 @@ const MainWrapper = styled.div`
     .second {
         position: absolute;
         top: -80px;
-        bottom: -220px;
+        bottom: 0;
         left: 50%;
         background: rgba(196,179,124, 0.5);
         width: 2px;
@@ -46,7 +47,7 @@ const MainWrapper = styled.div`
     .third {
         position: absolute;
         top: -80px;
-        bottom: -220px;
+        bottom: 0;
         right: 33%;
         background: rgba(196,179,124, 0.5);
         width: 2px;
@@ -87,6 +88,7 @@ export function Main() {
         <SecondPart />
         <USNinfo />
         <Accordion />
+        <Footer />
     </MainWrapper>  
   )
 }

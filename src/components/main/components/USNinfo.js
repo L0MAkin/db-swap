@@ -104,6 +104,7 @@ const Wrapper = styled.div`
                 width: 640px;
                 height: 355px;
                 object-fit: contain;
+                position: relative;
 
                 @media (max-width: 1441px) {
                     width: 200px;
