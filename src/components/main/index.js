@@ -13,7 +13,7 @@ const MainWrapper = styled.div`
     .first {
         position: absolute;
         top: -80px;
-        bottom: 0;
+        bottom: -220px;
         left: 33%;
         background: rgba(196,179,124, 0.5);
         width: 1.5px;
@@ -30,7 +30,7 @@ const MainWrapper = styled.div`
     .second {
         position: absolute;
         top: -80px;
-        bottom: 0;
+        bottom: -220px;
         left: 50%;
         background: rgba(196,179,124, 0.5);
         width: 2px;
@@ -46,7 +46,7 @@ const MainWrapper = styled.div`
     .third {
         position: absolute;
         top: -80px;
-        bottom: 0;
+        bottom: -220px;
         right: 33%;
         background: rgba(196,179,124, 0.5);
         width: 2px;
