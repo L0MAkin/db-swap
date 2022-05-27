@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #FEFDEE;
-    padding: 45px 196px 90px 140px;
+    padding: 90px 196px 90px 140px;
     z-index: 2;
 
     svg {
@@ -82,7 +82,7 @@ export const Wrapper = styled.div`
     }
 
     @media (max-width:1441px) {
-        padding: 45px 60px;
+        padding: 70px 60px;
     }
 
     @media (max-width: 426px) {

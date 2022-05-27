@@ -7,6 +7,8 @@ import Loader from './Loader';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GlobalStyle from '../styles/GlobalStyle';
+import { Navbar } from '../components/navigation/NavBar';
+import { Footer } from '../components/main/components/Footer';
 
 function App() {
     // wait wallet for initialization
@@ -24,7 +26,9 @@ function App() {
     return (
         <WithWallet>
             <GlobalStyle />
+            <Navbar />
             <Router />
+            <Footer />
             <ToastContainer />
         </WithWallet>
     );
