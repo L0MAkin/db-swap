@@ -53,19 +53,19 @@ const ModalWrapper = styled.div`
 export const Modal = ({ open }) => {
   return (
       <ModalWrapper open={open}>
-            <a href="https://twitter.com/DcntrlBank" target="_blank" className='links'>
+            <a className='links' onClick={() => window.open('https://twitter.com/DcntrlBank', '_blank')}>
               <img src={TwitterModal} alt='twitter'/>
               <span>Twitter</span>
             </a>
-            <a href="http://discord.gg/decentralbank" target="_blank" className='links'>
+            <a onClick={() => window.open('http://discord.gg/decentralbank', '_blank')} className='links'>
               <img src={DiscordModal} alt='twitter'/>
               <span>Discord</span>
             </a>
-            <a href="https://medium.com/@dcntrlbank" target="_blank" className='links'>
+            <a onClick={() => window.open('https://medium.com/@dcntrlbank', '_blank')} className='links'>
               <img src={MediumModal} alt='twitter'/>
               <span>Medium</span>
             </a>
-            <a href="https://github.com/orgs/DecentralBankDAO" target="_blank" className='links'>
+            <a onClick={() => window.open('https://github.com/orgs/DecentralBankDAO', '_blank')} className='links'>
               <img src={GitHubModal} alt='twitter'/>
               <span>GitHub</span>
             </a>
