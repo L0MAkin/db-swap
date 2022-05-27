@@ -13,9 +13,9 @@ const Wrapper = styled.div`
 const PageLayout: FC = ({ children }) => {
     return (
         <Wrapper>
-            <div className="h-screen flex flex-col">
+            <div className="flex flex-col">
 
-                <main className="flex-1 h-max container p-2 mx-auto">{children}</main>
+                <main className="flex-1 h-max container p-2 mx-auto" style={{marginBottom: 30}}>{children}</main>
             </div>
         </Wrapper> 
     );
