@@ -9,6 +9,10 @@ const Wrapper = styled.div`
     background-color: #FEFDEE;
     background-image: url(${bg});
     background-size: cover;
+
+    @media (max-width:1440px) {
+        background-size: contain;   
+    }
 `
 
 const PageLayout: FC = ({ children }) => {
