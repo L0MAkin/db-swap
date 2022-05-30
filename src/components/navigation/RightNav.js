@@ -10,13 +10,13 @@ const Ul = styled.ul`
 
   a {
     padding: 18px 30px;
-    color: black;
-    font-family: 'Shadows Into Light Two',cursive;
+    color: white;
+    font-family: 'Inter';
     font-weight: 400;
     font-style: normal;
-    font-size: 35px;
+    font-size: 25px;
     position: relative;
-    text-shadow: 3px 2px 4px rgba(150, 150, 150, 1);
+    /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
     
     :hover {
         color: rgba(196,179,124,0.7);
@@ -27,14 +27,15 @@ const Ul = styled.ul`
   .active {
     padding: 18px 30px;
     color: rgba(196,179,124,0.7);
-    font-family: 'Shadows Into Light Two',cursive;
+    font-family: 'Inter';
     font-weight: 400;
     font-style: normal;
-    font-size: 35px;
+    font-size: 25px;
     position: relative;
-    text-shadow: 3px 2px 4px rgba(150, 150, 150, 1);
+    /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
     text-decoration: none;
   }
+
   @media (max-width: 768px) {
     flex-flow: column nowrap;
     background-color: #0D2538;
@@ -51,6 +52,19 @@ const Ul = styled.ul`
       color: #fff;
       font-size: 18px;
     }
+
+    .active {
+      padding: 18px 30px;
+      color: rgba(196,179,124,0.7);
+      font-family: 'Inter';
+      font-weight: 400;
+      font-style: normal;
+      font-size: 18px;
+      position: relative;
+      /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
+      text-decoration: none;
+    }
+
   }
 `;
 
@@ -64,11 +78,11 @@ const RightNav = ({ open }) => {
   return (
     <Ul open={open}>
       {matches && <Link to='/'>Home</Link>}
-      <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap'>{matches ? 'Swap' : 'swap'}</NavLink>
-      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">{matches ? 'Whitepaper' : 'whitepaper'}</a>
+      <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap'>Swap</NavLink>
+      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a>
       {!matches && 
         <Link to='/' onMouseEnter={handleOpenModal} onMouseLeave={handleCloseModal}>
-         {matches ? 'Community' : 'community'}
+          Community
          <Modal open={openMadal}/> 
         </Link>
       } 
