@@ -25,6 +25,10 @@ const Nav = styled.nav`
     z-index: 1;
     box-shadow: 0px 3px 7px 2px rgb(0 0 0 / 50%);
 
+    @media (max-width: 1440px) {
+      top: 69px;
+    }
+
     @media (max-width: 768px) {
       top: 49px;
     }

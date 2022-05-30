@@ -23,8 +23,8 @@ export const Wrapper = styled.div`
        }
 
        @media (max-width: 1440px) {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
         }
 
        @media (max-width: 426px) {

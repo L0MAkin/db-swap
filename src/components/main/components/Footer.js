@@ -26,7 +26,7 @@ const FooterWrapper = styled(Wrapper)`
         font-size: 24px;
         line-height: 26px;
 
-        @media (max-width: 425px) {
+        @media (max-width: 1440px) {
           font-size: 20px;
         }
     }
@@ -40,12 +40,12 @@ const FooterWrapper = styled(Wrapper)`
         line-height: 26px;
         text-decoration: underline;
 
-        @media (max-width: 1025px) {
-          margin: 50px 0px;
+        @media (max-width: 1440px) {
+          font-size: 20px;
         }
 
-        @media (max-width: 425px) {
-          font-size: 20px;
+        @media (max-width: 1025px) {
+          margin: 50px 0px;
         }
     }
 
@@ -74,6 +74,10 @@ const FooterWrapper = styled(Wrapper)`
               font-style: normal;
               font-size: 24px;
               line-height: 26px;   
+
+              @media (max-width: 1025px) {
+                font-size: 20px;
+              }
               
               @media (max-width: 1025px) {
                   display: none;
@@ -91,6 +95,10 @@ const FooterWrapper = styled(Wrapper)`
             width: 100%;
             display: flex;
             justify-content: space-between;
+
+            @media (max-width: 1440px) {
+                max-width: 200px;
+            }
 
             @media (max-width: 1025px) {
                 max-width: 100%;

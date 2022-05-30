@@ -16,6 +16,10 @@ const Ul = styled.ul`
     font-style: normal;
     font-size: 25px;
     position: relative;
+
+    @media (max-width: 1440px) {
+      font-size: 20px;
+    }
     /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
     
     :hover {
