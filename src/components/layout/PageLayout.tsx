@@ -14,7 +14,7 @@ const Wrapper = styled.div`
         background-size: contain;   
     }
 
-    @media (max-width:1440px) {
+    @media (max-width:768px) {
        main {
            margin-top: 55px;
        } 
