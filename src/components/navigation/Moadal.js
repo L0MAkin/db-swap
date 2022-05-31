@@ -34,7 +34,7 @@ const ModalWrapper = styled.div`
       margin-bottom: 20px;
 
       :hover {
-        color: white;
+        color: rgba(196,179,124,0.7);
         font-weight: 600;
       }
 

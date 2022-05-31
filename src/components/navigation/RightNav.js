@@ -38,6 +38,10 @@ const Ul = styled.ul`
     position: relative;
     /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
     text-decoration: none;
+
+    @media (max-width: 1440px) {
+      font-size: 20px;
+    }
   }
 
   @media (max-width: 768px) {

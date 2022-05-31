@@ -75,7 +75,7 @@ const FooterWrapper = styled(Wrapper)`
               font-size: 24px;
               line-height: 26px;   
 
-              @media (max-width: 1025px) {
+              @media (max-width: 1440px) {
                 font-size: 20px;
               }
               
