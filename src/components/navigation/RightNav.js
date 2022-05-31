@@ -46,7 +46,7 @@ const Ul = styled.ul`
 
   @media (max-width: 768px) {
     flex-flow: column nowrap;
-    background-color: #0D2538;
+    background-color: #2A2B33;
     position: fixed;
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
     top: 0;
@@ -76,7 +76,7 @@ const Ul = styled.ul`
   }
 `;
 
-const RightNav = ({ open }) => {
+const RightNav = ({ open, close }) => {
   const matches = window.matchMedia('(max-width: 769px)').matches
   const [openMadal, isOpenModal] = useState(false)
 
@@ -85,8 +85,8 @@ const RightNav = ({ open }) => {
 
   return (
     <Ul open={open}>
-      <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap'>Swap</NavLink>
-      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a>
+      <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap' onClick={close}>Swap</NavLink>
+      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank" onClick={close}>Whitepaper</a>
       {!matches && 
         <Link to='/' onMouseEnter={handleOpenModal} onMouseLeave={handleCloseModal}>
           Community
@@ -95,11 +95,11 @@ const RightNav = ({ open }) => {
       } 
        {matches &&
           <>
-            <a href="https://github.com/orgs/DecentralBankDAO" target="_blank">GitHub</a>
-            <a href="https://twitter.com/DcntrlBank" target="_blank">Twitter</a>
-            <a href="http://discord.gg/decentralbank" target="_blank">Discord</a>
-            <a href="https://medium.com/@dcntrlbank" target="_blank">Medium</a>
-            <a href="mailto:dcntrlbankdao@gmail.com" target="_blank">Contact us</a>
+            <a href="https://github.com/orgs/DecentralBankDAO" target="_blank" onClick={close}>GitHub</a>
+            <a href="https://twitter.com/DcntrlBank" target="_blank" onClick={close}>Twitter</a>
+            <a href="http://discord.gg/decentralbank" target="_blank" onClick={close}>Discord</a>
+            <a href="https://medium.com/@dcntrlbank" target="_blank" onClick={close}>Medium</a>
+            <a href="mailto:dcntrlbankdao@gmail.com" target="_blank" onClick={close}>Contact us</a>
           </> 
       }
     </Ul>

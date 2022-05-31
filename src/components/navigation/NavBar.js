@@ -47,6 +47,9 @@ const Nav = styled.nav`
   @media (max-width: 768px) {
     height: 55px;
     padding: 0 20px;
+    position: fixed;
+    top: 0;
+    z-index: 1000;
     /* justify-content: flex-end; */
   }
 `

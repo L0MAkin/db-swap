@@ -13,6 +13,12 @@ const Wrapper = styled.div`
     @media (max-width:1440px) {
         background-size: contain;   
     }
+
+    @media (max-width:1440px) {
+       main {
+           margin-top: 55px;
+       } 
+    }
 `
 
 const PageLayout: FC = ({ children }) => {
