@@ -81,7 +81,6 @@ const RightNav = ({ open }) => {
 
   return (
     <Ul open={open}>
-      {matches && <Link to='/'>Home</Link>}
       <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap'>Swap</NavLink>
       <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a>
       {!matches && 

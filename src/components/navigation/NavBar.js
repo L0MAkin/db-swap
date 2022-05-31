@@ -39,7 +39,8 @@ const Nav = styled.nav`
     height: 80px;
 
     @media (max-width: 768px) {
-      display: none;
+      width: 55px;
+      height: 55px;
     }
   }
 
@@ -50,7 +51,7 @@ const Nav = styled.nav`
   @media (max-width: 768px) {
     height: 55px;
     padding: 0 20px;
-    justify-content: flex-end;
+    /* justify-content: flex-end; */
   }
 `
 
