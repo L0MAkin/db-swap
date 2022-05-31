@@ -12,7 +12,7 @@ export const Wrapper = styled.div`
     width: 100%;
     height: 100%;
     background-color: #FEFDEE;
-    padding: 45px 196px 90px 140px;
+    padding: 90px 196px 90px 140px;
     z-index: 2;
 
     svg {
@@ -21,6 +21,12 @@ export const Wrapper = styled.div`
        :hover {
            opacity: 0.8;
        }
+
+       @media (max-width: 1440px) {
+            width: 70px;
+            height: 70px;
+        }
+
        @media (max-width: 426px) {
             width: 65px;
             height: 65px;
@@ -43,6 +49,11 @@ export const Wrapper = styled.div`
             display: flex;
             justify-content: space-between;
 
+            @media (max-width: 1440px) {
+                margin-right: 22px;
+                max-width: 282px;
+            }
+
             @media (max-width: 1025px) {
                 max-width: 100%;
             }
@@ -55,6 +66,12 @@ export const Wrapper = styled.div`
             display: flex;
             justify-content: space-between;
 
+            @media (max-width: 1440px) {
+                margin-right: 22px;
+                max-width: 180px;
+            }
+        
+
             @media (max-width: 1025px) {
                 max-width: 100%;
                 justify-content: space-around;
@@ -65,7 +82,11 @@ export const Wrapper = styled.div`
     }
 
     @media (max-width:1441px) {
-        padding: 45px 60px;
+        padding: 70px 60px;
+    }
+
+    @media (max-width:768px) {
+       margin-top: 55px;
     }
 
     @media (max-width: 426px) {
@@ -85,6 +106,13 @@ const TextWrapper = styled.div`
         object-fit: contain;
         position: relative;
         z-index: 2;
+        @media (max-width: 1440px) {
+            width: 80%;
+        }
+
+        @media (max-width: 1024px) {
+            width: 100%;
+        }
     }
 
     p {
@@ -97,6 +125,11 @@ const TextWrapper = styled.div`
         line-height: 85px;
         font-family: 'Open Sans', sans-serif;
         font-size: 75px;
+
+        @media (max-width: 1440px) {
+            font-size: 56px;
+            max-width: 1000px;
+        }
 
         @media (max-width: 769px) {
             margin-top: 50px;

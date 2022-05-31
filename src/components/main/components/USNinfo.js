@@ -11,8 +11,13 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
 
+    @media (max-width: 1440px) {
+        padding: 190px 10px 130px 100px;
+    }
+
     @media (max-width: 1025px) {
         flex-direction: column;
+        padding: 190px 100px 130px 140px;
     }
 
     @media (max-width: 426px) {
@@ -44,9 +49,16 @@ const Wrapper = styled.div`
             letter-spacing: 2.5px;
             margin-bottom: 60px;
 
+            @media (max-width: 1440px) {
+                font-size: 40px;
+                line-height: 52px;
+                /* margin-bottom: 0; */
+            }
+
             @media (max-width: 1025px) {
                 font-size: 38px;
                 line-height: 52px;
+                max-width: 400px;
                 margin-bottom: 0;
             }
 
@@ -71,6 +83,11 @@ const Wrapper = styled.div`
                 width: 142px;
                 height: 142px;
 
+                @media (max-width: 1440px) {
+                    width: 110px;
+                    height: 110px;
+                }
+
                 @media (max-width: 769px) {
                     width: 102px;
                     height: 102px;
@@ -87,9 +104,10 @@ const Wrapper = styled.div`
                 width: 640px;
                 height: 355px;
                 object-fit: contain;
+                position: relative;
 
                 @media (max-width: 1441px) {
-                    width: 240px;
+                    width: 200px;
                     height: 155px;
                 }
 

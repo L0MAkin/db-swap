@@ -1,22 +1,52 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
+import { Modal } from './Modal';
 
 const Ul = styled.ul`
   list-style: none;
   display: flex;
   flex-flow: row nowrap;
+
   a {
-    padding: 18px 10px;
-    color: black;
+    padding: 18px 30px;
+    color: white;
     font-family: 'Inter';
     font-weight: 400;
     font-style: normal;
-    font-size: 24px;
+    font-size: 25px;
+    position: relative;
+
+    @media (max-width: 1440px) {
+      font-size: 20px;
+    }
+    /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
+    
+    :hover {
+        color: rgba(196,179,124,0.7);
+        text-decoration: none;
+    }
   }
+
+  .active {
+    padding: 18px 30px;
+    color: rgba(196,179,124,0.7);
+    font-family: 'Inter';
+    font-weight: 400;
+    font-style: normal;
+    font-size: 25px;
+    position: relative;
+    /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
+    text-decoration: none;
+
+    @media (max-width: 1440px) {
+      font-size: 20px;
+    }
+  }
+
   @media (max-width: 768px) {
     flex-flow: column nowrap;
-    background-color: #0D2538;
+    background-color: #2A2B33;
     position: fixed;
     transform: ${({ open }) => open ? 'translateX(0)' : 'translateX(100%)'};
     top: 0;
@@ -30,23 +60,46 @@ const Ul = styled.ul`
       color: #fff;
       font-size: 18px;
     }
+
+    .active {
+      padding: 18px 30px;
+      color: rgba(196,179,124,0.7);
+      font-family: 'Inter';
+      font-weight: 400;
+      font-style: normal;
+      font-size: 18px;
+      position: relative;
+      /* text-shadow: 3px 2px 4px rgba(150, 150, 150, 1); */
+      text-decoration: none;
+    }
+
   }
 `;
 
-const RightNav = ({ open }) => {
+const RightNav = ({ open, close }) => {
   const matches = window.matchMedia('(max-width: 769px)').matches
+  const [openMadal, isOpenModal] = useState(false)
+
+  const handleOpenModal = () => isOpenModal(true)
+  const handleCloseModal = () => isOpenModal(false)
 
   return (
     <Ul open={open}>
-      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a> 
-      <Link to='/swap'>Swap</Link>
+      <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap' onClick={close}>Swap</NavLink>
+      <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank" onClick={close}>Whitepaper</a>
+      {!matches && 
+        <Link to='/' onMouseEnter={handleOpenModal} onMouseLeave={handleCloseModal}>
+          Community
+         <Modal open={openMadal}/> 
+        </Link>
+      } 
        {matches &&
           <>
-            <a href="https://github.com/orgs/DecentralBankDAO" target="_blank">GitHub</a>
-            <a href="https://twitter.com/DcntrlBank" target="_blank">Twitter</a>
-            <a href="http://discord.gg/decentralbank" target="_blank">Discord</a>
-            <a href="https://medium.com/@dcntrlbank" target="_blank">Medium</a>
-            <a href="mailto:dcntrlbankdao@gmail.com" target="_blank">Contact us</a>
+            <a href="https://github.com/orgs/DecentralBankDAO" target="_blank" onClick={close}>GitHub</a>
+            <a href="https://twitter.com/DcntrlBank" target="_blank" onClick={close}>Twitter</a>
+            <a href="http://discord.gg/decentralbank" target="_blank" onClick={close}>Discord</a>
+            <a href="https://medium.com/@dcntrlbank" target="_blank" onClick={close}>Medium</a>
+            <a href="mailto:dcntrlbankdao@gmail.com" target="_blank" onClick={close}>Contact us</a>
           </> 
       }
     </Ul>
