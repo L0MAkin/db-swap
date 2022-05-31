@@ -18,19 +18,15 @@ const Nav = styled.nav`
   ::after {
     content: '';
     position: absolute;
-    top: 74px;
+    top: 79px;
     left: 0;
     right: 0;
     bottom: 0;
     z-index: 1;
-    box-shadow: 0px 3px 7px 2px rgb(0 0 0 / 50%);
-
-    @media (max-width: 1440px) {
-      top: 69px;
-    }
+    box-shadow: 0px 2px 7px 2px rgb(0 0 0 / 50%);
 
     @media (max-width: 768px) {
-      top: 49px;
+      top: 54px;
     }
   }
   
