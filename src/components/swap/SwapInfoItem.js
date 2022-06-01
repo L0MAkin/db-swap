@@ -22,7 +22,7 @@ const StyledInfoItem = styled.div`
     }
 
     input {
-        width: 67px;
+        width: 80px;
         height: 26px;
         background: #ffffff;
         border: 2px solid #C1B583;
@@ -111,7 +111,7 @@ function SwapInfoItem({
             </div>
             {slippageError && (
                 <div className="slippageError">
-                    <>Min 0.01 | Max 50</>
+                    <>Min 0.01</>
                 </div>
             )}
             {setSlippageValue ? (
@@ -120,7 +120,7 @@ function SwapInfoItem({
                         type='number'
                         value={slippageValue}
                         onChange={(e) =>
-                            setSlippageValue(Number(e.target.value))
+                            setSlippageValue(e.target.value)
                         }
                     />
                     <span>%</span>
