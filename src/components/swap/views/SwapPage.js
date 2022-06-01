@@ -57,7 +57,7 @@ const SwapPage = ({
     const dispatch = useDispatch();
     const balance = balanceForError(from);
     const error = balance < +inputValueFrom || !inputValueFrom;
-    const slippageError = slippageValue < 1 || slippageValue > 50;
+    const slippageError = +slippageValue < 0.01 || +slippageValue > 99.99;
 
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {
