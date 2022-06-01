@@ -150,12 +150,13 @@ const SwapAndSuccessContainer = ({
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const [methodFromHash, setMethodFromHash] = useState('buy')
     const [errorFromHash, setErrorFromHash] = useState('')
-    const [transactionHash, setTransactionHash] = useState('')
     const [deposit, setDeposit] = useState('')
     const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
+    const params = new URLSearchParams(search)
+    const transactionHash = params.get('transactionHashes') || ''
     const navigate = useNavigate()
 
     const multiplier = currentMultiplier(from?.onChainFTMetadata?.symbol, methodFromHash, multipliers.spot, multipliers.twap)
@@ -187,13 +188,8 @@ const SwapAndSuccessContainer = ({
             }
         }
 
-        if(wallet && search.includes('transactionHashes')) {
-            let hash = search.split('=')[1]
-            if(hash.includes('&')) {
-                hash = hash.split('&')[0]
-            }
-            getHash(hash)
-            setTransactionHash(hash)
+        if(wallet && transactionHash) {
+            getHash(transactionHash)
         }
         
     },[search, wallet])

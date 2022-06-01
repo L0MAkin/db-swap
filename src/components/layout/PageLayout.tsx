@@ -5,7 +5,7 @@ import { Footer } from '../main/components/Footer';
 
 const Wrapper = styled.div`
     width: 100%;
-    height: calc(100vh - 40px);
+    height: 100vh;
     background-color: #FEFDEE;
     background-image: url(${bg});
     background-size: cover;
