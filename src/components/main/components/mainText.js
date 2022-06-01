@@ -10,7 +10,7 @@ import FormButton from '../../swap/common/FormButton'
 
 export const Wrapper = styled.div`
     width: 100%;
-    height: 100%;
+    height: auto;
     background-color: #FEFDEE;
     padding: 90px 196px 90px 140px;
     z-index: 2;
