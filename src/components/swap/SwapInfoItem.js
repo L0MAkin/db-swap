@@ -111,16 +111,16 @@ function SwapInfoItem({
             </div>
             {slippageError && (
                 <div className="slippageError">
-                    <>Error</>
+                    <>Min 0.01 | Max 50</>
                 </div>
             )}
             {setSlippageValue ? (
                 <>
                     <input
-                        value={slippageValue && slippageValue}
+                        type='number'
+                        value={slippageValue}
                         onChange={(e) =>
-                            setSlippageValue &&
-                            setSlippageValue(+e.target.value)
+                            setSlippageValue(Number(e.target.value))
                         }
                     />
                     <span>%</span>
