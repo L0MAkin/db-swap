@@ -111,7 +111,7 @@ function SwapInfoItem({
             </div>
             {slippageError && (
                 <div className="slippageError">
-                    <>Min 0.01</>
+                    <>incorrect value</>
                 </div>
             )}
             {setSlippageValue ? (
