@@ -109,7 +109,7 @@ function SwapInfoItem({
             <div className="left_text">
                 {leftText}
             </div>
-            {slippageError && (
+            {!slippageValue ? null : slippageError && (
                 <div className="slippageError">
                     <>incorrect value</>
                 </div>
