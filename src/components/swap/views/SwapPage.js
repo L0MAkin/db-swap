@@ -43,7 +43,7 @@ const SwapPage = ({
 }) => {
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
-    const [slippageValue, setSlippageValue] = useState(1);
+    const [slippageValue, setSlippageValue] = useState('1');
     const [usnAmount, setUSNAmount] = useState('');
     const { commissionFee, isLoadingCommission } = commission({
         accountId: wallet.account(),
@@ -59,9 +59,6 @@ const SwapPage = ({
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
     const currentMultiplier = +multiplier * 10000
 
-    console.log('slipp', Math.round(
-        (+currentMultiplier / 100) * slippageValue
-    ));
 
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {

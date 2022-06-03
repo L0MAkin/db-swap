@@ -137,7 +137,7 @@ const SwapTokenContainer = ({
             inputRef.current.focus();
         }
     };
-
+    
     return (
         <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
             <div className="symbolFlex">
@@ -179,7 +179,7 @@ const SwapTokenContainer = ({
                         inputMode='decimal'
                         autoFocus
                         placeholder='0'
-                        value={value}
+                        value={value.replace(',', '.')}
                         onChange={handleChange}
                         className={error ? 'inputError' : ''}
                     />

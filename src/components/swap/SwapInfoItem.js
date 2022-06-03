@@ -104,6 +104,12 @@ function SwapInfoItem({
     slippageError,
     isDots =false
 }) {
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        setSlippageValue(value.replace(/[^.\d,]/g, ''));
+    };
+
     return (
         <StyledInfoItem >
             <div className="left_text">
@@ -117,12 +123,10 @@ function SwapInfoItem({
             {setSlippageValue ? (
                 <>
                     <input
-                        type='number'
+                        type="text"
                         inputMode='decimal'
-                        value={slippageValue}
-                        onChange={(e) =>
-                            setSlippageValue(e.target.value)
-                        }
+                        value={slippageValue.replace(',', '.')}
+                        onChange={handleChange}
                     />
                     <span>%</span>
                 </>
