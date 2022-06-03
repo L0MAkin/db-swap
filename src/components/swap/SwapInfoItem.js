@@ -107,7 +107,9 @@ function SwapInfoItem({
 
     const handleChange = (e) => {
         const { value } = e.target;
-        setSlippageValue(value.replace(/[^.\d,]/g, ''));
+        const replaceValue = value.replace(',', '.')
+        setSlippageValue(replaceValue.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''));
+        // setSlippageValue(value.replace(/[^.\d,]/g, ''));
     }
 
     return (
