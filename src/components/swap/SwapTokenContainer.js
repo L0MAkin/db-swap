@@ -129,7 +129,8 @@ const SwapTokenContainer = ({
     const error = setInputValueFrom && balance < +value;
     const handleChange = (e) => {
         const { value } = e.target;
-        setInputValueFrom(value.replace(/[^.\d,]/g, ''));
+        const replaceValue = value.replace(',', '.')
+        setInputValueFrom(replaceValue.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''));
     };
 
     const onFocus = () => {
