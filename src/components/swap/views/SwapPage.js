@@ -43,7 +43,7 @@ const SwapPage = ({
 }) => {
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
-    const [slippageValue, setSlippageValue] = useState(1);
+    const [slippageValue, setSlippageValue] = useState('1');
     const [usnAmount, setUSNAmount] = useState('');
     const { commissionFee, isLoadingCommission } = commission({
         accountId: wallet.account(),
