@@ -118,6 +118,7 @@ function SwapInfoItem({
                 <>
                     <input
                         type='number'
+                        inputMode='numeric'
                         value={slippageValue}
                         onChange={(e) =>
                             setSlippageValue(e.target.value)
