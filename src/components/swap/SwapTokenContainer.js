@@ -176,7 +176,7 @@ const SwapTokenContainer = ({
                     <input
                         ref={inputRef}
                         type="text"
-                        inputMode='numeric'
+                        inputMode='decimal'
                         autoFocus
                         placeholder='0'
                         value={value}
