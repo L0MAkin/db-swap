@@ -13,7 +13,7 @@ const Wrapper = styled.div`
         margin-bottom: 30px;
     }
 
-    @media (max-width:1024px) {
+    @media (max-width:1440px) {
         background-size: contain;   
     }
 
