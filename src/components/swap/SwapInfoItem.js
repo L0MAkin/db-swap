@@ -109,7 +109,6 @@ function SwapInfoItem({
         const { value } = e.target;
         const replaceValue = value.replace(',', '.')
         setSlippageValue(replaceValue.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''));
-        // setSlippageValue(value.replace(/[^.\d,]/g, ''));
     }
 
     return (
@@ -126,6 +125,7 @@ function SwapInfoItem({
                 <>
                     <input
                         type="text"
+                        inputMode='decimal'
                         value={slippageValue.replace(',', '.')}
                         onChange={handleChange}
                     />
