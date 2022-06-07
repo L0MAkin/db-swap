@@ -21,6 +21,7 @@
         "fetch-send-json": "^0.0.2",
         "i18next": "^21.6.4",
         "i18next-browser-languagedetector": "^6.1.2",
+        "js-user-country": "^1.0.1",
         "ky": "^0.28.7",
         "lodash.merge": "^4.6.2",
         "lodash.set": "^4.3.2",

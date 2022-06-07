@@ -5,8 +5,10 @@ import { useFungibleTokensIncludingNEAR } from '../../hooks/fungibleTokensInclud
 import { fetchMultiplier, fetchMultiplierTWAP, selectMultiplier } from '../../redux/slices/multiplier';
 import { fetchNearBalance } from '../../redux/slices/near';
 import { actions as tokensActions } from '../../redux/slices/tokens';
+import { userCountry } from './utils/isBlocedCountry'
 import SwapAndSuccessContainer from './SwapAndSuccessContainer';
 import AccountInfo from '../layout/account/AccountInfo';
+import { BlockedCountry } from './BlockedCountry';
 
 const { fetchTokens } = tokensActions;
 
@@ -30,12 +32,17 @@ const SwapContainerWrapper = ({ accountId }) => {
 
     return (
         <>
-            <AccountInfo/>
-            <SwapAndSuccessContainer
+          {userCountry() 
+            ? <BlockedCountry/> 
+            : <>
+                <AccountInfo/>
+                <SwapAndSuccessContainer
                 fungibleTokensList={fungibleTokensList}
                 accountId={accountId}
                 multipliers={multipliers}
-            />
+                />
+            </>
+            } 
         </>
     );
 };
