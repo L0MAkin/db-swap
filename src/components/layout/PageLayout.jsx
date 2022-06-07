@@ -20,7 +20,6 @@ const Wrapper = styled.div`
     }
 
     @media (max-width:768px) {
-        height: 100vh;
        main {
            margin-top: 55px;
            padding-bottom: 30px;
