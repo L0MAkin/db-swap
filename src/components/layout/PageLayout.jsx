@@ -34,16 +34,16 @@ const Wrapper = styled.div`
 
 const PageLayout = ({ children }) => {
 
-    const { geoInfo} = useCountryAPI()
+    const {isLoading, geoInfo} = useCountryAPI()
 
     return (
         <Wrapper isUSA={geoInfo}>
             <div className="flex flex-col h-full">
 
                 <main className="flex-1 h-max container p-2 mx-auto" >
-                    {children}
+                    {children(geoInfo, isLoading)}
                 </main>
-                <Footer /> 
+                <Footer />
             </div>
         </Wrapper> 
     );
