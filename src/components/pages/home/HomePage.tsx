@@ -11,11 +11,16 @@ function HomePage() {
 
     return (
         <PageLayout>
-            <div className="text-center">
-                    <>
-                        <SwapContainerWrapper accountId={accountId}/>
-                    </>
-            </div>
+           {(geoInfo: string, isLoading: boolean) => (
+                <>
+                    <div className="text-center">
+                        <>
+                            <SwapContainerWrapper accountId={accountId} geoInfo={geoInfo} isLoading={isLoading}/>
+                        </>
+                    </div>
+                </>
+            )}
+
         </PageLayout>
     );
 }

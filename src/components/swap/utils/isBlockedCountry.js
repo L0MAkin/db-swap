@@ -1,7 +1,7 @@
 import getUserCountry from 'js-user-country'
 import { useEffect, useState } from 'react'
 
-const bloced_contry = ['UA', 'USA']
+const bloced_contry = ['US', 'USA']
 
 const getInfo = async () => {
     const result = await  fetch('https://ipapi.co/json')
