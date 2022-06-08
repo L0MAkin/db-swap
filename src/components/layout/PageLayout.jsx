@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import bg from '../../assets/svg/bg.svg'
 import { Footer } from '../main/components/Footer';
-import { userCountry } from '../swap/utils/isBlockedCountry';
+import { useCountryAPI, userCountry } from '../swap/utils/isBlockedCountry';
 
 const Wrapper = styled.div`
     width: 100%;
@@ -33,8 +33,9 @@ const Wrapper = styled.div`
 `
 
 const PageLayout = ({ children }) => {
+    const { geoInfo } = useCountryAPI()
     return (
-        <Wrapper isUSA={userCountry()}>
+        <Wrapper isUSA={geoInfo}>
             <div className="flex flex-col h-full">
 
                 <main className="flex-1 h-max container p-2 mx-auto" >
