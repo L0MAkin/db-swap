@@ -5,16 +5,18 @@ import { useFungibleTokensIncludingNEAR } from '../../hooks/fungibleTokensInclud
 import { fetchMultiplier, fetchMultiplierTWAP, selectMultiplier } from '../../redux/slices/multiplier';
 import { fetchNearBalance } from '../../redux/slices/near';
 import { actions as tokensActions } from '../../redux/slices/tokens';
-import { userCountry } from './utils/isBlocedCountry'
+import { useCountryAPI, userCountry } from './utils/isBlocedCountry'
 import SwapAndSuccessContainer from './SwapAndSuccessContainer';
 import AccountInfo from '../layout/account/AccountInfo';
 import { BlockedCountry } from './BlockedCountry';
+import Loader from '../../App/Loader';
 
 const { fetchTokens } = tokensActions;
 
 const SwapContainerWrapper = ({ accountId }) => {
     const fungibleTokensList = useFungibleTokensIncludingNEAR(accountId);
     const multipliers = useSelector(selectMultiplier);
+    const { isLoading, geoInfo} = useCountryAPI()
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -32,7 +34,9 @@ const SwapContainerWrapper = ({ accountId }) => {
 
     return (
         <>
-          {userCountry() 
+        {isLoading 
+            ? <Loader />    
+            : geoInfo 
             ? <BlockedCountry/> 
             : <>
                 <AccountInfo/>
@@ -40,7 +44,7 @@ const SwapContainerWrapper = ({ accountId }) => {
                 fungibleTokensList={fungibleTokensList}
                 accountId={accountId}
                 multipliers={multipliers}
-                />
+            />
             </>
             } 
         </>
