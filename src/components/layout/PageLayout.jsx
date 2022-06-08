@@ -6,7 +6,6 @@ import { userCountry } from '../swap/utils/isBlocedCountry';
 const Wrapper = styled.div`
     width: 100%;
     height: ${({ isUSA}) => isUSA ? 'calc(100vh - 80px)' : ''};
-    /* height: 100%; */
     background-color: #FEFDEE;
     background-image: url(${bg});
     background-size: cover;
@@ -16,15 +15,20 @@ const Wrapper = styled.div`
     }
 
     @media (max-width:1440px) {
-        background-size: contain;   
+        background-size: ${({ isUSA}) => isUSA ? 'cover' : 'contain'};   
     }
 
     @media (max-width:768px) {
+        background-size: contain;
        main {
            margin-top: 55px;
            padding-bottom: 30px;
            margin-bottom: 0;
        } 
+    }
+
+    @media (max-width:425px) {
+        height: ${({ isUSA}) => isUSA ? '100vh' : ''};  
     }
 `
 
@@ -38,7 +42,6 @@ const PageLayout = ({ children }) => {
                 </main>
                 <Footer /> 
             </div>
-            
         </Wrapper> 
     );
 };
