@@ -15,10 +15,11 @@ const Wrapper = styled.div`
     }
 
     @media (max-width:1440px) {
-        background-size: contain;   
+        background-size: ${({ isUSA}) => isUSA ? 'cover' : 'contain'};   
     }
 
     @media (max-width:768px) {
+        background-size: contain;
        main {
            margin-top: 55px;
            padding-bottom: 30px;
