@@ -6,6 +6,10 @@ const { REACT_APP_NEAR_ENV } = process.env;
 const IS_MAINNET = REACT_APP_NEAR_ENV === 'mainnet' ? true : false;
 
 const getPredict = async (account, amount, multiplier, symbol, accountId) => {
+  
+  if(!multiplier.spotFull || !multiplier.twapFull) return
+
+
   const contractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
   const currentToken = symbol === 'NEAR';
   const usnMethods = {
