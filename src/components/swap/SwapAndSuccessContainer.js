@@ -206,6 +206,7 @@ const SwapAndSuccessContainer = ({
         <StyledContainer className='small-centered'>
             {activeView === VIEWS_SWAP.MAIN && (
                 <SwapPage
+                    multipliers={multipliers}
                     setActiveView={setActiveView}
                     setErrorFromHash={setErrorFromHash}
                     accountId={accountId}

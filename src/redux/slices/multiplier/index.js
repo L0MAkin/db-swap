@@ -35,7 +35,7 @@ export const fetchMultiplier = createAsyncThunk(
                 response.result.map((x) => String.fromCharCode(x)).join('')
             );
 
-            return { spot: res.prices[0].price.multiplier / 10000 }
+            return { spot: res.prices[0].price.multiplier / 10000, spotFull:  res.prices[0].price.multiplier}
         } catch (error) {
             console.warn('Failed to load ', error);
         }
@@ -60,7 +60,7 @@ export const fetchMultiplierTWAP = createAsyncThunk(
             const res = JSON.parse(
                 response.result.map((x) => String.fromCharCode(x)).join('')
             );
-            return { twap: res.prices[0].price.multiplier / 100000000 }
+            return { twap: res.prices[0].price.multiplier / 100000000, twapFull:  res.prices[0].price.multiplier}
         } catch (error) {
             console.warn('Failed to load ', error);
         }

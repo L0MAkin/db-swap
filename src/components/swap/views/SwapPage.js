@@ -13,6 +13,7 @@ import SwapInfoContainer from '../SwapInfoContainer';
 import SwapTokenContainer from '../SwapTokenContainer';
 import { useFetchByorSellUSN } from '../../../hooks/fetchByorSellUSN';
 import { useNearWallet } from 'react-near';
+import { usePredict } from '../../../hooks/usePredict';
 
 const { REACT_APP_NEAR_ENV } = process.env;
 const contractId  = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet' : 'usn'
@@ -39,7 +40,8 @@ const SwapPage = ({
   accountId,
   onSwap,
   setActiveView,
-  setErrorFromHash
+  setErrorFromHash,
+  multipliers
 }) => {
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
@@ -54,10 +56,14 @@ const SwapPage = ({
         isSwapped,
     });
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
+    const predict = usePredict(wallet.account(), inputValueFrom ? inputValueFrom : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)
     const balance = balanceForError(from);
     const error = balance < +inputValueFrom || !inputValueFrom;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
-    const currentMultiplier = +multiplier * 10000
+    const currentMultiplier = predict.rate * 10000
+    console.log('predict', predict);
+    console.log('SPOT', multipliers.spot);
+    console.log('TWAP', multipliers.twap);
 
 
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
@@ -132,6 +138,7 @@ const SwapPage = ({
                 fromToToken={to}
                 multiplier={multiplier}
                 value={inputValueFrom}
+                sum={predict.sum}
                 />
                 <AvailableToSwap
                     isUSN={true}
@@ -151,7 +158,11 @@ const SwapPage = ({
                 token={from?.onChainFTMetadata?.symbol}
                 exchangeRate={+multiplier}
                 amount={inputValueFrom}
-                tradingFee={commissionFee?.result}
+                // tradingFee={commissionFee?.result}
+                expected={inputValueFrom? predict.sum : '0'}
+                rate={predict.rate}
+                min={predict.amount}
+                tradingFee={predict.commission}
                 isLoading={isLoadingCommission}
                 percent={commissionFee?.percent}
             />

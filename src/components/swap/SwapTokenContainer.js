@@ -115,6 +115,7 @@ const SwapTokenContainer = ({
     value,
     setInputValueFrom,
     multiplier,
+    sum
 }) => {
     const inputRef = useRef(null);
     const balance =
@@ -188,11 +189,12 @@ const SwapTokenContainer = ({
                     <div className="exchange">
                         ≈
                         <>
-                            {exchangeRateTranslation({
+                            {/* {exchangeRateTranslation({
                                 token: fromToToken,
                                 balance: + value,
                                 exchangeRate: +multiplier
-                            })?.toFixed(5)}
+                            })?.toFixed(5)} */}
+                            {value ? sum : '0.00000'}
                         </>
                     </div>
                 ) : null}

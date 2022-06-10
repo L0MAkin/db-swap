@@ -42,7 +42,10 @@ function SwapInfoContainer({
    slippageError,
    tradingFee,
    isLoading,
-   percent
+   percent,
+   min,
+   expected,
+   rate
 }) {
     const isNear = token === 'NEAR';
     const expectedPrice = isNear
@@ -62,11 +65,12 @@ function SwapInfoContainer({
             />
             <SwapInfoItem
                 leftText={'Pair price'}
-                rightText={`1 ${isNear ? 'NEAR' : 'USN'} = ${pairPrice(isNear, exchangeRate)} ${symbol}`}
+                rightText={`1 ${isNear ? 'NEAR' : 'USN'} = ${pairPrice(isNear, rate)} ${symbol}`}
+                // rightText={`1 ${isNear ? 'NEAR' : 'USN'} = ${rate}`}
             />
             <SwapInfoItem
                 leftText={'Expected price'}
-                rightText={`${sliceAmount} ${token} = ${slicePrice} ${symbol}`}
+                rightText={`${sliceAmount} ${token} = ${expected} ${symbol}`}
             />
             <SwapInfoItem
                 isDots={isLoading}
@@ -75,18 +79,19 @@ function SwapInfoContainer({
                     amount,
                     symbol,
                     tradingFee,
-                    value: `${percent}% / ${tradingFee?.toFixed(5)}`,
+                    value: `${percent}% / ${tradingFee}`,
                 })}
             />
             <SwapInfoItem
                 isDots={isLoading}
                 leftText={'Minimum received'}
-                rightText={formatAmount({
-                    amount,
-                    symbol,
-                    tradingFee,
-                    value: MinimumReceived({ token: symbol, balance: amount, exchangeRate }) - tradingFee,
-                })}
+                // rightText={formatAmount({
+                //     amount,
+                //     symbol,
+                //     tradingFee,
+                //     value: MinimumReceived({ token: symbol, balance: amount, exchangeRate }) - tradingFee,
+                // })}
+                rightText={amount ? `${min} ${symbol}` : `0 ${symbol}`}
             />
         </StyledContainer>
     );
