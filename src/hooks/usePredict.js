@@ -53,7 +53,7 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
               ],
         })
     }
-    
+
     return {
       amount: currentToken ? formatTokenAmount(result.amount, 18, 5) : formatTokenAmount(result.amount, 24, 5),
       commission: currentToken ? formatTokenAmount(result.commission.usn, 18, 5) : formatTokenAmount(result.commission.near, 24, 5),
@@ -76,7 +76,7 @@ export const usePredict = (account, amount, multiplier, symbol, accountId) => {
 
       getPredictPrice()
 
-    },[amount, symbol])
+    },[amount, symbol, multiplier])
 
     return predict
 }

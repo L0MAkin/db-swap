@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import styled from 'styled-components'
 import { useDispatch } from 'react-redux';
 
-import { fetchMultiplier } from '../../../redux/slices/multiplier';
+import { fetchMultiplier, fetchMultiplierTWAP } from '../../../redux/slices/multiplier';
 import FormButton from '../common/FormButton';
 import SwapIconTwoArrows from '../../../assets/svg/SwapIconTwoArrows';
 import AvailableToSwap from '../AvailableToSwap';
@@ -61,6 +61,7 @@ const SwapPage = ({
     const error = balance < +inputValueFrom || !inputValueFrom;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
     const currentMultiplier = predict.rate * 10000
+    const dispatch = useDispatch()
     console.log('predict', predict);
     console.log('SPOT', multipliers.spot);
     console.log('TWAP', multipliers.twap);
@@ -97,9 +98,12 @@ const SwapPage = ({
 
     return (
         <>
-            {/*<div className='wrap'>*/}
-            {/*    <Loader onRefreshMultiplier={() => dispatch(fetchMultiplier())}/>*/}
-            {/*</div>*/}
+            <div className='wrap'>
+               <Loader onRefreshMultiplier={() => {
+                    dispatch(fetchMultiplier());
+                    dispatch(fetchMultiplierTWAP());
+               }}/>
+            </div>
             <StyledWrapper>
                 <SwapTokenContainer
                 fromToToken={from}

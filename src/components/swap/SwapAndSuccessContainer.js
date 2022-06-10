@@ -31,6 +31,7 @@ const StyledContainer = styled(Container)`
     .wrap {
         position: relative;
         height: 60px;
+        display: none;
     }
 
     h1 {
