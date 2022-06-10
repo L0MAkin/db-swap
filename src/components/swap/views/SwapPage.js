@@ -60,7 +60,7 @@ const SwapPage = ({
     const balance = balanceForError(from);
     const error = balance < +inputValueFrom || !inputValueFrom;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
-    const currentMultiplier = predict.rate * 10000
+    const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
     console.log('predict', predict);
     console.log('SPOT', multipliers.spot);
@@ -142,7 +142,7 @@ const SwapPage = ({
                 fromToToken={to}
                 multiplier={multiplier}
                 value={inputValueFrom}
-                sum={predict.sum}
+                sum={predict?.sum}
                 />
                 <AvailableToSwap
                     isUSN={true}
@@ -163,10 +163,10 @@ const SwapPage = ({
                 exchangeRate={+multiplier}
                 amount={inputValueFrom}
                 // tradingFee={commissionFee?.result}
-                expected={inputValueFrom? predict.sum : '0'}
-                rate={predict.rate}
-                min={predict.amount}
-                tradingFee={predict.commission}
+                expected={inputValueFrom? predict?.sum : '0'}
+                rate={predict?.rate}
+                min={predict?.amount}
+                tradingFee={predict?.commission}
                 isLoading={isLoadingCommission}
                 percent={commissionFee?.percent}
             />

@@ -73,13 +73,15 @@ export const usePredict = (account, amount, multiplier, symbol, accountId) => {
     
 
     useEffect(() => {
+      let isActive = true;
       const getPredictPrice = async () => {
         const reseult = await getPredict(account, amount, multiplier, symbol, accountId)
         setPredict(reseult)
       }
 
       getPredictPrice()
-
+      
+      return () => { isActive = false };
     },[amount, symbol, multiplier])
 
     return predict
