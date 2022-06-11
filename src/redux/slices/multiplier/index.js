@@ -34,7 +34,7 @@ export const fetchMultiplier = createAsyncThunk(
             const res = JSON.parse(
                 response.result.map((x) => String.fromCharCode(x)).join('')
             );
-
+            console.log('res', res);
             return res.prices[0].price;
         } catch (error) {
             console.warn('Failed to load ', error);
