@@ -54,7 +54,7 @@ function SwapInfoContainer({
     const symbol = !isNear ? 'NEAR' : 'USN';
     const slicePrice = expectedPrice?.toFixed(5).length > 17 ? expectedPrice.toString().slice(0, 17) + '...' : expectedPrice?.toFixed(5)
     const sliceAmount = amount.length > 10 ? amount.slice(0, 10) + '...' : amount
-    const minWithPercent =  min - (min / 100 * 1)
+    const minWithPercent =  min - (min / 100 * slippageValue)
     
     return (
         <StyledContainer>
