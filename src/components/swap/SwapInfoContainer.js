@@ -54,6 +54,7 @@ function SwapInfoContainer({
     const symbol = !isNear ? 'NEAR' : 'USN';
     const slicePrice = expectedPrice?.toFixed(5).length > 17 ? expectedPrice.toString().slice(0, 17) + '...' : expectedPrice?.toFixed(5)
     const sliceAmount = amount.length > 10 ? amount.slice(0, 10) + '...' : amount
+    const minWithPercent =  min - (min / 100 * 1)
     
     return (
         <StyledContainer>
@@ -91,7 +92,7 @@ function SwapInfoContainer({
                 //     tradingFee,
                 //     value: MinimumReceived({ token: symbol, balance: amount, exchangeRate }) - tradingFee,
                 // })}
-                rightText={amount ? `${min} ${symbol}` : `0 ${symbol}`}
+                rightText={amount ? `${minWithPercent} ${symbol}` : `0 ${symbol}`}
             />
         </StyledContainer>
     );
