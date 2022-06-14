@@ -12,11 +12,12 @@ function Loader({ onRefreshMultiplier }) {
     return (
         <StyledLoader>
             <CountdownCircleTimer
-                size={20}
-                strokeWidth={2}
+                size={25}
+                strokeWidth={3}
                 isPlaying
                 duration={30}
                 colors={['#C1B583', '#C1B583', '#C1B583', '#C1B583']}
+                trailColor='#fff'
                 colorsTime={[7, 5, 2, 0]}
                 onComplete={() => {
                     onRefreshMultiplier();
