@@ -29,8 +29,10 @@ const StyledContainer = styled(Container)`
     position: relative;
 
     .wrap {
-        position: relative;
+        position: absolute;
         height: 60px;
+        right: 15px;
+        top: -5px;
     }
 
     h1 {

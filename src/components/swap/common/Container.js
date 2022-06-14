@@ -6,7 +6,7 @@ const Container = styled.div`
     max-width: 100%;
     background: #2A2B34;
     border-radius: 30px;
-    padding: 25px 10px 25px 10px;
+    padding: 50px 10px 25px 10px;
 
     @media (min-width: 768px) {
         width: 610px;
@@ -33,7 +33,7 @@ const Container = styled.div`
                 padding: 40px;
                 margin-top: 40px;
             }
-        }
+        }   
 
         &.center {
             display: flex;

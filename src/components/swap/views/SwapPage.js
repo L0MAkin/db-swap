@@ -91,9 +91,9 @@ const SwapPage = ({
 
     return (
         <>
-            {/*<div className='wrap'>*/}
-            {/*    <Loader onRefreshMultiplier={() => dispatch(fetchMultiplier())}/>*/}
-            {/*</div>*/}
+            <div className='wrap'>
+               <Loader onRefreshMultiplier={() => dispatch(fetchMultiplier())}/>
+            </div>
             <StyledWrapper>
                 <SwapTokenContainer
                 fromToToken={from}
