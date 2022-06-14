@@ -33,6 +33,10 @@ const StyledContainer = styled(Container)`
         height: 60px;
         right: 15px;
         top: -5px;
+
+        @media (max-width: 425px) {
+            top: -10px;
+        }
     }
 
     h1 {
