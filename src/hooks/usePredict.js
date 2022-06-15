@@ -37,7 +37,7 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                 },
                 {
                   multiplier: multiplier.twapFull,
-                  decimals: 28,
+                  decimals: 32,
                 },
               ],
         })
@@ -52,12 +52,11 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                 },
                 {
                   multiplier: multiplier.twapFull,
-                  decimals: 28,
+                  decimals: 32,
                 },
               ],
         })
     }
-
     return {
       amount: currentToken ? formatTokenAmount(result.amount, 18, 5) : formatTokenAmount(result.amount, 24, 5),
       commission: currentToken ? formatTokenAmount(result.commission.usn, 18, 5) : formatTokenAmount(result.commission.near, 24, 5),
