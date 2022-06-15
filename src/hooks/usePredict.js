@@ -5,6 +5,23 @@ import { formatTokenAmount, parseTokenAmount } from '../components/swap/formatTo
 const { REACT_APP_NEAR_ENV } = process.env;
 const IS_MAINNET = REACT_APP_NEAR_ENV === 'mainnet' ? true : false;
 
+const s = (accountId, currentToken, multiplier, amount) => {
+  return {
+    account: accountId ? accountId : 'dontcare',
+    amount: currentToken ? parseTokenAmount(amount * (10 ** 24), 0).toString() : parseTokenAmount(amount * (10 ** 18), 0).toString(),
+    rates: [
+        {
+          multiplier: multiplier.spotFull,
+          decimals: 28,
+        },
+        {
+          multiplier: multiplier.twapFull,
+          decimals: 32,
+        },
+      ],
+}
+}
+
 const getPredict = async (account, amount, multiplier, symbol, accountId) => {
   
   if(!multiplier.spotFull || !multiplier.twapFull) return
@@ -36,8 +53,8 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                   decimals: 28,
                 },
                 {
-                  multiplier: multiplier.twapFull,
-                  decimals: 32,
+                  multiplier: Number(formatTokenAmount(multiplier.twapFull, 8, 4) * 10000).toString(),
+                  decimals: 28,
                 },
               ],
         })
@@ -51,8 +68,8 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                   decimals: 28,
                 },
                 {
-                  multiplier: multiplier.twapFull,
-                  decimals: 32,
+                  multiplier: Number(formatTokenAmount(multiplier.twapFull, 8, 4) * 10000).toString(),
+                  decimals: 28,
                 },
               ],
         })
