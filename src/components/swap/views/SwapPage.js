@@ -60,7 +60,7 @@ const SwapPage = ({
     const balance = balanceForError(from);
     const error = balance < +inputValueFrom || !inputValueFrom;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
-    const currentMultiplier = predict?.rate * 10000
+    // const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
     console.log('predict', predict);
     console.log('SPOT', multipliers.spot);
@@ -177,7 +177,7 @@ const SwapPage = ({
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
                     onClick={() => accountId
-                        ? onHandleSwapTokens(accountId, currentMultiplier.toString(), slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
+                        ? onHandleSwapTokens(accountId, predict.rateFull, slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
                         : signIn()}
                     sending={isLoading}
                 >

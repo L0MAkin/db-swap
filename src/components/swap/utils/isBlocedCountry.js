@@ -34,5 +34,5 @@ export const useCountryAPI = () => {
         getGeoInfo()
     },[])
 
-    return { isLoading, geoInfo: bloced_contry.includes(geoInfo) ? true : userCountry()}
+    return { isLoading, geoInfo: bloced_contry.includes(geoInfo) ? true : userCountry(), setIsLoading}
 }

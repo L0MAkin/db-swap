@@ -165,6 +165,7 @@ const SwapAndSuccessContainer = ({
     const [deposit, setDeposit] = useState('')
     const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const [successValue, setSuccessValue] = useState(0)
+    const [loadHsh, setLoadFash] = useState(false)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
@@ -184,12 +185,14 @@ const SwapAndSuccessContainer = ({
     useEffect(() => {
         const getHash = async (hash) => {
             try {
+                setLoadFash(true)
                 const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
                 if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
                 setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
                 setSuccessValue(formatSuccessValue(res.transaction.actions[0].FunctionCall.method_name, res.status.SuccessValue || res.status.SuccessReceiptId))
+                setLoadFash(false)
                 setActiveView('success')
             }   
                 if(res.status.Failure) {
@@ -199,6 +202,8 @@ const SwapAndSuccessContainer = ({
             } catch (e) {
                 setErrorFromHash(formatError(e.message))
                 setActiveView('success')
+            } finally {
+                setLoadFash(false)
             }
         }
 
@@ -218,7 +223,8 @@ const SwapAndSuccessContainer = ({
     
     return (
         <StyledContainer className='small-centered'>
-            {activeView === VIEWS_SWAP.MAIN && (
+            {loadHsh && <div style={{ width: '30vw', height: '30vh'}}/>}
+            {activeView === VIEWS_SWAP.MAIN && !transactionHash && (
                 <SwapPage
                     multipliers={multipliers}
                     setActiveView={setActiveView}

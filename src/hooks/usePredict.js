@@ -53,7 +53,7 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                   decimals: 28,
                 },
                 {
-                  multiplier: Number(formatTokenAmount(multiplier.twapFull, 8, 4) * 10000).toString(),
+                  multiplier: multiplier.twapFull.slice(0, 5),
                   decimals: 28,
                 },
               ],
@@ -68,7 +68,7 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
                   decimals: 28,
                 },
                 {
-                  multiplier: Number(formatTokenAmount(multiplier.twapFull, 8, 4) * 10000).toString(),
+                  multiplier: multiplier.twapFull.slice(0, 5),
                   decimals: 28,
                 },
               ],
@@ -80,7 +80,8 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
       sum: currentToken 
             ? +formatTokenAmount(result.amount, 18, 5) + +formatTokenAmount(result.commission.usn, 18, 5) 
             : +formatTokenAmount(result.amount, 24, 5) + +formatTokenAmount(result.commission.near, 24, 5),
-      rate: result.rate.multiplier / 10000     
+      rate: result.rate.multiplier / 10000, 
+      rateFull: result.rate.multiplier
     }
 }
 
