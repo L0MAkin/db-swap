@@ -136,6 +136,13 @@ const formatDeposit = (method, res) => {
     : formatTokenAmount(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount, 18, 0)
 }
 
+
+const formatSuccessValue = (method, value) => {
+    return method === 'buy' 
+    ? formatTokenAmount(JSON.parse(atob(value)), 18, 5)
+    : formatNearAmount(JSON.parse(atob(value))) 
+}
+
 const formatError = (value) => {
     return JSON.stringify(value);
 }
@@ -154,6 +161,7 @@ const SwapAndSuccessContainer = ({
     const [errorFromHash, setErrorFromHash] = useState('')
     const [deposit, setDeposit] = useState('')
     const [multiplierFromHash, setMultiplierFromHash] = useState(0)
+    const [successValue, setSuccessValue] = useState(0)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
@@ -176,6 +184,7 @@ const SwapAndSuccessContainer = ({
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
                 // setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
+                setSuccessValue(formatSuccessValue(res.transaction.actions[0].FunctionCall.method_name, res.status.SuccessValue || res.status.SuccessReceiptId))
                 setActiveView('success')
             }   
                 if(res.status.Failure) {
@@ -232,6 +241,7 @@ const SwapAndSuccessContainer = ({
             )}
             {activeView === VIEWS_SWAP.SUCCESS && (
                 <Success
+                    successValue={successValue}
                     errorFromHash={errorFromHash}
                     onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
                     inputValueFrom={deposit}

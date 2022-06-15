@@ -11,14 +11,15 @@ const Success = ({
     multiplier,
     handleBackToSwap,
     onClickGoToExplorer,
-    errorFromHash
+    errorFromHash,
+    successValue
 }) => {
   return (
     <>
         <TextInfoSuccess
             errorFromHash={errorFromHash}
             valueFrom={inputValueFrom}
-            valueTo={exchangeRateTranslationFromHash({
+            valueTo={successValue ? successValue : exchangeRateTranslationFromHash({
                 method: symbol,
                 balance: + inputValueFrom,
                 exchangeRate: +multiplier / 10000
