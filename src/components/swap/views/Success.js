@@ -22,7 +22,7 @@ const Success = ({
             valueTo={successValue ? successValue : exchangeRateTranslationFromHash({
                 method: symbol,
                 balance: + inputValueFrom,
-                exchangeRate: +multiplier / 10000
+                exchangeRate: +multiplier
             })}
             symbol={symbol}
         />

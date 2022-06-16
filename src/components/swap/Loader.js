@@ -17,6 +17,7 @@ function Loader({ onRefreshMultiplier }) {
                 isPlaying
                 duration={30}
                 colors={['#C1B583', '#C1B583', '#C1B583', '#C1B583']}
+                trailColor='black'
                 colorsTime={[7, 5, 2, 0]}
                 trailColor='black'
                 onComplete={() => {

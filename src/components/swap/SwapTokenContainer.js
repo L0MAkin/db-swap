@@ -115,6 +115,7 @@ const SwapTokenContainer = ({
     value,
     setInputValueFrom,
     multiplier,
+    sum
 }) => {
     const inputRef = useRef(null);
     const balance =
@@ -127,7 +128,6 @@ const SwapTokenContainer = ({
               );
 
     const error = setInputValueFrom && balance < +value;
-    const formatMultiplier = +multiplier / 10000;
     const handleChange = (e) => {
         const { value } = e.target;
         const replaceValue = value.replace(',', '.')
@@ -139,7 +139,7 @@ const SwapTokenContainer = ({
             inputRef.current.focus();
         }
     };
-
+    
     return (
         <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
             <div className="symbolFlex">
@@ -181,7 +181,7 @@ const SwapTokenContainer = ({
                         inputMode='decimal'
                         autoFocus
                         placeholder='0'
-                        value={value}
+                        value={value.replace(',', '.')}
                         onChange={handleChange}
                         className={error ? 'inputError' : ''}
                     />
@@ -189,11 +189,12 @@ const SwapTokenContainer = ({
                     <div className="exchange">
                         ≈
                         <>
-                            {exchangeRateTranslation({
+                            {/* {exchangeRateTranslation({
                                 token: fromToToken,
                                 balance: + value,
-                                exchangeRate: formatMultiplier
-                            })?.toFixed(5)}
+                                exchangeRate: +multiplier
+                            })?.toFixed(5)} */}
+                            {value ? sum : '0.00000'}
                         </>
                     </div>
                 ) : null}
