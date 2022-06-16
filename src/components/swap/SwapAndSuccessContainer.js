@@ -12,6 +12,7 @@ import { fetchNearBalance } from '../../redux/slices/near';
 import { useNearWallet } from 'react-near';
 import { useLocation, useNavigate } from 'react-router';
 import { formatNearAmount, formatTokenAmount } from './formatToken';
+import Loader from '../../App/Loader';
 
 const { REACT_APP_NEAR_ENV } = process.env;
 
@@ -165,7 +166,7 @@ const SwapAndSuccessContainer = ({
     const [deposit, setDeposit] = useState('')
     const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const [successValue, setSuccessValue] = useState(0)
-    const [loadHsh, setLoadFash] = useState(false)
+    const [loadHash, setLoadHash] = useState(false)
     const wallet = useNearWallet();
     const dispatch = useDispatch()
     const { search } = useLocation()
@@ -185,14 +186,14 @@ const SwapAndSuccessContainer = ({
     useEffect(() => {
         const getHash = async (hash) => {
             try {
-                setLoadFash(true)
+                setLoadHash(true)
                 const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
                 if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
                 setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
                 setSuccessValue(formatSuccessValue(res.transaction.actions[0].FunctionCall.method_name, res.status.SuccessValue || res.status.SuccessReceiptId))
-                setLoadFash(false)
+                setLoadHash(false)
                 setActiveView('success')
             }   
                 if(res.status.Failure) {
@@ -203,7 +204,7 @@ const SwapAndSuccessContainer = ({
                 setErrorFromHash(formatError(e.message))
                 setActiveView('success')
             } finally {
-                setLoadFash(false)
+                setLoadHash(false)
             }
         }
 
@@ -222,8 +223,11 @@ const SwapAndSuccessContainer = ({
     }, []);
     
     return (
-        <StyledContainer className='small-centered'>
-            {loadHsh && <div style={{ width: '30vw', height: '30vh'}}/>}
+        <>
+        {loadHash || (!successValue && transactionHash)
+            ?  <div style={{ width: 400, height: 400}}/>
+            : <>
+            <StyledContainer className='small-centered'>
             {activeView === VIEWS_SWAP.MAIN && !transactionHash && (
                 <SwapPage
                     multipliers={multipliers}
@@ -251,7 +255,7 @@ const SwapAndSuccessContainer = ({
                     }}
                 />
             )}
-            {activeView === VIEWS_SWAP.SUCCESS && (
+            {activeView === VIEWS_SWAP.SUCCESS && !loadHash && (
                 <Success
                     successValue={successValue}
                     errorFromHash={errorFromHash}
@@ -266,6 +270,10 @@ const SwapAndSuccessContainer = ({
                 />
             )}
         </StyledContainer>
+            </>}
+        
+        </>
+        
     );
 };
 

@@ -50,11 +50,11 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
             rates: [
                 {
                   multiplier: multiplier.spotFull,
-                  decimals: 28,
+                  decimals: multiplier.spotDecimals
                 },
                 {
-                  multiplier: multiplier.twapFull.slice(0, 5),
-                  decimals: 28,
+                  multiplier: multiplier.twapFull,
+                  decimals: multiplier.twapDecimals,
                 },
               ],
         })
@@ -65,11 +65,11 @@ const getPredict = async (account, amount, multiplier, symbol, accountId) => {
             rates: [
                 {
                   multiplier: multiplier.spotFull,
-                  decimals: 28,
+                  decimals: multiplier.spotDecimals,
                 },
                 {
-                  multiplier: multiplier.twapFull.slice(0, 5),
-                  decimals: 28,
+                  multiplier: multiplier.twapFull,
+                  decimals: multiplier.twapDecimals,
                 },
               ],
         })
