@@ -10,7 +10,7 @@ function Router() {
     return (
         <Routes>
             <Route path="/" element={<Main />} />
-            {/* <Route path="/swap" element={<HomePage />} /> */}
+            <Route path="/swap" element={<HomePage />} />
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
