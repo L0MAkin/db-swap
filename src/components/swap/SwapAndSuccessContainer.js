@@ -132,39 +132,28 @@ const StyledContainer = styled(Container)`
 `;
 
 const formatDeposit = (method, res) => {
-    return method === 'buy' 
-    ? formatNearAmount(res.transaction.actions[0].FunctionCall.deposit) 
-    : formatTokenAmount(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount, 18, 0)
-}
-
-const formatSuccessValue = (method, value) => {
-    return method === 'buy' 
-    ? formatTokenAmount(JSON.parse(atob(value)), 18, 5)
-    : formatNearAmount(JSON.parse(atob(value))) 
+    const amount = JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount || 0;
+    return method === 'withdraw'
+        ? formatNearAmount(res.transaction.actions[0].FunctionCall.deposit) 
+        : formatTokenAmount(amount, 6, 2)
 }
 
 const formatError = (value) => {
     return JSON.stringify(value);
 }
 
-const currentMultiplier = (symbol, method, a, b) => {
-    return symbol === 'NEAR' && method === 'buy' ? Math.max(a, b).toFixed(4) : Math.min(a, b).toFixed(4);
-}
-
-
 const SwapAndSuccessContainer = ({
     fungibleTokensList,
     accountId,
     multipliers,
 }) => {
-    const [from, setFrom] = useState(fungibleTokensList[0]);
+    const [from, setFrom] = useState(fungibleTokensList[1]);
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
     const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const [methodFromHash, setMethodFromHash] = useState('buy')
     const [errorFromHash, setErrorFromHash] = useState('')
     const [deposit, setDeposit] = useState('')
-    const [multiplierFromHash, setMultiplierFromHash] = useState(0)
     const [successValue, setSuccessValue] = useState(0)
     const [loadHash, setLoadHash] = useState(false)
     const wallet = useNearWallet();
@@ -174,8 +163,7 @@ const SwapAndSuccessContainer = ({
     const transactionHash = params.get('transactionHashes') || ''
     const navigate = useNavigate()
     
-    const multiplier = currentMultiplier(from?.onChainFTMetadata?.symbol, methodFromHash, multipliers.spot, multipliers.twap)
-    console.log('fungibleTokensList', fungibleTokensList);
+    const multiplier = 1;
     useEffect(() => {
         setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
         if(accountId) {
@@ -188,14 +176,10 @@ const SwapAndSuccessContainer = ({
             try {
                 setLoadHash(true)
                 const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
-                if(typeof res.status.SuccessValue === 'string' || typeof res.status.SuccessReceiptId === 'string') {
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
-                setMultiplierFromHash(JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).expected.multiplier)
-                setSuccessValue(formatSuccessValue(res.transaction.actions[0].FunctionCall.method_name, res.status.SuccessValue || res.status.SuccessReceiptId))
                 setLoadHash(false)
                 setActiveView('success')
-            }   
                 if(res.status.Failure) {
                     setErrorFromHash(formatError(res.status.Failure?.ActionError))
                     setActiveView('success')
@@ -214,17 +198,15 @@ const SwapAndSuccessContainer = ({
         
     },[search, wallet])
 
-
     const onHandleBackToSwap = useCallback(async () => {
         await dispatch(fetchTokens({ accountId }));
         await dispatch(fetchNearBalance(accountId))
         navigate('/swap')
         setActiveView('main');
     }, []);
-    
     return (
         <>
-        {loadHash || (!successValue && transactionHash)
+        {loadHash
             ?  <div style={{ width: 400, height: 400}}/>
             : <>
             <StyledContainer className='small-centered'>
@@ -240,14 +222,13 @@ const SwapAndSuccessContainer = ({
                     setInputValueFrom={setInputValueFrom}
                     to={to}
                     onSwap={() => {
-
-                        if (from?.onChainFTMetadata?.symbol === 'NEAR') {
+                        if (from?.onChainFTMetadata?.symbol === 'USDT') {
                             setFrom(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
-                            setTo(fungibleTokensList[0]);
+                            setTo(fungibleTokensList[1]);
                         } else {
-                            setFrom(fungibleTokensList[0]);
+                            setFrom(fungibleTokensList[1]);
                             setTo(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
@@ -262,7 +243,6 @@ const SwapAndSuccessContainer = ({
                     onClickGoToExplorer={() => window.open(`${explorerUrl}/transactions/${transactionHash}`, '_blank')}
                     inputValueFrom={deposit}
                     symbol={methodFromHash}
-                    multiplier={multiplierFromHash ? +multiplierFromHash / 10000: multiplier}
                     handleBackToSwap={async () => {
                         setInputValueFrom('');
                         await onHandleBackToSwap();

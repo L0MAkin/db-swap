@@ -2,69 +2,68 @@ import * as nearApiJs from 'near-api-js';
 import { useState } from 'react';
 import { formatTokenAmount, parseTokenAmount } from '../components/swap/formatToken';
 
-
 const { REACT_APP_NEAR_ENV } = process.env;
 const IS_MAINNET = REACT_APP_NEAR_ENV === 'mainnet' ? true : false;
+const usnContractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
+const usdtContractName = !IS_MAINNET ? 'usdt.fakes.testnet' : 'usdt';
 
-const setArgsUSNContractBuy = (multiplier, slippage, amount) => {
+const ONE_YOCTO_NEAR = '1';
+const GAS_TO_CALL_WITHDRAW = '';
+const GAS_FOR_CALL = '200000000000000'; // 200 TGas
+
+const setArgsUSNContractWithdraw = (amount) => {
     return {
         args: {
-            expected: {
-                multiplier,
-                slippage: `${Math.round(
-                    (+multiplier / 100) * slippage
-                )}`,
-                decimals: 28,
-            },
+            amount: parseTokenAmount(amount, 18)
         },
-        amount: parseTokenAmount(amount * (10 ** 24), 0),
-        gas: 50000000000000,
+        amount: ONE_YOCTO_NEAR,
+        gas: GAS_FOR_CALL,
     };
 };
 
-const setArgsUSNContractSell = (amount, multiplier, slippage, usnAmount) => {
+const setArgsUSDTContractTransfer = (amount) => {
     return {
         args: {
-            amount: amount === formatTokenAmount(usnAmount, 18, 5) ? usnAmount : parseTokenAmount(amount * (10 ** 18), 0),
-            expected: {
-                multiplier,
-                slippage: `${Math.round(
-                    (+multiplier / 100) * slippage
-                )}`,
-                decimals: 28,
-            },
+            receiver_id:usnContractName,
+            amount: parseTokenAmount(amount, 6),
+            msg: '',
         },
-        amount: 1,
-        gas: 100000000000000,
+        amount: ONE_YOCTO_NEAR,
+        gas: GAS_FOR_CALL,
     };
 };
 
 export const useFetchByorSellUSN = (account) => {
     const [isLoading, setIsLoading] = useState(false);
-    const contractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
     const usnMethods = {
         viewMethods: ['version', 'name', 'symbol', 'decimals', 'ft_balance_of'],
-        changeMethods: ['buy', 'sell'],
+        changeMethods: ['withdraw'],
+    };
+
+    const usdtMethods = {
+        changeMethods: ['ft_transfer_call'],
     };
 
     const fetchByOrSell = async (
         accountId,
-        multiplier,
-        slippage,
         amount,
         symbol,
         usnAmount
     ) => {
-        const usnContract = new nearApiJs.Contract(
-            account,
-            contractName,
-            usnMethods
-        );
-        if (symbol === 'NEAR') {
-            await usnContract.buy(setArgsUSNContractBuy(multiplier, slippage, amount));
-           
+        if (symbol === 'USDT') {
+            const usdtContract = new nearApiJs.Contract(
+                account,
+                usdtContractName,
+                usdtMethods
+            );
+            await usdtContract.ft_transfer_call(setArgsUSDTContractTransfer(amount));
         } else {
-           await usnContract.sell(setArgsUSNContractSell(amount, multiplier, slippage, usnAmount));
+            const usnContract = new nearApiJs.Contract(
+                account,
+                usnContractName,
+                usnMethods
+            );
+            await usnContract.withdraw(setArgsUSNContractWithdraw(amount));
         }
     };
 

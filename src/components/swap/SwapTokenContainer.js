@@ -118,14 +118,11 @@ const SwapTokenContainer = ({
     sum
 }) => {
     const inputRef = useRef(null);
-    const balance =
-        fromToToken?.onChainFTMetadata?.symbol === 'NEAR'
-            ? +formatNearAmount(fromToToken?.balance)
-            : +formatTokenAmount(
-                  fromToToken?.balance,
-                  fromToToken?.onChainFTMetadata?.decimals,
-                  5
-              );
+    const balance = +formatTokenAmount(
+        fromToToken?.balance,
+        fromToToken?.onChainFTMetadata?.decimals,
+        5
+    );
 
     const error = setInputValueFrom && balance < +value;
     const handleChange = (e) => {
@@ -168,7 +165,7 @@ const SwapTokenContainer = ({
                             </span>
                         ) : (
                             <span className="symbol">
-                                {fromToToken?.onChainFTMetadata?.symbol === 'NEAR' ? 'NEAR' : 'USN'}
+                                {fromToToken?.onChainFTMetadata?.symbol}
                             </span>
                         )}
                     </div>
