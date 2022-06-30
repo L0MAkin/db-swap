@@ -68,7 +68,7 @@ const fetchTokens = createAsyncThunk(
     async ({ accountId }, thunkAPI) => {
         const { dispatch, getState } = thunkAPI;
 
-        const likelyContracts = [`${currentContractName}`]
+        const likelyContracts = [`${currentContractName}`, 'usdt.fakes.testnet']
 
         await Promise.all(
             likelyContracts.map(async (contractName) => {
@@ -234,7 +234,7 @@ export const selectTokensWithMetadataForAccountId = createSelector(
         Object.entries(ownedTokensForAccount)
             .filter(([contractName, { balance }]) => {
                 // We need to see our contract even with zero balance
-                if (contractName === currentContractName) {
+                if (contractName === currentContractName || contractName === 'usdt.fakes.testnet') {
                      return true;
                 }
                 return !new BN(balance).isZero();

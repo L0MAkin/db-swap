@@ -175,7 +175,7 @@ const SwapAndSuccessContainer = ({
     const navigate = useNavigate()
     
     const multiplier = currentMultiplier(from?.onChainFTMetadata?.symbol, methodFromHash, multipliers.spot, multipliers.twap)
-
+    console.log('fungibleTokensList', fungibleTokensList);
     useEffect(() => {
         setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
         if(accountId) {
