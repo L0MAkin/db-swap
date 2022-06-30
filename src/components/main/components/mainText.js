@@ -141,7 +141,19 @@ const TextWrapper = styled.div`
         }
 
         span {
-            color: rgba(42, 43, 53, 1); 
+            color: rgba(42, 43, 53, 1);
+            div {
+                font-weight: 400;
+                line-height: 35px;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 25px; 
+            }
+            span {
+                font-weight: 600;
+                line-height: 35px;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 35px;
+            }
         }
     }
 `
@@ -154,9 +166,36 @@ export function MainText() {
           <div className='first'></div>
           <TextWrapper>
             <img src={textDB} alt='mainDBtext'/>
-            <p>
+            {/* <p>
                 <span>
                     decentralized organization developing and supporting NEAR Protocol based stable assets.
+                </span>
+            </p> */}
+            <p>
+                <span>
+                Meet USN v.2:
+                <br/>
+                Pegged to the value of basket of stable coins
+                </span>
+            </p>
+            <p>
+                <span>
+                    <span>
+                        Introducing USN v2.0: Towards True Stability
+                     </span>
+                    <br/>
+                <div>
+                Due to recent events in capital markets, the Decentral Bank team has taken some steps to remove risk from participating in the ecosystem. The safety and security of market participants is of the utmost importance to the team, and this has led to a redesign of the $USN token, adaptable to the harshest of market conditions, but also able to take advantage when positive sentiment returns.
+                <br/> 
+                <br/>
+                Phase 1 is to ensure a stable backing, and also a stable yield in a Bear Market scenario. This is achieved by a reserve fund only consisting of stable assets ($USDT) and receiving yield by using $NEAR staked in the Decentral Bank’s reserve fund to validate the NEAR protocol network, in which rewards will be paid out to $USN holders.
+                <br/>
+                <br/>
+                Adaptable monetary policy is one of the cornerstones of the Decentral Bank, and Phase 2 will allow for additional non-stablecoin assets (like $NEAR) to be added to the reserve fund which will allow for over-collateralization and more flexibility. 
+                <br/>
+                <br/>
+                This entire procedure will be conducted in a transparent and fully governed manner by the Decentral Bank.  
+                </div>
                 </span>
             </p>
         </TextWrapper>
@@ -170,14 +209,14 @@ export function MainText() {
                     <Medium onClick={() => window.open('https://medium.com/@dcntrlbank', '_blank')}/> 
                     <Git onClick={() => window.open('https://github.com/orgs/DecentralBankDAO', '_blank')}/>
                 </div>
-            <FormButton
+            {/* <FormButton
                 type="submit"
                 color='dark-gold2'
                 data-test-id="sendMoneyPageSubmitAmountButton"
                 linkTo='/swap'
             >
                 <>Buy $USN</>
-            </FormButton>
+            </FormButton> */}
         </div>
       </Wrapper>
   )

@@ -106,9 +106,9 @@ export function SecondPart() {
                 type="submit"
                 color='dark-gold2'
                 data-test-id="sendMoneyPageSubmitAmountButton"
-                linkTo='https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view'
+                // linkTo='https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view'
             >
-                <>Whitepaper v. 1.0</>
+                <>USN v. 2 whitepaper coming soon!</>
             </FormButton>
             <img src={man} alt='man'/>
     </Wrapper>

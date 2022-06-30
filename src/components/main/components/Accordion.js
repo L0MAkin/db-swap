@@ -5,7 +5,8 @@ import { AccordionItem } from './AccordionItem'
 const accordionData = [
     {
         title: 'What is $USN?',
-        content: `<span>$USN is a NEAR-native stablecoin <b>soft-pegged to the US Dollar</b>, backed by a Reserve Fund that contains <b>$NEAR</b>, as well as <b>$USDT</b> initially. $USN’s core stability mechanisms consist of on-chain arbitrage and the Reserve Fund based on the Currency Board principle. Combining the growth potential of $UST and the strong peg defense of $FRAX, $USN is positioned to be one of the most effective ways to bootstrap liquidity in the NEAR ecosystem; all while adding a new layer to $NEAR’s utility as a token. $USN’s smart contracts and Reserve Fund are managed by the Decentral Bank DAO.</span>`
+        content: `<span>$USN is a NEAR-native stablecoin soft-pegged to the US Dollar via Tether, backed by a Reserve Fund that contains $USDT, with the option for other assets in the future. $USN can be viewed as a fixed income product, with the alacrity to adjust monetary policy depending on market conditions. . Combining the security of  $USDT and the decentralisation of $FRAX, $USN is positioned to be one of the most effective ways to bootstrap liquidity in the NEAR ecosystem; all while adding a new layer of composability to $NEAR. $USN’s smart contracts and Reserve Fund are managed by the Decentral Bank DAO.
+        </span>`
     },
     {
         title: 'What is Decentral Bank?',
@@ -13,15 +14,12 @@ const accordionData = [
     },
     {
         title: 'How does $USN maintain its peg?',
-        content: `$USN’s peg to the US Dollar is secured through on-chain arbitrage and the Reserve Fund, a portion of which is deposited as liquidity in the StableSwap pools
-        <b>On-chain arbitrage:</b> $USN maintains its peg through a smart contract which allows for the exchange of $NEAR<>$USN with 0 slippage and minimal commissions. As soon as $USN loses its peg, arbitrageurs will exploit the price difference until $USN returns to its peg.<br/> 
-        <b>Reserve Fund:</b> $USN is initially double-collateralized by $NEAR and $USDT via the $USN Reserve Fund. The $USN Reserve Fund is based on the currency board principle and automatically balances to maintain a backing of $USN at a rate greater than 100% at all times. This means that later on, in an extreme case, Decentral Bank could buy back the entire amount of $USN ever issued and still be left with the initial reserve equal to the initial $USN issuance, plus any accumulated percentage income.<br/>
-        <b>StableSwap on Ref Finance.</b> At launch, Decentral Bank will seed the $USN< >$USDT pool on Ref Finance’s StableSwap. This offers additional stabilization of $USN in the open market. In the future, $USN can be supported by a tri- or quadri-pool of stablecoins.
+        content: `$USN’s peg to the US Dollar is secured through a 1-1 relationship with $USDT. , $USN will now be minted with $USDT, and users will receive $USDT for burning $USN  In the future, $USN can be supported by a tri- or quadri-pool of stablecoins.
         `
     },
     {
-        p1: 'Thus far, there have been four main approaches to stablecoins:',
-        p2: '$USN combines some of the best approaches to stablecoins as a semi-algorithmic stablecoin with an on-chain arbitrage mechanism backed by $NEAR, as well as $USDT at launch. Through an on-chain arbitrage model, $USN untaps the growth potential of $UST, while securing a strong peg defense like $FRAX through a self-balancing reserve. Furthermore, while the $USN Reserve Fund is initially double-collateralized by $NEAR and $USDT, there is no overcollateralization on the part of the user; 1 $USN will always be minted for $1 worth of $NEAR.',
+        content: '$USN combines some of the best approaches to stablecoins as a stablecoin with secure backing by $USDT, as well as consensus mechanism rewards. As NEAR is a P.O.S (Proof of stake) chain, the $NEAR held by the Decentral Bank will be used to validate the NEAR Network, In which validation rewards will be distributed to $USN holders. ',
+        // p2: '$USN combines some of the best approaches to stablecoins as a semi-algorithmic stablecoin with an on-chain arbitrage mechanism backed by $NEAR, as well as $USDT at launch. Through an on-chain arbitrage model, $USN untaps the growth potential of $UST, while securing a strong peg defense like $FRAX through a self-balancing reserve. Furthermore, while the $USN Reserve Fund is initially double-collateralized by $NEAR and $USDT, there is no overcollateralization on the part of the user; 1 $USN will always be minted for $1 worth of $NEAR.',
         title: 'How does $USN compare to other stablecoins?'
     },
     {
@@ -52,15 +50,15 @@ const accordionData = [
         <b>Phase 3.</b> Multi-chain expansion</br>
         <b>Phase 4.</b> Protocol-level integration of $USN as a native asset on NEAR to be used as gas and storage fees`
     },
-    {
-        title: 'Where can I learn more about $USN and Decentral Bank?',
-        content: `<a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a>
-        <a href="https://github.com/orgs/DecentralBankDAO" target="_blank">Github</a>
-        <a href="https://medium.com/@dcntrlbank" target="_blank">Medium</a>
-        <a href="https://twitter.com/DcntrlBank" target="_blank">Twitter</a>
-        <a href="https://discord.gg/TNtCNTDr" target="_blank">Discord</a>
-        `
-    }
+    // {
+    //     title: 'Where can I learn more about $USN and Decentral Bank?',
+    //     content: `<a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank">Whitepaper</a>
+    //     <a href="https://github.com/orgs/DecentralBankDAO" target="_blank">Github</a>
+    //     <a href="https://medium.com/@dcntrlbank" target="_blank">Medium</a>
+    //     <a href="https://twitter.com/DcntrlBank" target="_blank">Twitter</a>
+    //     <a href="https://discord.gg/TNtCNTDr" target="_blank">Discord</a>
+    //     `
+    // }
 ]
 
 const AccordionWrapper = styled.div`
