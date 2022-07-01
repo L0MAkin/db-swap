@@ -98,7 +98,7 @@ const TextWrapper = styled.div`
     max-width: 1400px;
     width: 100%;
     z-index: 2;
-    
+    position: relative;
     img {
         width: 100%;
         /* height: 100%; */
