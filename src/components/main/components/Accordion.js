@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import { AccordionItem } from './AccordionItem'
-import FAQtable from '../../../assets/images/faq-table.png';
 
 const accordionData = [
     {
