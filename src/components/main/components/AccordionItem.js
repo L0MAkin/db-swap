@@ -16,7 +16,7 @@ export function AccordionItem({ title, content, p1 = undefined, p2 = undefined, 
                     <p>{p2}</p>
                 </div>
             </>
-            : <div className={`accordion_content ${isActive ? 'open' : ''}`} dangerouslySetInnerHTML={{__html: content}} /> 
+            : <div className={`accordion_content ${isActive ? 'open' : ''}`} dangerouslySetInnerHTML={{__html: content}} />
         }
     </div>
   )

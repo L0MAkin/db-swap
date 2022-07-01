@@ -87,7 +87,7 @@ const RightNav = ({ open, close }) => {
     <Ul open={open}>
       {/* <NavLink className={({ isActive }) => isActive ? 'active' : ''} to='/swap' onClick={close}>Swap</NavLink> */}
       {/* <a href="https://drive.google.com/file/d/1RbpAYx7K7CsinQKbD9a1I3r9d5zwivm3/view?usp=sharing" target="_blank" onClick={close}>USN v. 2 whitepaper coming soon!</a> */}
-      <Link to='#' onClick={close}>USN v. 2 whitepaper coming soon!</Link>
+      <Link to='#' onClick={close}>Decentral Bank v2.0 whitepaper coming soon!</Link>
       {!matches && 
         <Link to='/' onMouseEnter={handleOpenModal} onMouseLeave={handleCloseModal}>
           Community
