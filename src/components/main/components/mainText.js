@@ -188,6 +188,9 @@ export function MainText() {
                 <br/>
                 <br/>
                 <b>This</b> entire procedure will be conducted in a transparent and fully governed manner by the Decentral Bank DAO.
+                <br/>
+                <br/>
+                Learn more about USN v2.0 on <a href="https://medium.com/nearprotocol/announcing-usn-v2-0-towards-true-stability-f4dbc6897d1f">Medium</a>
                 </div>
                 </span>
             </p>
