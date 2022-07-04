@@ -159,8 +159,8 @@ const SwapTokenContainer = ({
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {fromToToken?.onChainFTMetadata?.name ||
-                                        fromToToken?.onChainFTMetadata?.symbol}
+                                    {fromToToken?.onChainFTMetadata?.symbol ||
+                                        fromToToken?.onChainFTMetadata?.name}
                                 </a>
                             </span>
                         ) : (

@@ -20,7 +20,6 @@ const explorerUrl = REACT_APP_NEAR_ENV === 'testnet' ? 'https://explorer.testnet
 
 const { fetchTokens } = actions;
 
-
 export const VIEWS_SWAP = {
     MAIN: 'main',
     SUCCESS: 'success'
