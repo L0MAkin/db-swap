@@ -62,7 +62,7 @@ const SwapPage = ({
         isSwapped,
     });
     const inputAmount = inputValueFrom || 0;
-    const tradingFee = divNumbers(multiplyNumbers(inputAmount, 5), 10000);
+    const tradingFee = divNumbers(multiplyNumbers(inputAmount, 1), 10000);
     const minReceivedAmount = subsctractNumbers(inputAmount, tradingFee);
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
     const predict = usePredict(wallet.account(), inputValueFrom ? inputValueFrom : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)

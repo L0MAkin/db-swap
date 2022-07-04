@@ -42,7 +42,7 @@ function SwapInfoContainer({
    isLoading,
    min,
 }) {
-    const feePercent = 0.05;
+    const feePercent = 0.01;
     const isUsdt = token === 'USDT';
     const expectedAmpunt = +amount * 1;
     const symbol = !isUsdt ? 'USDT' : 'USN';
