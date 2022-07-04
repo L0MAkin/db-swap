@@ -134,7 +134,7 @@ const StyledContainer = styled(Container)`
 const formatDeposit = (method, res) => {
     const amount = JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount || 0;
     return method === 'withdraw'
-        ? formatNearAmount(res.transaction.actions[0].FunctionCall.deposit) 
+        ? formatTokenAmount(amount, 18, 2) 
         : formatTokenAmount(amount, 6, 2)
 }
 

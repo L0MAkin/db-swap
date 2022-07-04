@@ -18,8 +18,8 @@ export const useFungibleTokensIncludingNEAR = function (accountId) {
     );
     const NEARAsTokenWithMetadata = useSelector(nearbalanceAvailable);
     const fungibleTokens = useSelector((state) =>
-    selectTokensWithMetadataForAccountId(state, { accountId })
-);
+        selectTokensWithMetadataForAccountId(state, { accountId })
+    );
 
     return [NEARAsTokenWithMetadata, ...fungibleTokens];
 };
