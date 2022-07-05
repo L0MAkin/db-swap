@@ -7,7 +7,7 @@ import { formatTokenAmount, parseTokenAmount } from '../components/swap/formatTo
 const { REACT_APP_NEAR_ENV } = process.env;
 const IS_MAINNET = REACT_APP_NEAR_ENV === 'mainnet' ? true : false;
 const usnContractName = !IS_MAINNET ? 'usdn.testnet' : 'usn';
-const usdtContractName = !IS_MAINNET ? 'usdt.fakes.testnet' : 'usdt';
+const usdtContractName = !IS_MAINNET ? 'usdt.fakes.testnet' : 'dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near';
 
 const ONE_YOCTO_NEAR = '1';
 const GAS_TO_CALL_WITHDRAW = '';
