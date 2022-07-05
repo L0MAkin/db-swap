@@ -14,7 +14,7 @@ const Success = ({
     errorFromHash,
     successValue
 }) => {
-    const fee = divNumbers(multiplyNumbers(inputValueFrom, 5), 10000);
+    const fee = divNumbers(multiplyNumbers(inputValueFrom, 1), 10000);
     const valueTo = subsctractNumbers(inputValueFrom, fee);
   return (
     <>
