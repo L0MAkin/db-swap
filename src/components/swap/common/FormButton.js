@@ -157,7 +157,12 @@ const CustomButton = styled.button`
                 color: black;
             }
 
+            @media (max-width: 1440px) {
+                max-width: 300px;
+            }
+
             @media (max-width: 1025px) {
+                /* max-width: 400px !important; */
                 height: 40px;
                 font-size: 14px;
                 margin: 30px auto;
@@ -168,9 +173,9 @@ const CustomButton = styled.button`
                 max-width: ${({ man }) => (man ? '100%' : '500px')};
             }
 
-            @media (max-width:320px) {
+            /* @media (max-width:320px) {
                 margin: ${({ man }) => (man ? '30px auto' : '50px auto')};
-            }
+            } */
         }
 
         &.light-blue {
