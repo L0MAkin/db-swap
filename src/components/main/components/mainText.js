@@ -207,20 +207,20 @@ export function MainText() {
                 </div>
             <FormButton
                 type="submit"
-                color='dark-gold-small'
+                color='dark-gold2'
                 data-test-id="sendMoneyPageSubmitAmountButton"
                 linkTo='/swap'
             >
                 <>Buy $USN with USDT</>
             </FormButton>
-            <FormButton
+            {/* <FormButton
                 type="submit"
                 color='dark-gold-small'
                 data-test-id="sendMoneyPageSubmitAmountButton"
                 linkTo='/buy'
             >
                 <>Buy $USN with fiat</>
-            </FormButton>
+            </FormButton> */}
         </div>
       </Wrapper>
   )
