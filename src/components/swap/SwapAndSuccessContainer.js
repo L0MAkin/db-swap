@@ -155,8 +155,6 @@ const SwapAndSuccessContainer = ({
         }
     }, [fungibleTokensList]);
 
-    console.log('fungibleTokensList', fungibleTokensList);
-
     useEffect(() => {
         const getHash = async (hash) => {
             try {

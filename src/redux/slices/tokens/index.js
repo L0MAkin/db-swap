@@ -11,7 +11,7 @@ import createParameterSelector from '../createParameterSelector';
 
 const { REACT_APP_NEAR_ENV } = process.env;
 const currentContractName = REACT_APP_NEAR_ENV === 'testnet' ? 'usdn.testnet': 'usn';
-const usdtContractName = REACT_APP_NEAR_ENV === 'testnet' ? 'usdt.fakes.testnet' : 'usdt';
+const usdtContractName = REACT_APP_NEAR_ENV === 'testnet' ? 'usdt.fakes.testnet' : 'dac17f958d2ee523a2206206994597c13d831ec7.factory.bridge.near';
 
 const SLICE_NAME = 'tokens';
 
