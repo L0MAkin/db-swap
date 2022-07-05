@@ -131,7 +131,7 @@ const SwapAndSuccessContainer = ({
     accountId,
     multipliers,
 }) => {
-    const [from, setFrom] = useState(fungibleTokensList[1]);
+    const [from, setFrom] = useState({ onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
     const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
@@ -149,8 +149,9 @@ const SwapAndSuccessContainer = ({
     
     const multiplier = 1;
     useEffect(() => {
-        setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
+        
         if(accountId) {
+            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
             setTo(currentToken(fungibleTokensList, to?.onChainFTMetadata?.symbol || 'USN'));
         }
     }, [fungibleTokensList]);
@@ -210,9 +211,9 @@ const SwapAndSuccessContainer = ({
                             setFrom(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
-                            setTo(fungibleTokensList[1]);
+                            setTo(accountId ? fungibleTokensList[1] : { onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
                         } else {
-                            setFrom(fungibleTokensList[1]);
+                            setFrom(accountId ? fungibleTokensList[1] : { onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
                             setTo(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
