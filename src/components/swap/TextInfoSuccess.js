@@ -2,8 +2,8 @@ import React from 'react';
 // import { Translate } from 'react-localize-redux';
 
 const TextInfoSuccess = ({ valueFrom, valueTo, symbol, errorFromHash }) => {
-    const isNear = symbol === 'buy';
-    const NEAR = 'NEAR';
+    const isNear = symbol === 'withdraw';
+    const USDT = 'USDT';
     const USN = 'USN';
 
     return !errorFromHash 
@@ -14,14 +14,12 @@ const TextInfoSuccess = ({ valueFrom, valueTo, symbol, errorFromHash }) => {
             <br />
             <>
                 <>You swap</> {valueFrom}{' '}
-                {isNear ? NEAR : USN}
+                {isNear ? USN : USDT }
             </>
             <br />
-            {valueTo && 
-                <>
-                    <>To</>  {valueTo} {isNear ? USN : NEAR}
-                </>
-            }
+            <>
+                <>To</>  {valueTo} {isNear ? USDT : USN }
+            </>
         </div>
         : <div className="text_info_success">
         <>
