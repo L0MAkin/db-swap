@@ -16,7 +16,6 @@ const SwapContainer = styled.div`
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-
     input {
         text-align: right;
         padding-right: 3px;
@@ -31,7 +30,6 @@ const SwapContainer = styled.div`
         color: #252729;
         margin-bottom: 10px;
     }
-
     .exchange {
         text-align: right;
         padding: 0;
@@ -45,11 +43,9 @@ const SwapContainer = styled.div`
         line-height: 22px;
         color: #252729;
     }
-
     .inputError {
         color: #ec6563;
     }
-
     .symbolFlex {
         display: flex;
         width: 100%;
@@ -57,14 +53,12 @@ const SwapContainer = styled.div`
         justify-content: space-between;
         box-sizing: border-box;
     }
-
     .symbolContainer {
         display: flex;
         align-items: center;
         justify-content: flex-start;
         min-width: 100px;
     }
-
     .inputContainer {
         display: flex;
         align-items: center;
@@ -75,7 +69,6 @@ const SwapContainer = styled.div`
         padding-right: 20px;
         background-color: #FEFDEE;
     }
-
     .icon {
         display: flex;
         align-items: center;
@@ -85,7 +78,6 @@ const SwapContainer = styled.div`
         box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.15);
         align-self: center;
     }
-
     .desc {
         display: flex;
         flex-direction: column;
@@ -93,7 +85,6 @@ const SwapContainer = styled.div`
         margin-left: 5px;
         display: block;
         min-width: 0;
-
         .symbol {
             font-weight: 700;
             font-size: 16px;
@@ -102,7 +93,6 @@ const SwapContainer = styled.div`
             overflow: hidden;
             text-overflow: ellipsis;
             display: block;
-
             a {
                 color: inherit;
             }
@@ -118,14 +108,11 @@ const SwapTokenContainer = ({
     sum
 }) => {
     const inputRef = useRef(null);
-    const balance =
-        fromToToken?.onChainFTMetadata?.symbol === 'NEAR'
-            ? +formatNearAmount(fromToToken?.balance)
-            : +formatTokenAmount(
-                  fromToToken?.balance,
-                  fromToToken?.onChainFTMetadata?.decimals,
-                  5
-              );
+    const balance = +formatTokenAmount(
+        fromToToken?.balance,
+        fromToToken?.onChainFTMetadata?.decimals,
+        5
+    );
 
     const error = setInputValueFrom && balance < +value;
     const handleChange = (e) => {
@@ -162,13 +149,13 @@ const SwapTokenContainer = ({
                                     target="_blank"
                                     rel="noopener noreferrer"
                                 >
-                                    {fromToToken?.onChainFTMetadata?.name ||
-                                        fromToToken?.onChainFTMetadata?.symbol}
+                                    {fromToToken?.onChainFTMetadata?.symbol ||
+                                        fromToToken?.onChainFTMetadata?.name}
                                 </a>
                             </span>
                         ) : (
                             <span className="symbol">
-                                {fromToToken?.onChainFTMetadata?.symbol === 'NEAR' ? 'NEAR' : 'USN'}
+                                {fromToToken?.onChainFTMetadata?.symbol}
                             </span>
                         )}
                     </div>

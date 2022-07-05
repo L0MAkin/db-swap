@@ -1,5 +1,4 @@
 import DefaultTokenIcon from "../../assets/svg/DefaultTokenIcon";
-import DefaultTokenIconBlack from "../../assets/svg/DefaultTokenIconBlack";
 import DefaultUsnIcon from "../../assets/svg/DefaultUsnIcon";
 
 function isDataURL(s) {
@@ -8,15 +7,11 @@ function isDataURL(s) {
 isDataURL.regex = /^(data:)([\w\/\+-]*)(;charset=[\w-]+|;base64){0,1},(.*)/gi;
 
 
-
-
 const TokenIcon = ({ symbol = 'Token', icon }) => {
-    if (icon && isDataURL(icon)) {
-        // return <img src={icon} alt={symbol}/>;
-        return <DefaultUsnIcon/>;
-    } else if (symbol === 'NEAR') {
-        return <DefaultTokenIconBlack/>;
-    } else if (symbol === 'Token' || symbol === 'USN') {
+    if (icon && isDataURL(icon) && symbol !== 'USN') {
+        return <img src={icon} alt={symbol}/>;
+        // return <DefaultUsnIcon/>;
+    } else if (symbol === 'USN') {
         return <DefaultUsnIcon/>;
     } else {
         return <DefaultTokenIcon/>;

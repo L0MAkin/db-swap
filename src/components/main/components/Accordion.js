@@ -68,13 +68,12 @@ const accordionData = [
             4. $USN will also be available to make payments on off-chain applications and real-world commerce. Please see roadmap for more details
             `
     },
-    // {
-    //     title: 'What does $USN v2.0 compare to $USN v1.0 and what is the difference between Phase I and Phase II?',
-    //     content: `
-    //         Please see the informative table below:
-    //         </br>
-    //     ` 
-    // },
+    {
+        title: 'What does $USN v2.0 compare to $USN v1.0 and what is the difference between Phase I and Phase II?',
+        p1: `
+            Please see the informative table below:
+        ` 
+    },
     {
         title: 'How Does $USN compare to other stablecoins?',
         content: `<p>
@@ -152,6 +151,7 @@ const AccordionWrapper = styled.div`
     }
 
     h1 {
+        position: relative;
         font-family: 'Plus Jakarta Sans', sans-serif;
         font-weight: 500;
         line-height: 60px;
@@ -168,6 +168,7 @@ const AccordionWrapper = styled.div`
         /* max-height: 75px; */
         overflow: hidden;
         transition: all 0.3s ease-out;
+        position: relative;
 
         /* &.active {
             border-bottom: 1px solid #999;
@@ -185,6 +186,7 @@ const AccordionWrapper = styled.div`
             }
         }
         .accordion_title {
+            position: relative;
             padding: 12px 8px;
             display: flex;
             justify-content: space-between;
@@ -200,6 +202,7 @@ const AccordionWrapper = styled.div`
         }
         
         .accordion_content {
+            position: relative;
             padding: 0;
             transition: all 0.2s ease-in-out;
             font-family: 'Open Sans';

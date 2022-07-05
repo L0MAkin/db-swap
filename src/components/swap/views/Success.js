@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FormButton from '../common/FormButton';
+import { divNumbers, multiplyNumbers, subsctractNumbers } from '../formatToken';
 import { exchangeRateTranslationFromHash } from '../helpers';
 import ImageContainer from '../ImageContainer';
 import TextInfoSuccess from '../TextInfoSuccess';
@@ -8,22 +9,19 @@ import TextInfoSuccess from '../TextInfoSuccess';
 const Success = ({
     inputValueFrom,
     symbol,
-    multiplier,
     handleBackToSwap,
     onClickGoToExplorer,
     errorFromHash,
     successValue
 }) => {
+    const fee = divNumbers(multiplyNumbers(inputValueFrom, 1), 10000);
+    const valueTo = subsctractNumbers(inputValueFrom, fee);
   return (
     <>
         <TextInfoSuccess
             errorFromHash={errorFromHash}
             valueFrom={inputValueFrom}
-            valueTo={successValue ? successValue : exchangeRateTranslationFromHash({
-                method: symbol,
-                balance: + inputValueFrom,
-                exchangeRate: +multiplier
-            })}
+            valueTo={valueTo}
             symbol={symbol}
         />
         <div className="buttons-bottom-buttons">

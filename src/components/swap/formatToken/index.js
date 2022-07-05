@@ -1,9 +1,14 @@
 import { Big } from 'big.js/big';
 import { utils } from 'near-api-js';
 
-
 const NEAR_FRACTIONAL_DIGITS = 5;
 
+export const divNumbers = (firstValue, secondValue) =>
+    Big(firstValue).div(secondValue).toString();
+export const multiplyNumbers = (firstValue, secondValue) =>
+    Big(firstValue).times(secondValue).toString();
+export const subsctractNumbers = (firstValue, secondValue) =>
+    Big(firstValue).sub(Big(secondValue)).toString();
 export const formatTokenAmount = (value, decimals = 18, precision = 2) => value && typeof value !== 'object' 
 ? Big(value).div(Big(10).pow(decimals)).toFixed(precision)
 : 0;

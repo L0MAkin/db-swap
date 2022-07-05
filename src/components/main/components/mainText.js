@@ -205,14 +205,22 @@ export function MainText() {
                     <Medium onClick={() => window.open('https://medium.com/@dcntrlbank', '_blank')}/> 
                     <Git onClick={() => window.open('https://github.com/orgs/DecentralBankDAO', '_blank')}/>
                 </div>
-            {/* <FormButton
+            <FormButton
                 type="submit"
-                color='dark-gold2'
+                color='dark-gold-small'
                 data-test-id="sendMoneyPageSubmitAmountButton"
                 linkTo='/swap'
             >
-                <>Buy $USN</>
-            </FormButton> */}
+                <>Buy $USN with USDT</>
+            </FormButton>
+            <FormButton
+                type="submit"
+                color='dark-gold-small'
+                data-test-id="sendMoneyPageSubmitAmountButton"
+                linkTo='/buy'
+            >
+                <>Buy $USN with fiat</>
+            </FormButton>
         </div>
       </Wrapper>
   )

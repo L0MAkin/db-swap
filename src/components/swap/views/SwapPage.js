@@ -6,7 +6,13 @@ import { fetchMultiplier, fetchMultiplierTWAP } from '../../../redux/slices/mult
 import FormButton from '../common/FormButton';
 import SwapIconTwoArrows from '../../../assets/svg/SwapIconTwoArrows';
 import AvailableToSwap from '../AvailableToSwap';
-import { formatNearAmount, formatTokenAmount } from '../formatToken';
+import {
+    formatNearAmount,
+    formatTokenAmount,
+    divNumbers,
+    multiplyNumbers,
+    subsctractNumbers
+} from '../formatToken';
 import { commission } from '../helpers';
 import Loader from '../Loader';
 import SwapInfoContainer from '../SwapInfoContainer';
@@ -55,6 +61,9 @@ const SwapPage = ({
         token: from,
         isSwapped,
     });
+    const inputAmount = inputValueFrom || 0;
+    const tradingFee = divNumbers(multiplyNumbers(inputAmount, 1), 10000);
+    const minReceivedAmount = subsctractNumbers(inputAmount, tradingFee);
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
     const predict = usePredict(wallet.account(), inputValueFrom ? inputValueFrom : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)
     const balance = balanceForError(from);
@@ -62,15 +71,11 @@ const SwapPage = ({
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
     // const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
-    console.log('predict', predict);
-    console.log('SPOT', multipliers.spot);
-    console.log('TWAP', multipliers.twap);
-
 
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {
             setIsLoading(true);
-            await fetchByOrSell(accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount);
+            await fetchByOrSell(accountId, inputValueFrom, symbol, usnAmount);
             setActiveView('success');
         } catch (e) {
             setErrorFromHash(e.message);
@@ -80,8 +85,6 @@ const SwapPage = ({
             //     success: false,
             //     messageCodeHeader: 'error',
             // }));
-            
-            console.error(e.message)
         } finally {
             setIsLoading(false);
             // dispatch(checkAndHideLedgerModal());
@@ -142,7 +145,7 @@ const SwapPage = ({
                 fromToToken={to}
                 multiplier={multiplier}
                 value={inputValueFrom}
-                sum={predict?.sum}
+                sum={inputValueFrom}
                 />
                 <AvailableToSwap
                     isUSN={true}
@@ -160,15 +163,13 @@ const SwapPage = ({
                 slippageValue={slippageValue}
                 setSlippageValue={setSlippageValue}
                 token={from?.onChainFTMetadata?.symbol}
-                exchangeRate={+multiplier}
                 amount={inputValueFrom}
                 // tradingFee={commissionFee?.result}
-                expected={inputValueFrom? predict?.sum : '0'}
-                rate={predict?.rate}
-                min={predict?.amount}
-                tradingFee={predict?.commission}
+                // expected={inputValueFrom? predict?.sum : '0'}
+                // rate={predict?.rate}
+                min={minReceivedAmount}
+                tradingFee={tradingFee}
                 isLoading={isLoadingCommission}
-                percent={commissionFee?.percent}
             />
             <div className="buttons-bottom-buttons">
                 <FormButton
