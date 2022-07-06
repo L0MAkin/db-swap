@@ -217,7 +217,7 @@ export function MainText() {
                 type="submit"
                 color='dark-gold-small'
                 data-test-id="sendMoneyPageSubmitAmountButton"
-                linkTo='/buy'
+                linkTo='https://decentralbank.banxa.com/?buyMode&coinType=USN&blockchain=near'
             >
                 <>Buy $USN with fiat</>
             </FormButton>
