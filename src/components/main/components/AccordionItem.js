@@ -20,9 +20,9 @@ export function AccordionItem({ title, content, p1 = undefined, p2 = undefined, 
             ? <>
                 <div className={`accordion_content ${isActive ? 'open' : ''}`}>
                     <p>{p1}</p>
-                    <Img src={FAQTable} />
-                    {/* <Table /> */}
-                    {/* <p>{p2}</p> */}
+                    {/* <Img src={FAQTable} /> */}
+                    <Table />
+                    <p>{p2}</p>
                 </div>
             </>
             : <div className={`accordion_content ${isActive ? 'open' : ''}`} dangerouslySetInnerHTML={{__html: content}} />

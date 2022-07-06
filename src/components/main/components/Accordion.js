@@ -72,7 +72,8 @@ const accordionData = [
         title: 'What does $USN v2.0 compare to $USN v1.0 and what is the difference between Phase I and Phase II?',
         p1: `
             Please see the informative table below:
-        ` 
+        `,
+        p2: '*Other battle-tested stablecoins such as USDC or DAI might be included in the near future apart from USDT'
     },
     {
         title: 'How Does $USN compare to other stablecoins?',

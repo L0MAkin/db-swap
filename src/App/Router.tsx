@@ -12,7 +12,7 @@ function Router() {
         <Routes>
             <Route path="/" element={<Main />} />
             <Route path="/swap" element={<HomePage />} />
-            {/* <Route path="/buy" element={<IframePage/>} /> */}
+            <Route path="/buy" element={<IframePage/>} />
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
     );
