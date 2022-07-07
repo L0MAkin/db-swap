@@ -44,7 +44,7 @@ function SwapInfoContainer({
 }) {
     const feePercent = 0.01;
     const isUsdt = token === 'USDT';
-    const expectedAmpunt = +amount * 1;
+    const expectedAmount = +amount * 1;
     const symbol = !isUsdt ? 'USDT' : 'USN';
     const sliceAmount = amount.length > 10 ? amount.slice(0, 10) + '...' : amount
     
@@ -63,7 +63,7 @@ function SwapInfoContainer({
             />
             <SwapInfoItem
                 leftText={'Expected price'}
-                rightText={`${sliceAmount} ${token} = ${expectedAmpunt} ${symbol}`}
+                rightText={`${sliceAmount} ${token} = ${expectedAmount} ${symbol}`}
             />
             <SwapInfoItem
                 isDots={isLoading}

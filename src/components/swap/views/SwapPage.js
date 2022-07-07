@@ -142,10 +142,10 @@ const SwapPage = ({
                     <div className="iconSwapDivider"/>
                 </div>
                 <SwapTokenContainer
-                fromToToken={to}
-                multiplier={multiplier}
-                value={inputValueFrom}
-                sum={inputValueFrom}
+                    fromToToken={to}
+                    multiplier={multiplier}
+                    value={minReceivedAmount}
+                    sum={minReceivedAmount}
                 />
                 <AvailableToSwap
                     isUSN={true}
