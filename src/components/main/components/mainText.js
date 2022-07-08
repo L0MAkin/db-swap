@@ -7,6 +7,7 @@ import { Discord } from '../../../assets/svg/Discord'
 import { Medium } from '../../../assets/svg/Medium'
 import { Git } from '../../../assets/svg/Git'
 import FormButton from '../../swap/common/FormButton'
+import { ExchangeTable } from './ExchangeTable'
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -171,6 +172,15 @@ export function MainText() {
                     decentralized organization developing and supporting NEAR Protocol based stable assets.
                 </span>
             </p> */}
+            <p>
+                <span>
+                    <span>
+                        How to exchange USN?
+                    </span>
+                    <br/>
+                    <ExchangeTable />
+                </span>
+            </p>
             <p>
                 <span>
                     <span>
