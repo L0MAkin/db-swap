@@ -55,10 +55,6 @@ const TableWrapper = styled.table`
         padding-left: 30px;
         padding-right: 40px;
         height: 50px;
-
-        td:nth-child(1) {
-            font-weight: bold;
-        }
     }
 
 `
