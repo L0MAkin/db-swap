@@ -33,7 +33,7 @@ const Wrapper = styled.div`
 `
 
 const PageLayout = ({ children }) => {
-
+   
     const {isLoading, geoInfo} = useCountryAPI()
 
     return (
@@ -43,7 +43,7 @@ const PageLayout = ({ children }) => {
                 <main className="flex-1 h-max container p-2 mx-auto" >
                     {children(geoInfo, isLoading)}
                 </main>
-                <Footer />
+                <Footer /> 
             </div>
         </Wrapper> 
     );

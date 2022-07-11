@@ -27,28 +27,23 @@ export const VIEWS_SWAP = {
 
 const StyledContainer = styled(Container)`
     position: relative;
-
     .wrap {
         position: absolute;
         height: 60px;
         right: 15px;
         top: -5px;
-
         @media (max-width: 425px) {
             top: -10px;
         }
     }
-
     h1 {
         text-align: center;
         margin-bottom: 30px;
     }
-
     .text {
         margin-bottom: 11px;
         text-align: left;
     }
-
     .iconSwapContainer {
         width: 100%;
         height: 50px;
@@ -58,18 +53,15 @@ const StyledContainer = styled(Container)`
         flex-direction: column;
         border-radius: 50%;
         margin: 20px 0;
-
         .iconSwap{
             width: 50px;
             height: 50px;
             border-radius: 50%;
             z-index: 1;
-
             :hover {
                 box-shadow: 0px 0px 1px 2px #ffffff;
             }
         }
-
         .iconSwapDivider {
             width: 100%;
             top: -25px;
@@ -77,7 +69,6 @@ const StyledContainer = styled(Container)`
             position: relative;
             z-index: 0;
         }
-
         svg {
             /* margin: 2px 0px 2px 10px; */
             z-index: 10;
@@ -88,28 +79,23 @@ const StyledContainer = styled(Container)`
                    
                 }
             }
-
             #left {
                 position: absolute;
                 z-index: 10;
             }
         }
     }
-
     .buttons-bottom-buttons {
         margin-top: 30px;
-
         > button {
             display: block;
             width: 100%;
         }
-
         .link {
             display: block !important;
             margin: 20px auto !important;
         }
     }
-
     .text_info_success {
         width: fit-content;
         font-style: normal;
@@ -119,7 +105,6 @@ const StyledContainer = styled(Container)`
         text-align: center;
         color: #fff;
         margin: 0 auto;
-
         > div {
             width: 100%;
             background: #efefef;
@@ -146,13 +131,13 @@ const SwapAndSuccessContainer = ({
     accountId,
     multipliers,
 }) => {
-    const [from, setFrom] = useState(fungibleTokensList[1]);
+    const [from, setFrom] = useState({ onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
     const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const [methodFromHash, setMethodFromHash] = useState('buy')
     const [errorFromHash, setErrorFromHash] = useState('')
-    const [deposit, setDeposit] = useState('')
+    const [deposit, setDeposit] = useState('0')
     const [successValue, setSuccessValue] = useState(0)
     const [loadHash, setLoadHash] = useState(false)
     const wallet = useNearWallet();
@@ -164,8 +149,9 @@ const SwapAndSuccessContainer = ({
     
     const multiplier = 1;
     useEffect(() => {
-        setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
+        
         if(accountId) {
+            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
             setTo(currentToken(fungibleTokensList, to?.onChainFTMetadata?.symbol || 'USN'));
         }
     }, [fungibleTokensList]);
@@ -175,6 +161,7 @@ const SwapAndSuccessContainer = ({
             try {
                 setLoadHash(true)
                 const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
+                console.log('res', res);
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
                 setLoadHash(false)
@@ -184,6 +171,7 @@ const SwapAndSuccessContainer = ({
                     setActiveView('success')
                 }
             } catch (e) {
+                console.log('error', e);
                 setErrorFromHash(formatError(e.message))
                 setActiveView('success')
             } finally {
@@ -192,7 +180,13 @@ const SwapAndSuccessContainer = ({
         }
 
         if(wallet && transactionHash) {
-            getHash(transactionHash)
+            let hash;
+            if(transactionHash.includes(',')) {
+                hash = transactionHash.split(',')[1]
+            } else {
+                hash = transactionHash
+            }
+            getHash(hash)
         }
         
     },[search, wallet])
@@ -225,9 +219,9 @@ const SwapAndSuccessContainer = ({
                             setFrom(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
-                            setTo(fungibleTokensList[1]);
+                            setTo(accountId ? fungibleTokensList[1] : { onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
                         } else {
-                            setFrom(fungibleTokensList[1]);
+                            setFrom(accountId ? fungibleTokensList[1] : { onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
                             setTo(accountId 
                                 ? currentToken(fungibleTokensList, 'USN') 
                                 : { onChainFTMetadata: {symbol: 'USN'}, balance: '0'});

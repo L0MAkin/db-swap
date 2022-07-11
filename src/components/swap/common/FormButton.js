@@ -138,6 +138,46 @@ const CustomButton = styled.button`
                 margin: ${({ man }) => (man ? '30px auto' : '50px auto')};
             }
         }
+
+        &.dark-gold-small {
+            max-width: 400px;
+            width: 100%;
+            height: 70px;
+            background-color: #2A2A34;
+            border: 2px solid #C1B582;
+            color: #C1B583;
+            margin-top: 5px;
+            border-radius: 0px;
+            margin-left: auto;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 19px;
+            
+            :hover {
+                background-color: #C1B583;
+                color: black;
+            }
+
+            @media (max-width: 1440px) {
+                max-width: 300px;
+            }
+
+            @media (max-width: 1025px) {
+                /* max-width: 400px !important; */
+                height: 40px;
+                font-size: 14px;
+                margin: 30px auto;
+                max-width: ${({ man }) => (man ? '400px' : '500px')};
+            }
+
+            @media (max-width: 769px) {
+                max-width: ${({ man }) => (man ? '100%' : '500px')};
+            }
+
+            /* @media (max-width:320px) {
+                margin: ${({ man }) => (man ? '30px auto' : '50px auto')};
+            } */
+        }
+
         &.light-blue {
             background-color: #C1B583;
             border: 0;

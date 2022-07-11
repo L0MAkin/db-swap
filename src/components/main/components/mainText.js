@@ -7,6 +7,7 @@ import { Discord } from '../../../assets/svg/Discord'
 import { Medium } from '../../../assets/svg/Medium'
 import { Git } from '../../../assets/svg/Git'
 import FormButton from '../../swap/common/FormButton'
+import { ExchangeTable } from './ExchangeTable'
 
 export const Wrapper = styled.div`
     width: 100%;
@@ -98,7 +99,7 @@ const TextWrapper = styled.div`
     max-width: 1400px;
     width: 100%;
     z-index: 2;
-    
+    position: relative;
     img {
         width: 100%;
         /* height: 100%; */
@@ -141,7 +142,19 @@ const TextWrapper = styled.div`
         }
 
         span {
-            color: rgba(42, 43, 53, 1); 
+            color: rgba(42, 43, 53, 1);
+            div {
+                font-weight: 400;
+                line-height: 35px;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 25px; 
+            }
+            span {
+                font-weight: 600;
+                line-height: 35px;
+                font-family: 'Open Sans', sans-serif;
+                font-size: 35px;
+            }
         }
     }
 `
@@ -154,9 +167,41 @@ export function MainText() {
           <div className='first'></div>
           <TextWrapper>
             <img src={textDB} alt='mainDBtext'/>
-            <p>
+            {/* <p>
                 <span>
                     decentralized organization developing and supporting NEAR Protocol based stable assets.
+                </span>
+            </p> */}
+            <p>
+                <span>
+                    <span>
+                        How to exchange USN?
+                    </span>
+                    <br/>
+                    <ExchangeTable />
+                </span>
+            </p>
+            <p>
+                <span>
+                    <span>
+                        Introducing USN v2.0: Towards True Stability
+                    </span>
+                    <br/>
+                <div>
+                Due to recent events in capital markets, the Decentral Bank team has taken some steps to remove risk from participating in the ecosystem. The safety and security of market participants is of the utmost importance to the team, and this has led to a redesign of $USN, adaptable to the harshest of market conditions, modelled by us, but also able to take advantage when positive sentiment returns.
+                <br/> 
+                <br/>
+                <i>Phase I</i> takes place to ensure a $USN is a safe, reliable and truly stable asset while also providing native yield - very important aspects in a bear market. This is achieved by a Reserve Fund only consisting of stable assets ($USDT and soon $USDC and/or $DAI) and by $NEAR tokens in Decentral Bank’s Reserve Fund that are staked to secure the NEAR blockchain. These rewards will be distributed to users that participate with $USN in the NEAR/AURORA DeFi ecosystems.
+                <br/>
+                <br/>
+                Adaptable monetary policy is one of the cornerstones of Decentral Bank, and Phase II, once market conditions reverse and improve, will allow for additional non-stable assets -such as $NEAR, $BTC or $ETH-,  to be added to the Reserve Fund. This will lead to a bigger value accrual for the $NEAR token since they will be used to mint $USN and they’ll therefore be locked and staked, reducing the effective circulating supply.
+                <br/>
+                <br/>
+                <b>This</b> entire procedure will be conducted in a transparent and fully governed manner by the Decentral Bank DAO.
+                <br/>
+                <br/>
+                Learn more about USN v2.0 on <a href="https://medium.com/nearprotocol/announcing-usn-v2-0-towards-true-stability-f4dbc6897d1f">Medium</a>
+                </div>
                 </span>
             </p>
         </TextWrapper>
@@ -172,11 +217,19 @@ export function MainText() {
                 </div>
             <FormButton
                 type="submit"
-                color='dark-gold2'
+                color='dark-gold-small'
                 data-test-id="sendMoneyPageSubmitAmountButton"
                 linkTo='/swap'
             >
-                <>Buy $USN</>
+                <>Buy $USN with USDT</>
+            </FormButton>
+            <FormButton
+                type="submit"
+                color='dark-gold-small'
+                data-test-id="sendMoneyPageSubmitAmountButton"
+                linkTo='https://decentralbank.banxa.com/?buyMode&coinType=USN&blockchain=near'
+            >
+                <>Buy $USN with fiat</>
             </FormButton>
         </div>
       </Wrapper>

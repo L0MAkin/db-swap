@@ -33,7 +33,7 @@ const Container = styled.div`
                 padding: 40px;
                 margin-top: 40px;
             }
-        }
+        }   
 
         &.center {
             display: flex;

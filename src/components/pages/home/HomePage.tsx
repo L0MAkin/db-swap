@@ -11,7 +11,7 @@ function HomePage() {
 
     return (
         <PageLayout>
-            {(geoInfo: string, isLoading: boolean) => (
+           {(geoInfo: string, isLoading: boolean) => (
                 <>
                     <div className="text-center">
                         <>
@@ -20,7 +20,6 @@ function HomePage() {
                     </div>
                 </>
             )}
-            
         </PageLayout>
     );
 }
