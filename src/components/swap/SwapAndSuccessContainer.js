@@ -137,7 +137,7 @@ const SwapAndSuccessContainer = ({
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const [methodFromHash, setMethodFromHash] = useState('buy')
     const [errorFromHash, setErrorFromHash] = useState('')
-    const [deposit, setDeposit] = useState('')
+    const [deposit, setDeposit] = useState('0')
     const [successValue, setSuccessValue] = useState(0)
     const [loadHash, setLoadHash] = useState(false)
     const wallet = useNearWallet();
@@ -161,6 +161,7 @@ const SwapAndSuccessContainer = ({
             try {
                 setLoadHash(true)
                 const res = await wallet._near.connection.provider.txStatus(hash, wallet.getAccountId())
+                console.log('res', res);
                 setMethodFromHash(res.transaction.actions[0].FunctionCall.method_name)
                 setDeposit(formatDeposit(res.transaction.actions[0].FunctionCall.method_name, res))
                 setLoadHash(false)
@@ -170,6 +171,7 @@ const SwapAndSuccessContainer = ({
                     setActiveView('success')
                 }
             } catch (e) {
+                console.log('error', e);
                 setErrorFromHash(formatError(e.message))
                 setActiveView('success')
             } finally {
@@ -178,7 +180,13 @@ const SwapAndSuccessContainer = ({
         }
 
         if(wallet && transactionHash) {
-            getHash(transactionHash)
+            let hash;
+            if(transactionHash.includes(',')) {
+                hash = transactionHash.split(',')[1]
+            } else {
+                hash = transactionHash
+            }
+            getHash(hash)
         }
         
     },[search, wallet])

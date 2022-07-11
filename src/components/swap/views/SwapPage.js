@@ -75,11 +75,11 @@ const SwapPage = ({
     const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
         try {
             setIsLoading(true);
-            await fetchByOrSell(accountId, inputValueFrom, symbol, usnAmount);
-            setActiveView('success');
+            await fetchByOrSell(accountId, inputValueFrom, symbol, usnAmount, wallet);
+            // setActiveView('success');
         } catch (e) {
             setErrorFromHash(e.message);
-            setActiveView('success');
+            // setActiveView('success');
             // dispatch(showCustomAlert({
             //     errorMessage: e.message,
             //     success: false,

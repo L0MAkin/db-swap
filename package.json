@@ -16,6 +16,7 @@
         "@reduxjs/toolkit": "^1.8.1",
         "@sentry/browser": "^6.19.7",
         "big.js": "^6.1.1",
+        "borsh": "^0.7.0",
         "buffer": "^6.0.3",
         "connected-react-router": "^6.9.2",
         "fetch-send-json": "^0.0.2",
