@@ -144,8 +144,8 @@ const SwapPage = ({
                 <SwapTokenContainer
                 fromToToken={to}
                 multiplier={multiplier}
-                value={inputValueFrom}
-                sum={inputValueFrom}
+                value={minReceivedAmount}
+                sum={minReceivedAmount}
                 />
                 <AvailableToSwap
                     isUSN={true}
