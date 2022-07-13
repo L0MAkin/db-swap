@@ -14,9 +14,7 @@ export const plusNumbers = (firstValue, secondValue) =>
 export const formatTokenAmount = (value, decimals = 18, precision = 5) => value && typeof value !== 'object' 
 ? Big(value).div(Big(10).pow(decimals)).toFixed(precision)
 : 0;
-export const parseTokenAmount = (value, decimals = 18) => value && value && typeof value !== 'object' 
-? Big(value).times(Big(10).pow(decimals)).toString()
-: 0;
+export const parseTokenAmount = (value, decimals = 18) => value && Big(value).times(Big(10).pow(decimals)).toFixed();
 
 export const formatNearAmount = (amount) => {
     if (typeof amount === "object") {

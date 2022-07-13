@@ -105,7 +105,6 @@ const SwapTokenContainer = ({
     fromToToken,
     value,
     setInputValues,
-    fullAmount
 }) => {
     const inputRef = useRef(null);
     const balance = +formatTokenAmount(
@@ -114,7 +113,7 @@ const SwapTokenContainer = ({
         5
     );
 
-    const error = balance < +value && !fullAmount;
+    const error = balance < +value;
     
 
     const onFocus = () => {
@@ -168,7 +167,7 @@ const SwapTokenContainer = ({
                         placeholder='0'
                         value={value.replace(',', '.')}
                         onChange={(e) => setInputValues(e)}
-                        className={error ? 'inputError' : ''}
+                        className={USDT && error ? 'inputError' : ''}
                     />
                 </div>
             </div>

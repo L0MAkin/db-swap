@@ -168,7 +168,6 @@ const SwapPage = ({
                     multiplier={multiplier}
                     value={inputValues.toAmount}
                     sum={minReceivedAmount}
-                    fullAmount={fullAmount}
                 />
                 <AvailableToSwap
                     isUSN={true}
