@@ -52,7 +52,7 @@ const SwapPage = ({
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
     const [slippageValue, setSlippageValue] = useState('1');
-    const [usnAmount, setUSNAmount] = useState('');
+    const [fullAmount, setFullAmount] = useState('');
     const { commissionFee, isLoadingCommission } = commission({
         accountId: wallet.account(),
         amount: inputValueFrom,
@@ -72,10 +72,10 @@ const SwapPage = ({
     // const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
 
-    const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
+    const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, fullAmount) => {
         try {
             setIsLoading(true);
-            await fetchByOrSell(accountId, inputValueFrom, symbol, usnAmount, wallet);
+            await fetchByOrSell(accountId, inputValueFrom, symbol, fullAmount, wallet);
             // setActiveView('success');
         } catch (e) {
             setErrorFromHash(e.message);
@@ -117,7 +117,7 @@ const SwapPage = ({
                     isUSN={false}
                     onClick={(balance) => {
                         setInputValueFrom(balance);
-                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                        setFullAmount(from?.balance);
                     }}
                     balance={from?.balance}
                     symbol={from?.onChainFTMetadata?.symbol}
@@ -178,7 +178,7 @@ const SwapPage = ({
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
                     onClick={() => accountId
-                        ? onHandleSwapTokens(accountId, predict.rateFull, slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
+                        ? onHandleSwapTokens(accountId, predict.rateFull, slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, fullAmount)
                         : signIn()}
                     sending={isLoading}
                 >
