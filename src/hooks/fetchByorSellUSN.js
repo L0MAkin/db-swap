@@ -92,21 +92,21 @@ export const executeMultipleTransactions = async (
     return specialWallet.requestSignTransactions(currentTransactions, callbackUrl);
   };
 
-const setArgsUSNContractWithdraw = (amount) => {
+const setArgsUSNContractWithdraw = (amount, fullAmount) => {
     return {
         args: {
-            amount: parseTokenAmount(amount, 18)
+            amount: amount === formatTokenAmount(fullAmount, 18, 5) ? fullAmount : parseTokenAmount(amount, 18),
         },
         amount: ONE_YOCTO_NEAR,
         gas: GAS_FOR_CALL,
     };
 };
 
-const setArgsUSDTContractTransfer = (amount) => {
+const setArgsUSDTContractTransfer = (amount, fullAmount) => {
     return {
         args: {
             receiver_id:usnContractName,
-            amount: parseTokenAmount(amount, 6),
+            amount: amount === formatTokenAmount(fullAmount, 6, 5) ? fullAmount : parseTokenAmount(amount, 6),
             msg: '',
         },
         amount: ONE_YOCTO_NEAR,
@@ -130,7 +130,7 @@ export const useFetchByorSellUSN = (account) => {
         accountId,
         amount,
         symbol,
-        usnAmount,
+        fullAmount,
         wallet
     ) => {
         const usdtContract = new nearApiJs.Contract(
@@ -143,7 +143,7 @@ export const useFetchByorSellUSN = (account) => {
         const tokenOutActions = [];
 
         if (symbol === 'USDT') {
-           return await usdtContract.ft_transfer_call(setArgsUSDTContractTransfer(amount));
+           return await usdtContract.ft_transfer_call(setArgsUSDTContractTransfer(amount, fullAmount));
         } else {
             const usnContract = new nearApiJs.Contract(
                 account,
@@ -172,7 +172,7 @@ export const useFetchByorSellUSN = (account) => {
                   tokenInActions.push({
                     methodName: 'withdraw',
                     args: {
-                        amount: parseTokenAmount(amount, 18)
+                        amount: amount === formatTokenAmount(fullAmount, 18, 5) ? fullAmount : parseTokenAmount(amount, 18)
                     },
                     amount: ONE_YOCTO_NEAR,
                     gas: GAS_FOR_CALL,
@@ -184,21 +184,12 @@ export const useFetchByorSellUSN = (account) => {
                     functionCalls: tokenInActions,
                   });
                   
-                  console.log('executeMultipleTransactions', executeMultipleTransactions(accountId, wallet, transactions));
 
                   return executeMultipleTransactions(accountId, wallet, transactions)
-                // return wallet.requestSignTransactions(usdtContract.storage_deposit({args: {registration_only: true, account_id: accountId}, amount: bounds.min}))
-                // await usdtContract.storage_deposit({args: {registration_only: true, account_id: accountId}, amount: bounds.min}); 
-            } else {
-                return await usnContract.withdraw(setArgsUSNContractWithdraw(amount));
-            }
-            // console.log('bounds', bounds);
-            // console.log('format', formatNearAmount(bounds.max));
-            // console.log('storage', storage);
-            
 
-            // console.log('deposit', deposit);
-            
+            } else {
+                return await usnContract.withdraw(setArgsUSNContractWithdraw(amount, fullAmount));
+            }
         }
     };
 

@@ -11,7 +11,9 @@ import {
     formatTokenAmount,
     divNumbers,
     multiplyNumbers,
-    subsctractNumbers
+    subsctractNumbers,
+    plusNumbers,
+    parseTokenAmount
 } from '../formatToken';
 import { commission } from '../helpers';
 import Loader from '../Loader';
@@ -40,8 +42,6 @@ const balanceForError = (from) => {
 const SwapPage = ({
   from,
   to,
-  inputValueFrom,
-  setInputValueFrom,
   multiplier,
   accountId,
   onSwap,
@@ -52,30 +52,34 @@ const SwapPage = ({
     const wallet = useNearWallet();
     const [isSwapped, setIsSwapped] = useState(false);
     const [slippageValue, setSlippageValue] = useState('1');
-    const [usnAmount, setUSNAmount] = useState('');
+    const [fullAmount, setFullAmount] = useState('');
+    const [inputValues, setInputValues] = useState({
+        fromAmount: '',
+        toAmount: ''
+    });
     const { commissionFee, isLoadingCommission } = commission({
         accountId: wallet.account(),
-        amount: inputValueFrom,
+        amount: inputValues.fromAmount,
         delay: 500,
         exchangeRate: + multiplier,
         token: from,
         isSwapped,
     });
-    const inputAmount = inputValueFrom || 0;
+    const inputAmount = inputValues.fromAmount || 0;
     const tradingFee = divNumbers(multiplyNumbers(inputAmount, 1), 10000);
     const minReceivedAmount = subsctractNumbers(inputAmount, tradingFee);
+    const maxReceivedAmount = plusNumbers(inputValues.toAmount || 0, tradingFee)
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
-    const predict = usePredict(wallet.account(), inputValueFrom ? inputValueFrom : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)
+    const predict = usePredict(wallet.account(), inputValues.fromAmount ? inputValues.fromAmount : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)
     const balance = balanceForError(from);
-    const error = balance < +inputValueFrom || !inputValueFrom;
+    const error = balance < +inputValues.fromAmount || !inputValues.fromAmount;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
     // const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
-
-    const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, usnAmount) => {
+    const onHandleSwapTokens = useCallback(async (accountId, multiplier, slippageValue, inputValueFrom, symbol, fullAmount) => {
         try {
             setIsLoading(true);
-            await fetchByOrSell(accountId, inputValueFrom, symbol, usnAmount, wallet);
+            await fetchByOrSell(accountId, inputValueFrom, symbol, fullAmount, wallet);
             // setActiveView('success');
         } catch (e) {
             setErrorFromHash(e.message);
@@ -97,7 +101,23 @@ const SwapPage = ({
         })
         .catch(console.error);
     }
-    
+
+    const handleChange = (e) => {
+        const { value } = e.target;
+        const replaceValue = value.replace(',', '.').replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, '')
+        if(e.target.name === 'FROM') {
+            setInputValues({
+                fromAmount: replaceValue,
+                toAmount: subsctractNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000))
+            });
+        } else {
+            setInputValues({
+                fromAmount: plusNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000)),
+                toAmount: replaceValue
+            }); 
+        }
+        
+    };
 
     return (
         <>
@@ -110,14 +130,15 @@ const SwapPage = ({
             <StyledWrapper>
                 <SwapTokenContainer
                 fromToToken={from}
-                value={inputValueFrom}
-                setInputValueFrom={setInputValueFrom}
+                USDT={true}
+                value={inputValues.fromAmount}
+                setInputValues={handleChange}
             />
                 <AvailableToSwap
                     isUSN={false}
                     onClick={(balance) => {
-                        setInputValueFrom(balance);
-                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                        setInputValues({fromAmount: balance, toAmount: subsctractNumbers(balance, divNumbers(multiplyNumbers(balance, 1), 10000))});
+                        setFullAmount(from?.balance);
                     }}
                     balance={from?.balance}
                     symbol={from?.onChainFTMetadata?.symbol}
@@ -143,16 +164,18 @@ const SwapPage = ({
                 </div>
                 <SwapTokenContainer
                     fromToToken={to}
+                    setInputValues={handleChange}
                     multiplier={multiplier}
-                    value={minReceivedAmount}
+                    value={inputValues.toAmount}
                     sum={minReceivedAmount}
+                    fullAmount={fullAmount}
                 />
                 <AvailableToSwap
                     isUSN={true}
-                    onClick={(balance) => {
-                        setInputValueFrom(balance);
-                        from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
-                    }}
+                    // onClick={(balance) => {
+                    //     setInputValueFrom(balance);
+                    //     from?.onChainFTMetadata?.symbol === 'USN' && setUSNAmount(from?.balance);
+                    // }}
                     balance={to?.balance}
                     symbol={to?.onChainFTMetadata?.symbol}
                     decimals={to?.onChainFTMetadata?.decimals}
@@ -163,11 +186,11 @@ const SwapPage = ({
                 slippageValue={slippageValue}
                 setSlippageValue={setSlippageValue}
                 token={from?.onChainFTMetadata?.symbol}
-                amount={inputValueFrom}
+                amount={inputValues.fromAmount}
                 // tradingFee={commissionFee?.result}
                 // expected={inputValueFrom? predict?.sum : '0'}
                 // rate={predict?.rate}
-                min={minReceivedAmount}
+                min={inputValues.toAmount}
                 tradingFee={tradingFee}
                 isLoading={isLoadingCommission}
             />
@@ -178,7 +201,7 @@ const SwapPage = ({
                     disabled={!accountId ? false : error || slippageError || isLoading}
                     data-test-id="sendMoneyPageSubmitAmountButton"
                     onClick={() => accountId
-                        ? onHandleSwapTokens(accountId, predict.rateFull, slippageValue, inputValueFrom, from?.onChainFTMetadata?.symbol, usnAmount)
+                        ? onHandleSwapTokens(accountId, predict.rateFull, slippageValue, inputValues.fromAmount, from?.onChainFTMetadata?.symbol, fullAmount)
                         : signIn()}
                     sending={isLoading}
                 >

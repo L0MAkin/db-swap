@@ -101,11 +101,11 @@ const SwapContainer = styled.div`
 `;
 
 const SwapTokenContainer = ({
+    USDT = false,
     fromToToken,
     value,
-    setInputValueFrom,
-    multiplier,
-    sum
+    setInputValues,
+    fullAmount
 }) => {
     const inputRef = useRef(null);
     const balance = +formatTokenAmount(
@@ -114,15 +114,11 @@ const SwapTokenContainer = ({
         5
     );
 
-    const error = setInputValueFrom && balance < +value;
-    const handleChange = (e) => {
-        const { value } = e.target;
-        const replaceValue = value.replace(',', '.')
-        setInputValueFrom(replaceValue.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''));
-    };
+    const error = balance < +value && !fullAmount;
+    
 
     const onFocus = () => {
-        if (setInputValueFrom) {
+        if (USDT) {
             inputRef.current.focus();
         }
     };
@@ -161,30 +157,19 @@ const SwapTokenContainer = ({
                     </div>
                 </div>
                 <div className="inputContainer">
-                {setInputValueFrom ? (
+                
                     <input
-                        ref={inputRef}
+                        ref={USDT ? inputRef : null}
                         type="text"
                         inputMode='decimal'
+                        autoComplete='off'
+                        name={USDT ? 'FROM' : 'TO'}
                         autoFocus
                         placeholder='0'
                         value={value.replace(',', '.')}
-                        onChange={handleChange}
+                        onChange={(e) => setInputValues(e)}
                         className={error ? 'inputError' : ''}
                     />
-                ) : multiplier && fromToToken ? (
-                    <div className="exchange">
-                        ≈
-                        <>
-                            {/* {exchangeRateTranslation({
-                                token: fromToToken,
-                                balance: + value,
-                                exchangeRate: +multiplier
-                            })?.toFixed(5)} */}
-                            {value ? sum : '0.00000'}
-                        </>
-                    </div>
-                ) : null}
                 </div>
             </div>
         </SwapContainer>
