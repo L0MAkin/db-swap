@@ -150,7 +150,7 @@ const SwapAndSuccessContainer = ({
     useEffect(() => {
         
         if(accountId) {
-            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
+            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol || 'USDT'));
             setTo(currentToken(fungibleTokensList, to?.onChainFTMetadata?.symbol || 'USN'));
         }
     }, [fungibleTokensList]);

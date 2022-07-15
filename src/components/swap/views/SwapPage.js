@@ -104,15 +104,19 @@ const SwapPage = ({
 
     const handleChange = (e) => {
         const { value } = e.target;
-        const replaceValue = value.replace(',', '.').replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, '')
+        const replaceValue = value.replace(',', '.').replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, '');
+
         if(e.target.name === 'FROM') {
             setInputValues({
                 fromAmount: replaceValue,
                 toAmount: subsctractNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000))
             });
         } else {
+            const isUSDT = from?.onChainFTMetadata?.symbol === 'USDT'
+            const withPercent = plusNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000));
+            const currentAmount = plusNumbers(replaceValue, divNumbers(multiplyNumbers(withPercent, 1), 10000));
             setInputValues({
-                fromAmount: plusNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000)),
+                fromAmount: Number(currentAmount).toFixed(isUSDT ? 6 : 18),
                 toAmount: replaceValue
             }); 
         }
