@@ -95,7 +95,7 @@ export const executeMultipleTransactions = async (
 const setArgsUSNContractWithdraw = (amount, fullAmount) => {
     return {
         args: {
-            amount: amount === formatTokenAmount(fullAmount, 18, 5) ? fullAmount : parseTokenAmount(amount, 18),
+            amount: amount === formatTokenAmount(fullAmount, 18, 5).toString() ? fullAmount : parseTokenAmount(amount, 18),
         },
         amount: ONE_YOCTO_NEAR,
         gas: GAS_FOR_CALL,
@@ -106,7 +106,7 @@ const setArgsUSDTContractTransfer = (amount, fullAmount) => {
     return {
         args: {
             receiver_id:usnContractName,
-            amount: amount === formatTokenAmount(fullAmount, 6, 5) ? fullAmount : parseTokenAmount(amount, 6),
+            amount: amount === formatTokenAmount(fullAmount, 6, 5).toString() ? fullAmount : parseTokenAmount(amount, 6),
             msg: '',
         },
         amount: ONE_YOCTO_NEAR,

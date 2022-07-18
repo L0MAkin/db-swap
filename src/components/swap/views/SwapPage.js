@@ -108,16 +108,16 @@ const SwapPage = ({
 
         if(e.target.name === 'FROM') {
             setInputValues({
-                fromAmount: replaceValue,
-                toAmount: subsctractNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000))
+                fromAmount: value ? replaceValue : '',
+                toAmount: parseFloat(subsctractNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(value ? replaceValue : 0, 1), 10000))).toString()
             });
         } else {
             const isUSDT = from?.onChainFTMetadata?.symbol === 'USDT'
-            const withPercent = plusNumbers(replaceValue, divNumbers(multiplyNumbers(replaceValue, 1), 10000));
-            const currentAmount = plusNumbers(replaceValue, divNumbers(multiplyNumbers(withPercent, 1), 10000));
+            const withPercent = plusNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(value ? replaceValue : 0, 1), 10000));
+            const currentAmount = plusNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(withPercent, 1), 10000));
             setInputValues({
-                fromAmount: Number(currentAmount).toFixed(isUSDT ? 6 : 18),
-                toAmount: replaceValue
+                fromAmount: parseFloat(Number(currentAmount).toFixed(isUSDT ? 6 : 18)).toString(),
+                toAmount: value ? replaceValue : ''
             }); 
         }
         
@@ -141,7 +141,8 @@ const SwapPage = ({
                 <AvailableToSwap
                     isUSN={false}
                     onClick={(balance) => {
-                        setInputValues({fromAmount: balance, toAmount: subsctractNumbers(balance, divNumbers(multiplyNumbers(balance, 1), 10000))});
+                        console.log('balance', balance);
+                        setInputValues({fromAmount: balance, toAmount: parseFloat(subsctractNumbers(balance, divNumbers(multiplyNumbers(balance, 1), 10000))).toString()});
                         setFullAmount(from?.balance);
                     }}
                     balance={from?.balance}

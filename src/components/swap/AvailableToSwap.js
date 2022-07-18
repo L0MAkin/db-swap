@@ -59,7 +59,7 @@ function AvailableToSwap({ balance, symbol, decimals, onClick, isUSN }) {
                 <div>
                  {!isUSN && onClick && 
                     <span
-                        onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals))}
+                        onClick={() => onClick(symbol === 'NEAR' ? amountToShow : formatTokenAmount(balance, decimals).toString())}
                         className="useMaxButton"
                     >
                         <>Use Max</>
