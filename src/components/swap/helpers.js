@@ -18,7 +18,7 @@ export const exchangeRateTranslation = ({ token, balance, exchangeRate }) => {
 };
 
 export const exchangeRateTranslationFromHash = ({ method, balance, exchangeRate }) => {
-    return method === 'buy'
+    return method === 'withdraw'
         ? balance * exchangeRate
         : balance / exchangeRate;
 };

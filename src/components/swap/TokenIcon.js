@@ -11,7 +11,7 @@ const USDTIcon = `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' w
 
 const TokenIcon = ({ symbol = 'Token', icon }) => {
     if (icon && isDataURL(icon) && symbol !== 'USN') {
-        return <img src={icon} alt={symbol}/>;
+        return <img src={icon} alt={symbol} width='39px' height='39px'/>;
         // return <DefaultUsnIcon/>;
     } else if (symbol === 'USN') {
         return <DefaultUsnIcon/>;

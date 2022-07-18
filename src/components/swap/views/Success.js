@@ -15,7 +15,7 @@ const Success = ({
     successValue
 }) => {
     const fee = divNumbers(multiplyNumbers(inputValueFrom, 1), 10000);
-    const valueTo = subsctractNumbers(inputValueFrom, fee);
+    const valueTo = parseFloat(subsctractNumbers(inputValueFrom, fee));
   return (
     <>
         <TextInfoSuccess

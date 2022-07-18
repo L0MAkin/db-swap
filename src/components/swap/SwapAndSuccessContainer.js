@@ -118,8 +118,8 @@ const StyledContainer = styled(Container)`
 const formatDeposit = (method, res) => {
     const amount = JSON.parse(atob(res.transaction.actions[0].FunctionCall.args)).amount || 0;
     return method === 'withdraw'
-        ? formatTokenAmount(amount, 18, 2) 
-        : formatTokenAmount(amount, 6, 2)
+        ? formatTokenAmount(amount, 18) 
+        : formatTokenAmount(amount, 6)
 }
 
 const formatError = (value) => {
@@ -133,7 +133,6 @@ const SwapAndSuccessContainer = ({
 }) => {
     const [from, setFrom] = useState({ onChainFTMetadata: {symbol: 'USDT'}, balance: '0'});
     const [to, setTo] = useState({ onChainFTMetadata: {symbol: 'USN'}, balance: '0'});
-    const [inputValueFrom, setInputValueFrom] = useState('');
     const [activeView, setActiveView] = useState(VIEWS_SWAP.MAIN);
     const [methodFromHash, setMethodFromHash] = useState('buy')
     const [errorFromHash, setErrorFromHash] = useState('')
@@ -151,7 +150,7 @@ const SwapAndSuccessContainer = ({
     useEffect(() => {
         
         if(accountId) {
-            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol));
+            setFrom(currentToken(fungibleTokensList, from?.onChainFTMetadata?.symbol || 'USDT'));
             setTo(currentToken(fungibleTokensList, to?.onChainFTMetadata?.symbol || 'USN'));
         }
     }, [fungibleTokensList]);
@@ -210,9 +209,7 @@ const SwapAndSuccessContainer = ({
                     setErrorFromHash={setErrorFromHash}
                     accountId={accountId}
                     from={from}
-                    inputValueFrom={inputValueFrom}
                     multiplier={multiplier}
-                    setInputValueFrom={setInputValueFrom}
                     to={to}
                     onSwap={() => {
                         if (from?.onChainFTMetadata?.symbol === 'USDT') {
@@ -237,7 +234,7 @@ const SwapAndSuccessContainer = ({
                     inputValueFrom={deposit}
                     symbol={methodFromHash}
                     handleBackToSwap={async () => {
-                        setInputValueFrom('');
+                        // setInputValueFrom('');
                         await onHandleBackToSwap();
                     }}
                 />

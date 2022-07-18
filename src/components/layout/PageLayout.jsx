@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import bg from '../../assets/svg/bg.svg'
 import { Footer } from '../main/components/Footer';
-import { useCountryAPI, userCountry } from '../swap/utils/isBlockedCountry';
+import { useCountryAPI, userCountry } from '../swap/utils/isBlocedCountry';
 
 const Wrapper = styled.div`
     width: 100%;

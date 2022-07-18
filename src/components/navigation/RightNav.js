@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Link, NavLink } from 'react-router-dom'
-import { Modal } from './Modal';
+import { Modal } from './Moadal';
 
 const Ul = styled.ul`
   list-style: none;

@@ -101,11 +101,10 @@ const SwapContainer = styled.div`
 `;
 
 const SwapTokenContainer = ({
+    USDT = false,
     fromToToken,
     value,
-    setInputValueFrom,
-    multiplier,
-    sum
+    setInputValues,
 }) => {
     const inputRef = useRef(null);
     const balance = +formatTokenAmount(
@@ -114,21 +113,17 @@ const SwapTokenContainer = ({
         5
     );
 
-    const error = setInputValueFrom && balance < +value;
-    const handleChange = (e) => {
-        const { value } = e.target;
-        const replaceValue = value.replace(',', '.')
-        setInputValueFrom(replaceValue.replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, ''));
-    };
+    const error = balance < +value;
+    
 
-    const onFocus = () => {
-        if (setInputValueFrom) {
-            inputRef.current.focus();
-        }
-    };
+    // const onFocus = () => {
+    //     if (USDT) {
+    //         inputRef.current.focus();
+    //     }
+    // };
     
     return (
-        <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
+        <SwapContainer className={error ? 'error' : ''}>
             <div className="symbolFlex">
                 <div className="symbolContainer">
                     <div className="icon">
@@ -161,30 +156,18 @@ const SwapTokenContainer = ({
                     </div>
                 </div>
                 <div className="inputContainer">
-                {setInputValueFrom ? (
+                
                     <input
-                        ref={inputRef}
                         type="text"
                         inputMode='decimal'
-                        autoFocus
+                        autoComplete='off'
+                        name={USDT ? 'FROM' : 'TO'}
+                        autoFocus={USDT}
                         placeholder='0'
                         value={value.replace(',', '.')}
-                        onChange={handleChange}
-                        className={error ? 'inputError' : ''}
+                        onChange={(e) => setInputValues(e)}
+                        className={USDT && error ? 'inputError' : ''}
                     />
-                ) : multiplier && fromToToken ? (
-                    <div className="exchange">
-                        ≈
-                        <>
-                            {/* {exchangeRateTranslation({
-                                token: fromToToken,
-                                balance: + value,
-                                exchangeRate: +multiplier
-                            })?.toFixed(5)} */}
-                            {value ? sum : '0.00000'}
-                        </>
-                    </div>
-                ) : null}
                 </div>
             </div>
         </SwapContainer>
