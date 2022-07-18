@@ -116,14 +116,14 @@ const SwapTokenContainer = ({
     const error = balance < +value;
     
 
-    const onFocus = () => {
-        if (USDT) {
-            inputRef.current.focus();
-        }
-    };
+    // const onFocus = () => {
+    //     if (USDT) {
+    //         inputRef.current.focus();
+    //     }
+    // };
     
     return (
-        <SwapContainer className={error ? 'error' : ''} onClick={onFocus}>
+        <SwapContainer className={error ? 'error' : ''}>
             <div className="symbolFlex">
                 <div className="symbolContainer">
                     <div className="icon">
@@ -158,12 +158,11 @@ const SwapTokenContainer = ({
                 <div className="inputContainer">
                 
                     <input
-                        ref={USDT ? inputRef : null}
                         type="text"
                         inputMode='decimal'
                         autoComplete='off'
                         name={USDT ? 'FROM' : 'TO'}
-                        autoFocus
+                        autoFocus={USDT}
                         placeholder='0'
                         value={value.replace(',', '.')}
                         onChange={(e) => setInputValues(e)}
