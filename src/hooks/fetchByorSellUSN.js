@@ -172,7 +172,7 @@ export const useFetchByorSellUSN = (account) => {
                   tokenInActions.push({
                     methodName: 'withdraw',
                     args: {
-                        amount: amount === formatTokenAmount(fullAmount, 18, 5) ? fullAmount : parseTokenAmount(amount, 18)
+                        amount: amount === formatTokenAmount(fullAmount, 18, 5).toString() ? fullAmount : parseTokenAmount(amount, 18)
                     },
                     amount: ONE_YOCTO_NEAR,
                     gas: GAS_FOR_CALL,
