@@ -15,7 +15,7 @@ import {
     plusNumbers,
     parseTokenAmount
 } from '../formatToken';
-import { commission } from '../helpers';
+import { commission, replacedValue } from '../helpers';
 import Loader from '../Loader';
 import SwapInfoContainer from '../SwapInfoContainer';
 import SwapTokenContainer from '../SwapTokenContainer';
@@ -104,7 +104,8 @@ const SwapPage = ({
 
     const handleChange = (e) => {
         const { value } = e.target;
-        const replaceValue = value.replace(',', '.').replace(/^\.|[^\d\.]|\.(?=.*\.)|^0+(?=\d)/g, '');
+        const isUSDT = from?.onChainFTMetadata?.symbol === 'USDT'
+        const replaceValue = replacedValue(e.target.dataset.token, value);
 
         if(e.target.name === 'FROM') {
             setInputValues({
@@ -112,7 +113,6 @@ const SwapPage = ({
                 toAmount: parseFloat(subsctractNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(value ? replaceValue : 0, 1), 10000))).toString()
             });
         } else {
-            const isUSDT = from?.onChainFTMetadata?.symbol === 'USDT'
             const withPercent = plusNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(value ? replaceValue : 0, 1), 10000));
             const currentAmount = plusNumbers(value ? replaceValue : 0, divNumbers(multiplyNumbers(withPercent, 1), 10000));
             setInputValues({

@@ -66,7 +66,7 @@ function SwapInfoContainer({
                 rightText={`${sliceAmount} ${token} = ${expectedAmount} ${symbol}`}
             />
             <SwapInfoItem
-                isDots={isLoading}
+                // isDots={isLoading}
                 leftText={'Trading fee'}
                 rightText={formatAmount({
                     amount,
@@ -76,7 +76,7 @@ function SwapInfoContainer({
                 })}
             />
             <SwapInfoItem
-                isDots={isLoading}
+                // isDots={isLoading}
                 leftText={'Minimum received'}
                 // rightText={formatAmount({
                 //     amount,
