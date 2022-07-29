@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import TokenIcon from './TokenIcon';
 import { formatNearAmount, formatTokenAmount } from './formatToken';
-import { exchangeRateTranslation, maxLength } from './helpers';
 
 const { REACT_APP_NEAR_ENV } = process.env;
 const EXPLORER_URL = REACT_APP_NEAR_ENV === 'testnet' ? 'https://near-contract-helper.onrender.com': 'https://helper.mainnet.near.org';
@@ -165,7 +164,6 @@ const SwapTokenContainer = ({
                         data-token={fromToToken?.onChainFTMetadata?.symbol === 'USDT' ? 'USDT' : 'USN'}
                         autoFocus={USDT}
                         placeholder='0'
-                        maxLength={maxLength(value, fromToToken?.onChainFTMetadata?.symbol)}
                         value={value.replace(',', '.')}
                         onChange={(e) => setInputValues(e)}
                         className={USDT && error ? 'inputError' : ''}

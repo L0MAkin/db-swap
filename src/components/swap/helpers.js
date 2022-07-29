@@ -7,23 +7,10 @@ import { parseTokenAmount } from './formatToken';
 const { REACT_APP_NEAR_ENV } = process.env;
 const IS_MAINNET = REACT_APP_NEAR_ENV === 'testnet' ? false : true;
 
-export const maxLength = (value, symbol) => {
-
-    value = value.replace(',', '.');
-
-    const isDecimalNumber = value.includes('.');
-
-    if(!isDecimalNumber) return 10;
-
-    if(isDecimalNumber && symbol === 'USDT') return 17;
-
-    if(isDecimalNumber && symbol === 'USN') return 29;
-}
-
 export const replacedValue = (flag, value) => {
     return flag === 'USDT'
-        ? value.replace(',', '.').replace(/[^0-9]\.]/g, '').replace(/(\.\d{6})\d+/g, '$1')
-        : value.replace(',', '.').replace(/[^0-9]\.]/g, '').replace(/(\.\d{18})\d+/g, '$1');
+        ? value.replace(',', '.').replace(/^\d{10}(\.\d{6})?\d+$/g, '')
+        : value.replace(',', '.').replace(/^\d{10}(\.\d{18})?\d+$/g, '');
 }
 
 export const currentToken = (tokens, value) => {
