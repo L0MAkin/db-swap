@@ -68,11 +68,10 @@ const SwapPage = ({
     const inputAmount = inputValues.fromAmount || 0;
     const tradingFee = divNumbers(multiplyNumbers(inputAmount, 1), 10000);
     const minReceivedAmount = subsctractNumbers(inputAmount, tradingFee);
-    const maxReceivedAmount = plusNumbers(inputValues.toAmount || 0, tradingFee)
     const { fetchByOrSell, isLoading, setIsLoading } = useFetchByorSellUSN(wallet.account());
     const predict = usePredict(wallet.account(), inputValues.fromAmount ? inputValues.fromAmount : '1', multipliers, from?.onChainFTMetadata?.symbol, accountId)
     const balance = balanceForError(from);
-    const error = balance < +inputValues.fromAmount || !inputValues.fromAmount;
+    const error = balance < +inputValues.fromAmount || !inputValues.fromAmount || inputValues.fromAmount == 0;
     const slippageError = slippageValue < 0.01 || slippageValue > 99.99;
     // const currentMultiplier = predict?.rate * 10000
     const dispatch = useDispatch()
