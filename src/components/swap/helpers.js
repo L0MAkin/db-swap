@@ -9,8 +9,8 @@ const IS_MAINNET = REACT_APP_NEAR_ENV === 'testnet' ? false : true;
 
 export const replacedValue = (flag, value) => {
     return flag === 'USDT'
-        ? value.replace(',', '.').replace(/^\d{11,11}/, '$1').replace(/(\.\d{6})\d+/g, '$1')
-        : value.replace(',', '.').replace(/^\d{11,11}/, '$1').replace(/(\.\d{18})\d+/g, '$1');
+        ? value.replace(',', '.').replace(/^\d{13,13}/, '$1').replace(/(\.\d{6})\d+/g, '$1')
+        : value.replace(',', '.').replace(/^\d{13,13}/, '$1').replace(/(\.\d{18})\d+/g, '$1');
 }
 
 export const currentToken = (tokens, value) => {
